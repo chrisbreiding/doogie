@@ -7,24 +7,29 @@ class HousesStore {
     this.houses = [];
 
     this.bindListeners({
-      onHouseAdded: actions.ADD_HOUSE,
-      onHouseUpdated: actions.UPDATE_HOUSE,
-      onHouseRemoved: actions.REMOVE_HOUSE
+      addHouse: actions.ADD_HOUSE,
+      updateHouse: actions.UPDATE_HOUSE,
+      removeHouse: actions.REMOVE_HOUSE,
+      clearData: actions.STOP_LISTENING
     });
   }
 
-  onHouseAdded (house) {
+  addHouse (house) {
     this.houses.push(house);
   }
 
-  onHouseUpdated (house) {
+  updateHouse (house) {
     const index = _.findIndex(this.houses, { id: house.id });
     this.houses[index] = house;
   }
 
-  onHouseRemoved (house) {
+  removeHouse (house) {
     const index = _.findIndex(this.houses, { id: house.id });
     this.houses.splice(index, 1);
+  }
+
+  clearData () {
+    this.houses = [];
   }
 }
 

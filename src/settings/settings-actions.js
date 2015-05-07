@@ -30,6 +30,7 @@ class SettingsActions {
   }
 
   stopListening () {
+    this.dispatch();
     fieldsRef.off();
   }
 }

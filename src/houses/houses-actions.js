@@ -30,6 +30,7 @@ class HousesActions {
   }
 
   stopListening () {
+    this.dispatch();
     housesRef.off();
   }
 }

@@ -7,24 +7,29 @@ class SettingsStore {
     this.fields = [];
 
     this.bindListeners({
-      onFieldAdded: actions.ADD_FIELD,
-      onFieldUpdated: actions.UPDATE_FIELD,
-      onFieldRemoved: actions.REMOVE_FIELD
+      addField: actions.ADD_FIELD,
+      updateField: actions.UPDATE_FIELD,
+      removeField: actions.REMOVE_FIELD,
+      clearData: actions.STOP_LISTENING
     });
   }
 
-  onFieldAdded (field) {
+  addField (field) {
     this.fields.push(field);
   }
 
-  onFieldUpdated (field) {
+  updateField (field) {
     const index = _.findIndex(this.fields, { id: field.id });
     this.fields[index] = field;
   }
 
-  onFieldRemoved (field) {
+  removeField (field) {
     const index = _.findIndex(this.fields, { id: field.id });
     this.fields.splice(index, 1);
+  }
+
+  clearData () {
+    this.fields = [];
   }
 }
 
