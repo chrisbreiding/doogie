@@ -5,7 +5,7 @@ import Router from 'react-router';
 import RSVP from 'rsvp';
 
 import AppComponent from './app/app';
-import HousesComponent from './houses/houses';
+import MenuComponent from './menu/menu';
 import HouseComponent from './house/house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
@@ -21,9 +21,8 @@ const Redirect = createFactory(Router.Redirect);
 const DefaultRoute = createFactory(Router.DefaultRoute);
 
 const routes = Route({ handler: AppComponent, path: '/' },
-  Redirect({ from: '/', to: '/houses' }),
-  Route({ name: 'houses', handler: HousesComponent, path: 'houses' },
-    Route({ name: 'house', handler: HouseComponent, path: ':id' })
+  Route({ name: 'menu', handler: MenuComponent, path: '/' },
+    Route({ name: 'house', handler: HouseComponent, path: 'houses/:id' })
   ),
   Route({ name: 'login', handler: LoginComponent, path: 'login' }),
   Route({ name: 'logout', handler: LogoutComponent, path: 'logout' })
