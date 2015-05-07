@@ -7,6 +7,7 @@ import RSVP from 'rsvp';
 import AppComponent from './app/app';
 import MenuComponent from './menu/menu';
 import HouseComponent from './house/house';
+import NewHouseComponent from './house/new-house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
 
@@ -22,6 +23,7 @@ const DefaultRoute = createFactory(Router.DefaultRoute);
 
 const routes = Route({ handler: AppComponent, path: '/' },
   Route({ name: 'menu', handler: MenuComponent, path: '/' },
+    Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
     Route({ name: 'house', handler: HouseComponent, path: 'houses/:id' })
   ),
   Route({ name: 'login', handler: LoginComponent, path: 'login' }),

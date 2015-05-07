@@ -33,7 +33,8 @@ export default createClass({
     return DOM.div(null,
       DOM.ul(null,
         MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout'))),
-        Houses()
+        Houses(),
+        MenuGroup(null, DOM.li(null, Link({ to: 'house', params: { id: 'new' }}, '+ Add house')))
       ),
       createFactory(RouteHandler)()
     );

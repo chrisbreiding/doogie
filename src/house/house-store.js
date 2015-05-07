@@ -7,7 +7,7 @@ class HouseStore {
     this.house = null;
 
     this.bindListeners({
-      onUpdate: actions.UPDATE
+      onUpdate: actions.DID_UPDATE
     });
   }
 
