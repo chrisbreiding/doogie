@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { createStore } from '../lib/dispatcher';
-import actions from './house-actions'
+import actions from './houses-actions';
 
-class HouseStore {
+class HousesStore {
   constructor () {
     this.houses = [];
 
@@ -28,4 +28,4 @@ class HouseStore {
   }
 }
 
-export default createStore(HouseStore, 'HouseStore');
+export default createStore(HousesStore, 'HousesStore');

@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { createClass, createFactory, PropTypes, DOM } from 'react';
-import { Link as LinkComponent } from 'react-router';
+import { Link as LinkComponent, RouteHandler } from 'react-router';
 import auth from '../auth/auth';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
-import HouseStore from './house-store';
-import { listen, stopListening } from './house-actions';
-import HouseComponent from './house';
+import HousesStore from './houses-store';
+import { listen, stopListening } from './houses-actions';
+import HouseComponent from '../house/house';
 import MenuGroupComponent from './menu-group';
 
 const Link = createFactory(LinkComponent);
@@ -20,7 +20,7 @@ export default createClass({
   },
 
   statics: {
-    registerStore: HouseStore,
+    registerStore: HousesStore,
 
     willTransitionTo (transition) {
       if (!auth.isAuthenticated()) {
@@ -44,11 +44,16 @@ export default createClass({
   },
 
   render () {
-    return DOM.ul(null,
-      MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout'))),
-      MenuGroup(null, _.map(this.state.houses, (house) => {
-        return House(_.extend({ key: house.id }, house));
-      }))
+    return DOM.div(null,
+      DOM.ul(null,
+        MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout'))),
+        MenuGroup(null, _.map(this.state.houses, (house) => {
+          return DOM.li({ key: house.id },
+            Link({ to: 'house', params: house }, house.name)
+          );
+        }))
+      ),
+      createFactory(RouteHandler)()
     );
   }
 });

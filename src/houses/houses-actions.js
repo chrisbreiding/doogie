@@ -4,7 +4,7 @@ import firebaseRef from '../lib/firebase-ref';
 
 const housesRef = firebaseRef.child('houses');
 
-class HouseActions {
+class HousesActions {
   addHouse (house) {
     this.dispatch(house);
   }
@@ -34,4 +34,4 @@ class HouseActions {
   }
 }
 
-export default createActions(HouseActions);
+export default createActions(HousesActions);

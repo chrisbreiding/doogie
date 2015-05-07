@@ -6,6 +6,7 @@ import RSVP from 'rsvp';
 
 import AppComponent from './app/app';
 import HousesComponent from './houses/houses';
+import HouseComponent from './house/house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
 
@@ -16,10 +17,14 @@ RSVP.on('error', (e) => {
 });
 
 const Route = createFactory(Router.Route);
+const Redirect = createFactory(Router.Redirect);
 const DefaultRoute = createFactory(Router.DefaultRoute);
 
 const routes = Route({ handler: AppComponent, path: '/' },
-  DefaultRoute({ name: 'default', handler: HousesComponent }),
+  Redirect({ from: '/', to: '/houses' }),
+  Route({ name: 'houses', handler: HousesComponent, path: 'houses' },
+    Route({ name: 'house', handler: HouseComponent, path: ':id' })
+  ),
   Route({ name: 'login', handler: LoginComponent, path: 'login' }),
   Route({ name: 'logout', handler: LogoutComponent, path: 'logout' })
 );
