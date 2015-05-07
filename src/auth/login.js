@@ -33,7 +33,7 @@ export default createClass({
     this.setState({ attemptingLogin: true }, () => {
       auth.login(email, password).then((didSucceed) => {
         if (didSucceed) {
-          this.context.router.transitionTo('default');
+          this.context.router.transitionTo('menu');
         } else {
           this.setState({
             attemptingLogin: false,
