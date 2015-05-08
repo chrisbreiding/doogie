@@ -1,7 +1,10 @@
+import _ from 'lodash';
 import { createClass, PropTypes, DOM } from 'react';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HouseStore from './house-store';
-import actions from './house-actions';
+import houseActions from './house-actions';
+import SettingsStore from '../settings/settings-store';
+import settingsActions from '../settings/settings-actions';
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -11,20 +14,24 @@ export default createClass({
   },
 
   statics: {
-    registerStore: HouseStore,
+    registerStores: {
+      house: HouseStore,
+      settings: SettingsStore
+    }
   },
 
   componentDidMount () {
-    actions.listen(this._getId());
+    houseActions.listen(this._getId());
+    settingsActions.listen();
     this._focusName();
   },
 
   componentDidUpdate (__, prevState) {
     const id = this._getId();
-    if (!prevState.house || prevState.house.id === id) return;
+    if (!prevState.house.house || prevState.house.house.id === id) return;
 
-    if (prevState.house.id) actions.stopListening(prevState.house.id);
-    actions.listen(id);
+    if (prevState.house.house.id) houseActions.stopListening(prevState.house.house.id);
+    houseActions.listen(id);
     this._focusName();
   },
 
@@ -37,24 +44,33 @@ export default createClass({
   },
 
   componentWillUnmount () {
-    actions.stopListening(this.state.house.id);
+    houseActions.stopListening(this.state.house.house.id);
+    settingsActions.stopListening();
   },
 
   render () {
-    if (!this.state.house) return DOM.p(null, '...');
+    if (!this.state.house.house) return DOM.p(null, '...');
 
-    return DOM.form(null,
-      DOM.input({
-        ref: 'name',
-        value: this.state.house.name,
-        onChange: this._onChange
-      })
-    );
+    const fields = [{ id: 'name', label: 'Name' }].concat(this.state.settings.fields);
+    const inputs = _.map(fields, (field) => {
+      const key = _.camelCase(field.label);
+
+      return DOM.fieldset({ key: field.id, className: key },
+        DOM.label(null, field.label),
+        DOM.input({
+          ref: key,
+          value: this.state.house.house[key],
+          onChange: _.partial(this._onChange, key)
+        })
+      );
+    });
+
+    return DOM.form(null, inputs);
   },
 
-  _onChange () {
-    actions.update(_.extend({}, this.state.house, {
-      name: this.refs.name.getDOMNode().value
+  _onChange (key) {
+    houseActions.update(_.extend({}, this.state.house.house, {
+      [key]: this.refs[key].getDOMNode().value
     }));
   }
 });
