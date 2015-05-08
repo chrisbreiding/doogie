@@ -31,11 +31,11 @@ export default createClass({
 
   render () {
     return DOM.div(null,
-      DOM.ul(null,
-        MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout'))),
+      DOM.ul({ className: 'menu' },
         MenuGroup(null, DOM.li(null, Link({ to: 'settings' }, '* Settings'))),
         Houses(),
-        MenuGroup(null, DOM.li(null, Link({ to: 'house', params: { id: 'new' }}, '+ Add house')))
+        MenuGroup(null, DOM.li(null, Link({ to: 'house', params: { id: 'new' }}, '+ Add house'))),
+        MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout')))
       ),
       createFactory(RouteHandler)()
     );

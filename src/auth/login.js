@@ -14,13 +14,13 @@ export default createClass({
   },
 
   render () {
-    return DOM.form({ onSubmit: this._onSubmit },
-      DOM.h2(null, 'Please Login'),
+    return DOM.form({ className: 'login', onSubmit: this._onSubmit },
+      DOM.h1(null, 'Please Log In'),
       DOM.label(null, 'Email'),
       DOM.input({ ref: 'email' }),
       DOM.label(null, 'Password'),
       DOM.input({ ref: 'password', type: 'password' }),
-      this.state.attemptingLogin ? DOM.p(null, '...') : DOM.button(null, 'Login')
+      this.state.attemptingLogin ? DOM.div({ className: 'loading' }, 'Logging in...') : DOM.button(null, 'Login')
     );
   },
 

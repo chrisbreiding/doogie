@@ -1,10 +1,12 @@
 import { createFactory, createClass, DOM } from 'react';
 import { Link as LinkComponent, RouteHandler } from 'react-router';
+import MenuGroupComponent from '../menu/menu-group';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from './settings-store';
 import { listen, stopListening } from './settings-actions';
 
 const Link = createFactory(LinkComponent);
+const MenuGroup = createFactory(MenuGroupComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -29,8 +31,8 @@ export default createClass({
       ),
       DOM.main(null,
         DOM.h2(null, 'Fields'),
-        DOM.ul(null, this._fields()),
-        Link({ to: 'new-field'}, '+ Add field')
+        DOM.ul({ className: 'menu' }, MenuGroup(null, this._fields())),
+        MenuGroup(null, DOM.li(null, Link({ to: 'new-field' }, '+ Add field')))
       ),
       createFactory(RouteHandler)()
     );

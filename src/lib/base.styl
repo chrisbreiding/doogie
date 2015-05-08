@@ -1,22 +1,84 @@
-// body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img,a img{border:none;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img,a img{border:none;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}
 
-// * {
-//   box-sizing: border-box;
-// }
+* {
+  box-sizing: border-box;
+}
 
-// body,
-// input,
-// textarea {
-//   font-family: sans-serif;
-// }
+html {
+  background: darken(light-color, 10%);
+}
 
-// input,
-// textarea {
-//   font-size: 1em;
-// }
+body {
+  color: #545454;
+  width: 100%;
+  height: 100%;
+}
 
-// h1 {
-//   color: #545454;
-//   margin: 2em;
-//   text-align: center;
-// }
+body,
+input,
+textarea {
+  font-family: sans-serif;
+}
+
+label {
+  display: block;
+  margin-left: 0.6em;
+}
+
+input,
+textarea {
+  border: none;
+  border-bottom: solid 1px #d3d3d3;
+  border-top: solid 1px #d3d3d3;
+  display: block;
+  font-size: 1em;
+  margin: 0.2em 0 0.6em;
+  padding: 0.6em 0.8em;
+  width: 100%;
+}
+
+h1 {
+  background: primary-color;
+  color: light-color;
+  margin: 0 0 1em;
+  padding: 0.6em 0.8em;
+  text-align: center;
+}
+
+a {
+  display: block;
+  padding: 0.6em 0.8em;
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  background: light-color;
+  color: primary-color;
+}
+
+a:hover,
+a:focus,
+a:active {
+  background: primary-color;
+  color: light-color;
+}
+
+button {
+  background: action-color;
+  border: none;
+  color: light-color;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  margin: 0 auto;
+  padding: 0.6em 0.8em;
+  text-align: center;
+  width: 90%;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: darken(action-color, 20%);
+  }
+}
