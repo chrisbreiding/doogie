@@ -8,7 +8,7 @@ export default createClass({
 
   componentDidMount () {
     add((id) => {
-      this.context.router.transitionTo('houses', { id });
+      this.context.router.transitionTo('house', { id });
     });
   },
 
