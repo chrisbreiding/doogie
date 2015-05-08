@@ -59,7 +59,7 @@ export default createClass({
         DOM.label(null, field.label),
         DOM[field.type || 'textarea']({
           ref: key,
-          value: this.state.house.house[key],
+          value: this.state.house.house[key] || '',
           onChange: _.partial(this._onChange, key)
         })
       );
