@@ -51,13 +51,13 @@ export default createClass({
   render () {
     if (!this.state.house.house) return DOM.p(null, '...');
 
-    const fields = [{ id: 'name', label: 'Name' }].concat(this.state.settings.fields);
+    const nameField = { id: 'name', label: 'Name', type: 'input' };
+    const fields = [nameField].concat(this.state.settings.fields);
     const inputs = _.map(fields, (field) => {
       const key = _.camelCase(field.label);
-
       return DOM.fieldset({ key: field.id, className: key },
         DOM.label(null, field.label),
-        DOM.input({
+        DOM[field.type || 'textarea']({
           ref: key,
           value: this.state.house.house[key],
           onChange: _.partial(this._onChange, key)
