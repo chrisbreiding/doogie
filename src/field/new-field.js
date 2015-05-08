@@ -1,5 +1,5 @@
 import { createClass, PropTypes, DOM } from 'react';
-import { add } from './house-actions';
+import { add } from './field-actions';
 
 export default createClass({
   contextTypes: {
@@ -8,11 +8,11 @@ export default createClass({
 
   componentDidMount () {
     add((id) => {
-      this.context.router.transitionTo('houses', { id });
+      this.context.router.transitionTo('field', { id });
     });
   },
 
   render () {
-    return DOM.p(null, 'Adding new house...');
+    return DOM.p(null, 'Adding new field...');
   }
 });

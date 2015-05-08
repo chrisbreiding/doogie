@@ -11,6 +11,8 @@ import NewHouseComponent from './house/new-house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
 import SettingsComponent from './settings/settings';
+import FieldComponent from './field/field';
+import NewFieldComponent from './field/new-field';
 
 RSVP.on('error', (e) => {
   console.error('Error caught by RSVP:');
@@ -24,7 +26,10 @@ const DefaultRoute = createFactory(Router.DefaultRoute);
 
 const routes = Route({ handler: AppComponent, path: '/' },
   Route({ name: 'menu', handler: MenuComponent, path: '/' },
-    Route({ name: 'settings', handler: SettingsComponent, path: 'settings' }),
+    Route({ name: 'settings', handler: SettingsComponent, path: 'settings' },
+      Route({ name: 'new-field', handler: NewFieldComponent, path: 'fields/new' }),
+      Route({ name: 'field', handler: FieldComponent, path: 'fields/:id' })
+    ),
     Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
     Route({ name: 'house', handler: HouseComponent, path: 'houses/:id' })
   ),

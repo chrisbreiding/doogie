@@ -1,5 +1,5 @@
 import { createFactory, createClass, DOM } from 'react';
-import { Link as LinkComponent } from 'react-router';
+import { Link as LinkComponent, RouteHandler } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from './settings-store';
 import { listen, stopListening } from './settings-actions';
@@ -29,15 +29,19 @@ export default createClass({
       ),
       DOM.main(null,
         DOM.h2(null, 'Fields'),
-        DOM.ul(null, this._fields())
-      )
+        DOM.ul(null, this._fields()),
+        Link({ to: 'new-field'}, '+ Add field')
+      ),
+      createFactory(RouteHandler)()
     );
   },
 
   _fields () {
     if (this.state.fields.length) {
       return _.map(this.state.fields, (field) => {
-        return DOM.li({ key: field.id }, field.label);
+        return DOM.li({ key: field.id },
+          Link({ to: 'field', params: { id: field.id }}, field.label)
+        );
       });
     } else {
       return DOM.li(null, '...');
