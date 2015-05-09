@@ -32,10 +32,19 @@ export default createClass({
   render () {
     return DOM.div(null,
       DOM.ul({ className: 'menu' },
-        MenuGroup(null, DOM.li(null, Link({ to: 'settings' }, '* Settings'))),
+        MenuGroup(null, DOM.li(null, Link({ to: 'settings' },
+          DOM.i({ className: 'fa fa-cog' }),
+          ' Settings'
+        ))),
         Houses(),
-        MenuGroup(null, DOM.li(null, Link({ to: 'house', params: { id: 'new' }}, '+ Add house'))),
-        MenuGroup(null, DOM.li(null, Link({ to: 'logout' }, 'Logout')))
+        MenuGroup(null, DOM.li(null, Link({ to: 'house', params: { id: 'new' }},
+          DOM.i({ className: 'fa fa-plus' }),
+          ' Add house'
+        ))),
+        MenuGroup(null, DOM.li(null, Link({ to: 'logout' },
+          DOM.i({ className: 'fa fa-sign-out' }),
+          ' Logout'
+        )))
       ),
       createFactory(RouteHandler)()
     );

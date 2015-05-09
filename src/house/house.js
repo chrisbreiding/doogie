@@ -1,10 +1,13 @@
 import _ from 'lodash';
-import { createClass, PropTypes, DOM } from 'react';
+import { createFactory, createClass, PropTypes, DOM } from 'react';
+import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HouseStore from './house-store';
 import houseActions from './house-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
+
+const Link = createFactory(LinkComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -65,7 +68,13 @@ export default createClass({
       );
     });
 
-    return DOM.form(null, inputs);
+    return DOM.div(null,
+      DOM.header(null,
+        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back')
+      ),
+      DOM.form(null, inputs)
+    );
+
   },
 
   _onChange (key) {

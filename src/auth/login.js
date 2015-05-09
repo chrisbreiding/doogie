@@ -15,7 +15,9 @@ export default createClass({
 
   render () {
     return DOM.form({ className: 'login', onSubmit: this._onSubmit },
-      DOM.h1(null, 'Please Log In'),
+      DOM.header(null,
+        DOM.h1(null, 'Please Log In')
+      ),
       DOM.label(null, 'Email'),
       DOM.input({ ref: 'email' }),
       DOM.label(null, 'Password'),

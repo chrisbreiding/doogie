@@ -26,13 +26,16 @@ export default createClass({
   render () {
     return DOM.div(null,
       DOM.header(null,
-        Link({ to: 'menu' }, '< Back'),
+        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
         DOM.h1(null, 'Settings')
       ),
       DOM.main(null,
-        DOM.h2(null, 'Fields'),
+        DOM.label(null, 'Fields'),
         DOM.ul({ className: 'menu' }, MenuGroup(null, this._fields())),
-        MenuGroup(null, DOM.li(null, Link({ to: 'new-field' }, '+ Add field')))
+        MenuGroup(null, DOM.li(null, Link({ to: 'new-field' },
+          DOM.i({ className: 'fa fa-plus' }),
+          ' Add field'
+        )))
       ),
       createFactory(RouteHandler)()
     );
