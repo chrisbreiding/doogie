@@ -6,6 +6,7 @@ import HouseStore from './house-store';
 import houseActions from './house-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
+import { HOUSE_NAME_KEY } from '../lib/constants';
 
 const Link = createFactory(LinkComponent);
 
@@ -54,18 +55,12 @@ export default createClass({
   render () {
     if (!this.state.house.house) return DOM.p(null, '...');
 
-    const nameField = { id: 'name', label: 'Name', type: 'input' };
-    const fields = [nameField].concat(this.state.settings.fields);
-    const inputs = _.map(fields, (field) => {
-      const key = _.camelCase(field.label);
-      return DOM.fieldset({ key: field.id, className: key },
-        DOM.label(null, field.label),
-        DOM[field.type || 'textarea']({
-          ref: key,
-          value: this.state.house.house[key] || '',
-          onChange: _.partial(this._onChange, key)
-        })
-      );
+    const nameField = DOM.input({
+      ref: HOUSE_NAME_KEY,
+      key: HOUSE_NAME_KEY,
+      className: HOUSE_NAME_KEY,
+      value: this.state.house.house[HOUSE_NAME_KEY] || '',
+      onChange: _.partial(this._onChange, HOUSE_NAME_KEY)
     });
 
     return DOM.div({ className: 'house full-screen' },
@@ -73,9 +68,24 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
         DOM.h1()
       ),
-      DOM.form(null, inputs)
+      DOM.form(null, [nameField].concat(this._fields()))
     );
+  },
 
+  _fields () {
+    if (!this.state.settings.fields.length) return DOM.p({ key: 'loading' }, '...');
+
+    return _.map(this.state.settings.fields, (field) => {
+      const key = _.camelCase(field.label);
+      return DOM.fieldset({ key: field.id },
+        DOM.label(null, field.label),
+        DOM.textarea({
+          ref: key,
+          value: this.state.house.house[key] || '',
+          onChange: _.partial(this._onChange, key)
+        })
+      );
+    });
   },
 
   _onChange (key) {

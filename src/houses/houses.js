@@ -5,6 +5,7 @@ import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HousesStore from './houses-store';
 import { listen, stopListening } from './houses-actions';
 import MenuGroupComponent from '../menu/menu-group';
+import { HOUSE_NAME_KEY } from '../lib/constants';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
@@ -27,7 +28,7 @@ export default createClass({
   render () {
     return MenuGroup(null, _.map(this.state.houses, (house) => {
       return DOM.li({ key: house.id },
-        Link({ to: 'house', params: house }, house.name)
+        Link({ to: 'house', params: house }, house[HOUSE_NAME_KEY])
       );
     }));
   }
