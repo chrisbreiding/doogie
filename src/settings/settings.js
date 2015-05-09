@@ -4,9 +4,11 @@ import MenuGroupComponent from '../menu/menu-group';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from './settings-store';
 import { listen, stopListening } from './settings-actions';
+import LoaderComponent from '../loader/loader';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
+const Loader = createFactory(LoaderComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -51,7 +53,7 @@ export default createClass({
         );
       });
     } else {
-      return DOM.li(null, '...');
+      return Loader({ el: 'li' });
     }
   }
 });

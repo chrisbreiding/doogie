@@ -3,8 +3,10 @@ import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import FieldStore from './field-store';
 import actions from './field-actions';
+import LoaderComponent from '../loader/loader';
 
 const Link = createFactory(LinkComponent);
+const Loader = createFactory(LoaderComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -44,7 +46,7 @@ export default createClass({
   },
 
   render () {
-    if (!this.state.field) return DOM.p(null, '...');
+    if (!this.state.field) return Loader();
 
     return DOM.form({ className: 'fields full-screen' },
       DOM.header(null,

@@ -1,5 +1,8 @@
-import { createClass, PropTypes, DOM } from 'react';
+import { createFactory, createClass, PropTypes, DOM } from 'react';
 import auth from './auth';
+import LoaderComponent from '../loader/loader';
+
+const Loader = createFactory(LoaderComponent);
 
 export default createClass({
   contextTypes: {
@@ -22,7 +25,7 @@ export default createClass({
       DOM.input({ ref: 'email' }),
       DOM.label(null, 'Password'),
       DOM.input({ ref: 'password', type: 'password' }),
-      this.state.attemptingLogin ? DOM.div({ className: 'loading' }, 'Logging in...') : DOM.button(null, 'Login')
+      this.state.attemptingLogin ? Loader({ size: 'regular' }) : DOM.button(null, 'Login')
     );
   },
 

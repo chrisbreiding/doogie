@@ -1,5 +1,8 @@
-import { createClass, PropTypes, DOM } from 'react';
+import { createFactory, createClass, PropTypes, DOM } from 'react';
 import { add } from './house-actions';
+import LoaderComponent from '../loader/loader';
+
+const Loader = createFactory(LoaderComponent);
 
 export default createClass({
   contextTypes: {
@@ -13,6 +16,6 @@ export default createClass({
   },
 
   render () {
-    return DOM.p(null, 'Adding new house...');
+    return DOM.div({ className: 'adding full-screen' }, Loader());
   }
 });

@@ -7,8 +7,10 @@ import houseActions from './house-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
+import LoaderComponent from '../loader/loader';
 
 const Link = createFactory(LinkComponent);
+const Loader = createFactory(LoaderComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -53,7 +55,7 @@ export default createClass({
   },
 
   render () {
-    if (!this.state.house.house) return DOM.p(null, '...');
+    if (!this.state.house.house) return Loader();
 
     const nameField = DOM.input({
       ref: HOUSE_NAME_KEY,
@@ -73,7 +75,7 @@ export default createClass({
   },
 
   _fields () {
-    if (!this.state.settings.fields.length) return DOM.p({ key: 'loading' }, '...');
+    if (!this.state.settings.fields.length) return Loader({ key: '__loading' });
 
     return _.map(this.state.settings.fields, (field) => {
       const key = _.camelCase(field.label);
