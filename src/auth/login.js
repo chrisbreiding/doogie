@@ -23,8 +23,12 @@ export default createClass({
       DOM.input({ ref: 'email' }),
       DOM.label(null, 'Password'),
       DOM.input({ ref: 'password', type: 'password' }),
-      this.state.loginFailed ? DOM.p({ className: 'error' }, 'Login failed. Please try again.') : null,
-      this.state.attemptingLogin ? Loader({ size: 'regular' }) : DOM.button(null, 'Login')
+      this.state.loginFailed ?
+        DOM.p({ className: 'error' }, 'Login failed. Please try again.') :
+        null,
+      this.state.attemptingLogin ?
+        Loader({ size: 'regular' }) :
+        DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), ' Log In')
     );
   },
 

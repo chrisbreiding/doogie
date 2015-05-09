@@ -11,15 +11,15 @@ const MenuGroup = createFactory(MenuGroupComponent);
 export default createClass({
   render () {
     return DOM.ul({ className: 'menu full-screen' },
-      MenuGroup(null, DOM.li(null,
-        Link({ to: 'settings' },
-          DOM.i({ className: 'fa fa-cog' }), ' Settings'
-        )
-      )),
       Houses(),
       MenuGroup(null, DOM.li(null,
         Link({ to: 'house', params: { id: 'new' }},
           DOM.i({ className: 'fa fa-plus' }), ' Add house'
+        )
+      )),
+      MenuGroup(null, DOM.li(null,
+        Link({ to: 'settings' },
+          DOM.i({ className: 'fa fa-cog' }), ' Settings'
         )
       )),
       MenuGroup(null, DOM.li(null,
