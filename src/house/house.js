@@ -68,7 +68,7 @@ export default createClass({
       );
     });
 
-    return DOM.div(null,
+    return DOM.div({ className: 'house full-screen' },
       DOM.header(null,
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back')
       ),

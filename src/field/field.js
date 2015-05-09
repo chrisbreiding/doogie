@@ -1,7 +1,10 @@
-import { createClass, PropTypes, DOM } from 'react';
+import { createFactory, createClass, PropTypes, DOM } from 'react';
+import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import FieldStore from './field-store';
 import actions from './field-actions';
+
+const Link = createFactory(LinkComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -43,7 +46,10 @@ export default createClass({
   render () {
     if (!this.state.field) return DOM.p(null, '...');
 
-    return DOM.form(null,
+    return DOM.form({ className: 'fields full-screen' },
+      DOM.header(null,
+        Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back')
+      ),
       DOM.label(null, 'Label'),
       DOM.input({
         ref: 'label',

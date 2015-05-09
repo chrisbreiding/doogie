@@ -31,7 +31,7 @@ export default createClass({
 
   render () {
     return DOM.div(null,
-      DOM.ul({ className: 'menu' },
+      DOM.ul({ className: 'menu full-screen' },
         MenuGroup(null, DOM.li(null, Link({ to: 'settings' },
           DOM.i({ className: 'fa fa-cog' }),
           ' Settings'
@@ -46,7 +46,7 @@ export default createClass({
           ' Logout'
         )))
       ),
-      createFactory(RouteHandler)()
+      createFactory(RouteHandler)({ className: 'foo' })
     );
   }
 });
