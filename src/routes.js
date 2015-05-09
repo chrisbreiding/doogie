@@ -1,4 +1,4 @@
-import { createFactory } from 'react';
+import { createFactory, createClass } from 'react';
 import Router from 'react-router';
 
 import AppComponent from './app/app';
@@ -14,9 +14,12 @@ import NewFieldComponent from './field/new-field';
 const Route = createFactory(Router.Route);
 const Redirect = createFactory(Router.Redirect);
 const DefaultRoute = createFactory(Router.DefaultRoute);
+const RouteHandler = createFactory(Router.RouteHandler);
 
-export default Route({ handler: AppComponent, path: '/' },
-  Route({ name: 'menu', handler: MenuComponent, path: '/' },
+const RootComponent = createClass({ render () { return RouteHandler(); } });
+
+export default Route({ handler: RootComponent, path: '/' },
+  Route({ name: 'menu', handler: AppComponent, path: '/' },
     Route({ name: 'settings', handler: SettingsComponent, path: 'settings' },
       Route({ name: 'new-field', handler: NewFieldComponent, path: 'fields/new' }),
       Route({ name: 'field', handler: FieldComponent, path: 'fields/:id' })
