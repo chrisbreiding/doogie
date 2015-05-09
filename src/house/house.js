@@ -70,7 +70,8 @@ export default createClass({
 
     return DOM.div({ className: 'house full-screen' },
       DOM.header(null,
-        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back')
+        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
+        DOM.h1()
       ),
       DOM.form(null, inputs)
     );

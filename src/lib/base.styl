@@ -42,26 +42,52 @@ header {
   color: light-color;
   margin: 0 0 1em;
   padding: 0.6em 0.8em;
+  position: relative;
   text-align: center;
+}
+
+h1:empty:before {
+  content: '\00A0';
+  display: block;
 }
 
 a {
   display: block;
   padding: 0.6em 0.8em;
   text-decoration: none;
+
+  &:link,
+  &:visited {
+    background: light-color;
+    color: primary-color;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: primary-color;
+    color: light-color;
+  }
 }
 
-a:link,
-a:visited {
-  background: light-color;
-  color: primary-color;
-}
+header a {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
 
-a:hover,
-a:focus,
-a:active {
-  background: primary-color;
-  color: light-color;
+  &:link,
+  &:visited {
+    background: none;
+    color: light-color;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: light-color;
+    color: primary-color;
+  }
 }
 
 button {
