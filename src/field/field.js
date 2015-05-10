@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { createFactory, createClass, PropTypes, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
@@ -53,18 +54,28 @@ export default createClass({
         Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
         DOM.h1()
       ),
-      DOM.label(null, 'Label'),
-      DOM.input({
-        ref: 'label',
-        value: this.state.field.label,
-        onChange: this._onChange
-      })
+      DOM.fieldset(null,
+        DOM.label(null, 'Label'),
+        DOM.input({
+          ref: 'label',
+          value: this.state.field.label || '',
+          onChange: _.partial(this._onChange, 'label')
+        })
+      ),
+      DOM.fieldset(null,
+        DOM.label(null, 'Default notes'),
+        DOM.textarea({
+          ref: 'defaultNotes',
+          value: this.state.field.defaultNotes || '',
+          onChange: _.partial(this._onChange, 'defaultNotes')
+        })
+      )
     );
   },
 
-  _onChange () {
+  _onChange (key) {
     actions.update(_.extend({}, this.state.field, {
-      label: this.refs.label.getDOMNode().value
+      [key]: this.refs[key].getDOMNode().value
     }));
   }
 });

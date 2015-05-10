@@ -83,7 +83,7 @@ export default createClass({
         DOM.label(null, field.label),
         DOM.textarea({
           ref: key,
-          value: this.state.house.house[key] || '',
+          value: this.state.house.house[key] || field.defaultNotes || '',
           onChange: _.partial(this._onChange, key)
         })
       );
