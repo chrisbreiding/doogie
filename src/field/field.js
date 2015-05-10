@@ -71,7 +71,8 @@ export default createClass({
           value: this.state.field.defaultNotes || '',
           onChange: _.partial(this._onChange, 'defaultNotes')
         })
-      )
+      ),
+      DOM.button({ className: 'remove', onClick: this._remove }, 'Remove field')
     );
   },
 
@@ -79,5 +80,12 @@ export default createClass({
     actions.update(_.extend({}, this.state.field, {
       [key]: this.refs[key].getDOMNode().value
     }));
+  },
+
+  _remove () {
+    if (confirm('Remove this field?')) {
+      actions.remove(this.state.field.id);
+      this.context.router.transitionTo('settings');
+    }
   }
 });

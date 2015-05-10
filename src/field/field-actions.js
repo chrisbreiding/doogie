@@ -20,6 +20,10 @@ class fieldActions {
     });
   }
 
+  remove (id) {
+    fieldsRef.child(id).remove();
+  }
+
   listen (id) {
     fieldsRef.child(id).on('value', (childSnapshot) => {
       this.actions.didUpdate(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
