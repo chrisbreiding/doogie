@@ -68,6 +68,7 @@ export default createClass({
         DOM.label(null, 'Default notes'),
         Textarea({
           ref: 'defaultNotes',
+          key: this.state.field.id,
           value: this.state.field.defaultNotes || '',
           onChange: _.partial(this._onChange, 'defaultNotes')
         })
