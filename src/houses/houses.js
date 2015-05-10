@@ -26,17 +26,10 @@ export default createClass({
   },
 
   render () {
-    return MenuGroup(null, _.map(this._sortedHouses(), (house) => {
+    return MenuGroup(null, _.map(this.state.houses, (house) => {
       return DOM.li({ key: house.id },
         Link({ to: 'house', params: house }, house[HOUSE_NAME_KEY])
       );
     }));
-  },
-
-  _sortedHouses () {
-    return _(this.state.houses)
-      .values()
-      .sortBy('order')
-      .value();
   }
 });

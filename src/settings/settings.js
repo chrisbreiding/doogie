@@ -47,7 +47,7 @@ export default createClass({
   },
 
   _fields () {
-    const fields = this._sortedFields();
+    const fields = this.state.fields;
     if (!fields.length) return Loader({ el: 'li' });
 
     return _.map(fields, (field) => {
@@ -55,12 +55,5 @@ export default createClass({
         Link({ to: 'field', params: { id: field.id }}, field.label)
       );
     });
-  },
-
-  _sortedFields () {
-    return _(this.state.fields)
-      .values()
-      .sortBy('order')
-      .value();
   }
 });

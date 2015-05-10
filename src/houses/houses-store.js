@@ -4,7 +4,7 @@ import actions from './houses-actions';
 
 class HousesStore {
   constructor () {
-    this.houses = {};
+    this.clearData();
 
     this.bindListeners({
       addHouse: actions.ADD_HOUSE,
@@ -16,25 +16,40 @@ class HousesStore {
 
   addHouse (house) {
     house.order = this._newOrder();
-    this.houses[house.id] = house;
+    this._houses[house.id] = house;
+    this._updateHouses();
   }
 
   updateHouse (house) {
-    this.houses[house.id] = house;
+    this._houses[house.id] = house;
+    this._updateHouses();
   }
 
   removeHouse (house) {
-    delete this.houses[house.id];
+    delete this._houses[house.id];
+    this._updateHouses();
   }
 
   clearData () {
-    this.houses = {};
+    this._houses = {};
+    this.houses = [];
   }
 
   _newOrder (orders) {
-    var orders = _.map(this.houses, (house) => house.order || 0);
+    var orders = _.map(this._houses, (house) => house.order || 0);
     if (!orders.length) return 0;
     return Math.max.apply(Math, orders);
+  }
+
+  _updateHouses () {
+    this.houses = this._sortedHouses();
+  }
+
+  _sortedHouses () {
+    return _(this._houses)
+      .values()
+      .sortBy('order')
+      .value();
   }
 }
 
