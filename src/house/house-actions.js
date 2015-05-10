@@ -20,6 +20,10 @@ class HouseActions {
     });
   }
 
+  remove (id) {
+    housesRef.child(id).remove();
+  }
+
   listen (id) {
     housesRef.child(id).on('value', (childSnapshot) => {
       this.actions.didUpdate(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));

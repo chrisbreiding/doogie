@@ -72,7 +72,8 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
         DOM.h1()
       ),
-      DOM.form(null, [nameField].concat(this._fields()))
+      DOM.form(null, [nameField].concat(this._fields())),
+      DOM.button({ className: 'remove', onClick: this._remove }, 'Remove house')
     );
   },
 
@@ -96,5 +97,12 @@ export default createClass({
     houseActions.update(_.extend({}, this.state.house.house, {
       [key]: this.refs[key].getDOMNode().value
     }));
+  },
+
+  _remove () {
+    if (confirm('Remove this house?')) {
+      houseActions.remove(this.state.house.house.id);
+      this.context.router.transitionTo('menu');
+    }
   }
 });
