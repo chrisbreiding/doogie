@@ -8,9 +8,11 @@ import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
 import LoaderComponent from '../loader/loader';
+import TextareaComponent from '../lib/growing-textarea';
 
 const Link = createFactory(LinkComponent);
 const Loader = createFactory(LoaderComponent);
+const Textarea = createFactory(TextareaComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -81,7 +83,7 @@ export default createClass({
       const key = _.camelCase(field.label);
       return DOM.fieldset({ key: field.id },
         DOM.label(null, field.label),
-        DOM.textarea({
+        Textarea({
           ref: key,
           value: this.state.house.house[key] || field.defaultNotes || '',
           onChange: _.partial(this._onChange, key)

@@ -5,9 +5,11 @@ import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import FieldStore from './field-store';
 import actions from './field-actions';
 import LoaderComponent from '../loader/loader';
+import TextareaComponent from '../lib/growing-textarea';
 
 const Link = createFactory(LinkComponent);
 const Loader = createFactory(LoaderComponent);
+const Textarea = createFactory(TextareaComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -64,7 +66,7 @@ export default createClass({
       ),
       DOM.fieldset(null,
         DOM.label(null, 'Default notes'),
-        DOM.textarea({
+        Textarea({
           ref: 'defaultNotes',
           value: this.state.field.defaultNotes || '',
           onChange: _.partial(this._onChange, 'defaultNotes')
