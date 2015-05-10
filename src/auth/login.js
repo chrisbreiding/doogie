@@ -20,7 +20,7 @@ export default createClass({
     return DOM.form({ className: 'login', onSubmit: this._onSubmit },
       DOM.header(null, DOM.h1(null, 'Please Log In')),
       DOM.label(null, 'Email'),
-      DOM.input({ ref: 'email' }),
+      DOM.input({ ref: 'email', type: 'email' }),
       DOM.label(null, 'Password'),
       DOM.input({ ref: 'password', type: 'password' }),
       this.state.loginFailed ?
