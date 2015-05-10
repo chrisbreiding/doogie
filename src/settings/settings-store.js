@@ -4,7 +4,7 @@ import actions from './settings-actions';
 
 class SettingsStore {
   constructor () {
-    this.fields = [];
+    this.fields = {};
 
     this.bindListeners({
       addField: actions.ADD_FIELD,
@@ -15,21 +15,26 @@ class SettingsStore {
   }
 
   addField (field) {
-    this.fields.push(field);
+    field.order = this._newOrder();
+    this.fields[field.id] = field;
   }
 
   updateField (field) {
-    const index = _.findIndex(this.fields, { id: field.id });
-    this.fields[index] = field;
+    this.fields[field.id] = field;
   }
 
   removeField (field) {
-    const index = _.findIndex(this.fields, { id: field.id });
-    this.fields.splice(index, 1);
+    delete this.fields[field.id];
   }
 
   clearData () {
-    this.fields = [];
+    this.fields = {};
+  }
+
+  _newOrder (orders) {
+    var orders = _.map(this.fields, (field) => field.order || 0);
+    if (!orders.length) return 0;
+    return Math.max.apply(Math, orders);
   }
 }
 

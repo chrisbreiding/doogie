@@ -5,23 +5,23 @@ import firebaseRef from '../lib/firebase-ref';
 const fieldsRef = firebaseRef.child('settings/fields');
 
 class fieldActions {
-  update (field) {
-    fieldsRef.child(field.id).set(_.omit(field, 'id'));
-    this.actions.didUpdate(field);
-  }
-
-  didUpdate (field) {
-    this.dispatch(field);
-  }
-
   add (cb) {
     const newRef = fieldsRef.push({ label: '' }, () => {
       cb(newRef.key());
     });
   }
 
+  update (field) {
+    fieldsRef.child(field.id).set(_.omit(field, 'id'));
+    this.actions.didUpdate(field);
+  }
+
   remove (id) {
     fieldsRef.child(id).remove();
+  }
+
+  didUpdate (field) {
+    this.dispatch(field);
   }
 
   listen (id) {

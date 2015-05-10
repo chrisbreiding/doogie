@@ -1,5 +1,5 @@
 import { createFactory, createClass, DOM } from 'react';
-import { Link as LinkComponent, RouteHandler } from 'react-router';
+import { Link as LinkComponent, RouteHandler as RouteHandlerComponent } from 'react-router';
 import MenuGroupComponent from '../menu/menu-group';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from './settings-store';
@@ -9,6 +9,7 @@ import LoaderComponent from '../loader/loader';
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
 const Loader = createFactory(LoaderComponent);
+const RouteHandler = createFactory(RouteHandlerComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -41,19 +42,25 @@ export default createClass({
           )))
         )
       ),
-      createFactory(RouteHandler)()
+      RouteHandler()
     );
   },
 
   _fields () {
-    if (this.state.fields.length) {
-      return _.map(this.state.fields, (field) => {
-        return DOM.li({ key: field.id },
-          Link({ to: 'field', params: { id: field.id }}, field.label)
-        );
-      });
-    } else {
-      return Loader({ el: 'li' });
-    }
+    const fields = this._sortedFields();
+    if (!fields.length) return Loader({ el: 'li' });
+
+    return _.map(fields, (field) => {
+      return DOM.li({ key: field.id },
+        Link({ to: 'field', params: { id: field.id }}, field.label)
+      );
+    });
+  },
+
+  _sortedFields () {
+    return _(this.state.fields)
+      .values()
+      .sortBy('order')
+      .value();
   }
 });
