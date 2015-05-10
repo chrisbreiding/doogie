@@ -9,7 +9,9 @@
   "gh-pages-deploy": {
     "staticpath": "dist",
     "cname": "doogie.crbapps.com",
-    "prep": ["build-production"],
+    "prep": [
+      "build-production"
+    ],
     "noprompt": true
   },
   "devDependencies": {
@@ -25,6 +27,7 @@
   },
   "dependencies": {
     "alt": "^0.16.1",
+    "fastclick": "^1.0.6",
     "firebase": "^2.2.4",
     "lodash": "^3.8.0",
     "react": "^0.13.2",
