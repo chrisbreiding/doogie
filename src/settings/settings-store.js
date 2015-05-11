@@ -15,7 +15,9 @@ class SettingsStore {
   }
 
   addField (field) {
-    field.order = this._newOrder();
+    if (field.order == null) {
+      field.order = this._newOrder();
+    }
     this._fields[field.id] = field;
     this._updateFields();
   }
@@ -35,14 +37,14 @@ class SettingsStore {
     this.fields = [];
   }
 
-  _updateFields () {
-    this.fields = this._sortedFields();
-  }
-
   _newOrder (orders) {
     var orders = _.map(this._fields, (field) => field.order || 0);
     if (!orders.length) return 0;
     return Math.max.apply(Math, orders);
+  }
+
+  _updateFields () {
+    this.fields = this._sortedFields();
   }
 
   _sortedFields () {
