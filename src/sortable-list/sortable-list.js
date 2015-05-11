@@ -2,6 +2,12 @@ import _ from 'lodash';
 import dragula from 'dragula';
 import { createClass, DOM } from 'react';
 
+function idsAndIndex (els, el) {
+  const ids = _.pluck(els, 'dataset.id');
+  const index = _.findIndex(ids, _.partial(_.isEqual, el.dataset.id));
+  return { ids, index };
+}
+
 export default createClass({
 
   componentDidMount () {
@@ -18,14 +24,13 @@ export default createClass({
     let originalIndex;
     this.drake = dragula([this.getDOMNode()])
       .on('drag', (el, container) => {
-        originalIndex = _.findIndex(container.children, el);
+        originalIndex = idsAndIndex(container.children, el).index;
       })
       .on('drop', (el, container) => {
-        const ids = _.map(container.children, (el) => el.dataset.id);
-        const newIndex = _.findIndex(container.children, el);
+        const { ids, index } = idsAndIndex(container.children, el);
         if (originalIndex === container.children.length - 1) {
           container.appendChild(el);
-        } else if (newIndex < originalIndex) {
+        } else if (index < originalIndex) {
           container.insertBefore(el, container.children[originalIndex + 1]);
         } else {
           container.insertBefore(el, container.children[originalIndex]);
