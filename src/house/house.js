@@ -87,7 +87,7 @@ export default createClass({
     if (!this.state.settings.fields.length) return Loader({ key: '__loading' });
 
     return _.map(this.state.settings.fields, (field) => {
-      const key = _.camelCase(field.label);
+      const key = _.camelCase(field.id);
       return DOM.fieldset({ key: field.id },
         DOM.label(null, field.label),
         Textarea({
