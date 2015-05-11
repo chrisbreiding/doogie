@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
 import firebaseRef from '../lib/firebase-ref';
+import { HOUSE_NAME_KEY } from '../lib/constants';
 
 const housesRef = firebaseRef.child('houses');
 
 class HouseActions {
   add (cb) {
-    const newRef = housesRef.push({ name: '' }, () => {
+    const newRef = housesRef.push({ [HOUSE_NAME_KEY]: '' }, () => {
       cb(newRef.key());
     });
   }
