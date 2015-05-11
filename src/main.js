@@ -1,12 +1,12 @@
 require('./main.styl');
 
-import attachFastClick from 'fastclick';
+import fastClick from 'fastclick';
 import { render, createFactory } from 'react';
 import { run } from 'react-router';
 import RSVP from 'rsvp';
 import routes from './routes';
 
-attachFastClick(document.body);
+fastClick.attach(document.body);
 
 RSVP.on('error', (e) => {
   console.error('Error caught by RSVP:');
