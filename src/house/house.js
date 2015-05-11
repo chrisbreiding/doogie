@@ -75,7 +75,10 @@ export default createClass({
       DOM.form(null,
         [nameField]
           .concat(this._fields())
-          .concat(DOM.button({ className: 'remove', onClick: this._remove }, 'Remove house'))
+          .concat(DOM.button({
+            key: '__remove',
+            className: 'remove',
+            onClick: this._remove }, 'Remove house'))
       )
     );
   },
