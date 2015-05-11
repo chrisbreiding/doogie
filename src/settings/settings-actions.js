@@ -17,6 +17,12 @@ class SettingsActions {
     this.dispatch(field);
   }
 
+  updateSorting (ids) {
+    _.each(ids, (id, index) => {
+      fieldsRef.child(`${id}/order`).set(index);
+    });
+  }
+
   listen () {
     fieldsRef.on('child_added', (childSnapshot) => {
       this.actions.addField(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));

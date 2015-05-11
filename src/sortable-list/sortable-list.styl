@@ -1,3 +1,22 @@
+.sortable-item {
+  background: light-color;
+  color: action-color;
+  display: flex;
+
+  i {
+    @extends .center-contents;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    width: 2.8em;
+  }
+
+  a {
+    flex-grow: 1;
+  }
+}
+
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;

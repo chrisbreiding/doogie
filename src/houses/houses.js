@@ -32,7 +32,7 @@ export default createClass({
     };
 
     return MenuGroup(menuGroupProps, _.map(this.state.houses, (house) => {
-      return DOM.li({ key: house.id, className: 'list-house', 'data-id': house.id },
+      return DOM.li({ key: house.id, className: 'sortable-item', 'data-id': house.id },
         DOM.i({ className: 'fa fa-bars' }),
         Link({ to: 'house', params: house }, house[HOUSE_NAME_KEY])
       );

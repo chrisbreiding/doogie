@@ -3,7 +3,7 @@ import { Link as LinkComponent, RouteHandler as RouteHandlerComponent } from 're
 import MenuGroupComponent from '../menu/menu-group';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from './settings-store';
-import { listen, stopListening } from './settings-actions';
+import actions from './settings-actions';
 import LoaderComponent from '../loader/loader';
 
 const Link = createFactory(LinkComponent);
@@ -19,14 +19,19 @@ export default createClass({
   },
 
   componentDidMount () {
-    listen();
+    actions.listen();
   },
 
   componentWillUnmount () {
-    stopListening();
+    actions.stopListening();
   },
 
   render () {
+    const fieldsGroupProps = {
+      sortable: true,
+      onSortingUpdate: actions.updateSorting.bind(actions)
+    };
+
     return DOM.div(null,
       DOM.div({ className: 'settings full-screen' },
         DOM.header(null,
@@ -35,7 +40,7 @@ export default createClass({
         ),
         DOM.main(null,
           DOM.label(null, 'Fields'),
-          DOM.ul({ className: 'menu' }, MenuGroup(null, this._fields())),
+          DOM.ul({ className: 'menu' }, MenuGroup(fieldsGroupProps, this._fields())),
           MenuGroup(null, DOM.li(null, Link({ to: 'new-field' },
             DOM.i({ className: 'fa fa-plus' }),
             ' Add field'
@@ -51,7 +56,8 @@ export default createClass({
     if (!fields.length) return Loader({ el: 'li' });
 
     return _.map(fields, (field) => {
-      return DOM.li({ key: field.id },
+      return DOM.li({ key: field.id, className: 'sortable-item', 'data-id': field.id },
+        DOM.i({ className: 'fa fa-bars' }),
         Link({ to: 'field', params: { id: field.id }}, field.label)
       );
     });
