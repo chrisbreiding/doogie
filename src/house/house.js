@@ -72,8 +72,11 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
-      DOM.form(null, [nameField].concat(this._fields())),
-      DOM.button({ className: 'remove', onClick: this._remove }, 'Remove house')
+      DOM.form(null,
+        [nameField]
+          .concat(this._fields())
+          .concat(DOM.button({ className: 'remove', onClick: this._remove }, 'Remove house'))
+      )
     );
   },
 
