@@ -72,7 +72,7 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
-      DOM.form(null,
+      DOM.form({ onSubmit: this._onSubmit },
         [nameField]
           .concat(this._fields())
           .concat(DOM.button({
@@ -110,5 +110,9 @@ export default createClass({
       houseActions.remove(this.state.house.house.id);
       this.context.router.transitionTo('menu');
     }
+  },
+
+  _onSubmit (e) {
+    e.preventDefault();
   }
 });

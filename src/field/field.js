@@ -51,7 +51,7 @@ export default createClass({
   render () {
     if (!this.state.field) return Loader();
 
-    return DOM.form({ className: 'fields full-screen' },
+    return DOM.form({ className: 'fields full-screen', onSubmit: this._onSubmit },
       DOM.header(null,
         Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
@@ -88,5 +88,9 @@ export default createClass({
       actions.remove(this.state.field.id);
       this.context.router.transitionTo('settings');
     }
+  },
+
+  _onSubmit (e) {
+    e.preventDefault();
   }
 });
