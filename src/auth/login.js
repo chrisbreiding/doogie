@@ -28,7 +28,7 @@ export default createClass({
         null,
       this.state.attemptingLogin ?
         Loader({ size: 'regular' }) :
-        DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), ' Log In')
+        DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), 'Log In')
     );
   },
 

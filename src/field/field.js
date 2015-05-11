@@ -53,7 +53,7 @@ export default createClass({
 
     return DOM.form({ className: 'fields full-screen' },
       DOM.header(null,
-        Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), ' Back'),
+        Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
       DOM.fieldset(null,

@@ -14,17 +14,17 @@ export default createClass({
       Houses(),
       MenuGroup(null, DOM.li(null,
         Link({ to: 'house', params: { id: 'new' }},
-          DOM.i({ className: 'fa fa-plus' }), ' Add house'
+          DOM.i({ className: 'fa fa-plus' }), 'Add house'
         )
       )),
       MenuGroup(null, DOM.li(null,
         Link({ to: 'settings' },
-          DOM.i({ className: 'fa fa-cog' }), ' Settings'
+          DOM.i({ className: 'fa fa-cog' }), 'Settings'
         )
       )),
       MenuGroup(null, DOM.li(null,
         Link({ to: 'logout' },
-          DOM.i({ className: 'fa fa-sign-out' }), ' Logout'
+          DOM.i({ className: 'fa fa-sign-out' }), 'Logout'
         )
       ))
     );
