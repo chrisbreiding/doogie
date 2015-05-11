@@ -3,7 +3,7 @@ import { createClass, createFactory, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HousesStore from './houses-store';
-import { listen, stopListening } from './houses-actions';
+import actions from './houses-actions';
 import MenuGroupComponent from '../menu/menu-group';
 import { HOUSE_NAME_KEY } from '../lib/constants';
 
@@ -18,16 +18,22 @@ export default createClass({
   },
 
   componentDidMount () {
-    listen();
+    actions.listen();
   },
 
   componentWillUnmount () {
-    stopListening();
+    actions.stopListening();
   },
 
   render () {
-    return MenuGroup(null, _.map(this.state.houses, (house) => {
-      return DOM.li({ key: house.id },
+    const menuGroupProps = {
+      sortable: true,
+      onSortingUpdate: actions.updateSorting.bind(actions)
+    };
+
+    return MenuGroup(menuGroupProps, _.map(this.state.houses, (house) => {
+      return DOM.li({ key: house.id, className: 'list-house', 'data-id': house.id },
+        DOM.i({ className: 'fa fa-bars' }),
         Link({ to: 'house', params: house }, house[HOUSE_NAME_KEY])
       );
     }));

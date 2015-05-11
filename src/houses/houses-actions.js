@@ -17,6 +17,12 @@ class HousesActions {
     this.dispatch(house);
   }
 
+  updateSorting (ids) {
+    _.each(ids, (id, index) => {
+      housesRef.child(`${id}/order`).set(index);
+    });
+  }
+
   listen () {
     housesRef.on('child_added', (childSnapshot) => {
       this.actions.addHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));

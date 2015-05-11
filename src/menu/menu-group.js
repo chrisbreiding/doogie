@@ -1,13 +1,32 @@
 import { createFactory, createClass, DOM } from 'react';
 import { isArray } from 'lodash';
 import LoaderComponent from '../loader/loader';
+import SortableListComponent from '../sortable-list/sortable-list';
 
 const Loader = createFactory(LoaderComponent);
+const SortableList = createFactory(SortableListComponent);
 
 export default createClass({
+  getDefaultProps () {
+    return {
+      sortable: false,
+      onSortingUpdate: () => {}
+    };
+  },
+
   render () {
-    const contents = this._showLoading() ? Loader({ el: 'li' }) : this.props.children;
-    return DOM.li(null, DOM.ul(null, contents));
+    if (this._showLoading()) return Loader();
+
+    const list = this.props.sortable ?
+
+      SortableList({
+        el: 'ul',
+        onSortingUpdate: this.props.onSortingUpdate
+      }, this.props.children) :
+
+      DOM.ul(null, this.props.children);
+
+    return DOM.li(null, list);
   },
 
   _showLoading () {
