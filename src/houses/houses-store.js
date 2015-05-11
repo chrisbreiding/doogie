@@ -13,9 +13,10 @@ class HousesStore {
       clearData: actions.STOP_LISTENING
     });
   }
-
   addHouse (house) {
-    house.order = this._newOrder();
+    if (house.order == null) {
+      house.order = this._newOrder();
+    }
     this._houses[house.id] = house;
     this._updateHouses();
   }
