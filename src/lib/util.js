@@ -1,9 +1,9 @@
 export default {
-  numberFromString (numString) {
+  numberFromString (numString = '0') {
     return Number(numString.replace(/[^0-9\.]/g, ''));
   },
 
-  currencyFromNumber (num) {
+  currencyFromNumber (num = 0) {
     var centDigits = 2,
         sign = num < 0 ? '-' : '',
         numString = parseInt(num = Math.abs(+num || 0).toFixed(centDigits)) + '',
