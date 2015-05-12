@@ -4,8 +4,8 @@ import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HouseStore from './house-store';
 import houseActions from './house-actions';
-import SettingsStore from '../settings/settings-store';
-import settingsActions from '../settings/settings-actions';
+import FieldsStore from '../fields/fields-store';
+import fieldsActions from '../fields/fields-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
 import LoaderComponent from '../loader/loader';
 import TextareaComponent from '../lib/growing-textarea';
@@ -24,13 +24,13 @@ export default createClass({
   statics: {
     registerStores: {
       house: HouseStore,
-      settings: SettingsStore
+      fields: FieldsStore
     }
   },
 
   componentDidMount () {
     houseActions.listen(this._getId());
-    settingsActions.listen();
+    fieldsActions.listen();
     this._focusName();
   },
 
@@ -53,7 +53,7 @@ export default createClass({
 
   componentWillUnmount () {
     houseActions.stopListening(this.state.house.house.id);
-    settingsActions.stopListening();
+    fieldsActions.stopListening();
   },
 
   render () {
@@ -84,9 +84,9 @@ export default createClass({
   },
 
   _fields () {
-    if (!this.state.settings.fields.length) return Loader({ key: '__loading' });
+    if (!this.state.fields.fields.length) return Loader({ key: '__loading' });
 
-    return _.map(this.state.settings.fields, (field) => {
+    return _.map(this.state.fields.fields, (field) => {
       const key = _.camelCase(field.id);
       return DOM.fieldset({ key: field.id },
         DOM.label(null, field.label),
