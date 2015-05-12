@@ -1,8 +1,11 @@
+import _ from 'lodash';
 import { createFactory, createClass, DOM } from 'react';
 import { Link as LinkComponent, RouteHandler as RouteHandlerComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
+import FieldsStore from '../fields/fields-store';
+import fieldsActions from '../fields/fields-actions';
 import SettingsStore from './settings-store';
-import actions from './settings-actions';
+import settingsActions from './settings-actions';
 import MenuGroupComponent from '../menu/menu-group';
 import FieldsComponent from '../fields/fields';
 
@@ -15,15 +18,20 @@ export default createClass({
   mixins: [ReactStateMagicMixin],
 
   statics: {
-    registerStore: SettingsStore
+    registerStores: {
+      fields: FieldsStore,
+      settings: SettingsStore
+    }
   },
 
   componentDidMount () {
-    actions.listen();
+    fieldsActions.listen();
+    settingsActions.listen();
   },
 
   componentWillUnmount () {
-    actions.stopListening();
+    fieldsActions.stopListening();
+    settingsActions.stopListening();
   },
 
   render () {
@@ -50,25 +58,41 @@ export default createClass({
   },
 
   _settings () {
-    const settings = [
-      { label: 'Down Payment',   key: 'downPayment' },
-      { label: 'Interest Rate',  key: 'interestRate' },
-      { label: 'Insurance Rate', key: 'insuranceRate' }
-    ];
+    const textSettings = _.map(['Down Payment', 'Interest Rate', 'Insurance Rate'],
+                               this._textSetting);
+    const dropdownSettings = _.map(['Cost Field', 'Taxes Field'],
+                                   this._dropdownSetting);
 
-    return _.map(settings, (setting) => {
-      return DOM.fieldset({ key: setting.key },
-        DOM.label(null, setting.label),
-        DOM.input({
-          ref: setting.key,
-          value: this.state[setting.key],
-          onChange: _.partial(this._onSettingChange, setting.key)
-        })
-      )
-    });
+    return textSettings.concat(dropdownSettings);
+  },
+
+  _textSetting (setting) {
+    const key = _.camelCase(setting);
+    return DOM.fieldset({ key: key },
+      DOM.label(null, setting),
+      DOM.input({
+        ref: key,
+        value: this.state.settings[key],
+        onChange: _.partial(this._onSettingChange, key)
+      })
+    );
+  },
+
+  _dropdownSetting (setting) {
+    const key = _.camelCase(setting);
+    return DOM.fieldset({ key: key },
+      DOM.label(null, setting),
+      DOM.select({
+        ref: key,
+        value: this.state.settings[key],
+        onChange: _.partial(this._onSettingChange, key)
+      }, _.map(this.state.fields.fields, (field) => {
+        return DOM.option({ key: field.id, value: field.id }, field.label);
+      }))
+    );
   },
 
   _onSettingChange (key) {
-    actions.updateSetting(key, this.refs[key].getDOMNode().value);
+    settingsActions.updateSetting(key, this.refs[key].getDOMNode().value);
   }
 });
