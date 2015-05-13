@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
-import firebaseRef from '../lib/firebase-ref';
-
-const fieldsRef = firebaseRef.child('fields');
+import { fieldsRef } from '../lib/firebase-ref';
 
 class FieldsActions {
   addField (field) {

@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
-import firebaseRef from '../lib/firebase-ref';
-
-const housesRef = firebaseRef.child('houses');
+import { housesRef } from '../lib/firebase-ref';
 
 class HousesActions {
   addHouse (house) {

@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
-import firebaseRef from '../lib/firebase-ref';
-
-const settingsRef = firebaseRef.child('settings');
+import { settingsRef } from '../lib/firebase-ref';
 
 class SettingsActions {
   updateSetting (key, value) {
