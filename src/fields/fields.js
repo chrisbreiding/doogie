@@ -1,5 +1,5 @@
 import { createFactory, createClass, DOM } from 'react';
-import { Link as LinkComponent } from 'react-router';
+import { Link as LinkComponent, RouteHandler as RouteHandlerComponent } from 'react-router';
 import MenuGroupComponent from '../menu/menu-group';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import FieldsStore from './fields-store';
@@ -9,6 +9,7 @@ import FieldsComponent from '../fields/fields';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
+const RouteHandler = createFactory(RouteHandlerComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -33,12 +34,28 @@ export default createClass({
 
     const fields = this.state.fields;
 
-    return MenuGroup(menuProps, _.map(fields, (field) => {
-      return DOM.li({ key: field.id, className: 'sortable-item', 'data-id': field.id },
-        DOM.i({ className: 'fa fa-bars' }),
-        Link({ to: 'field', params: { id: field.id }}, field.label)
-      );
-    }));
+    return DOM.div(null,
+      DOM.div({ className: 'fields full-screen' },
+        DOM.header(null,
+          Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+          DOM.h1(null, 'Fields')
+        ),
+        DOM.main(null,
+          DOM.ul({ className: 'menu' },
+            MenuGroup(menuProps, _.map(fields, (field) => {
+              return DOM.li({ key: field.id, className: 'sortable-item', 'data-id': field.id },
+                DOM.i({ className: 'fa fa-bars' }),
+                Link({ to: 'field', params: { id: field.id }}, field.label)
+              );
+            })),
+            MenuGroup(null, DOM.li(null, Link({ to: 'new-field' },
+              DOM.i({ className: 'fa fa-plus' }), 'Add field'
+            )))
+          )
+        )
+      ),
+      RouteHandler()
+    );
   }
 
 });

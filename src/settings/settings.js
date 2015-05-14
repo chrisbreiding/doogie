@@ -7,12 +7,10 @@ import fieldsActions from '../fields/fields-actions';
 import SettingsStore from './settings-store';
 import settingsActions from './settings-actions';
 import MenuGroupComponent from '../menu/menu-group';
-import FieldsComponent from '../fields/fields';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
 const RouteHandler = createFactory(RouteHandlerComponent);
-const Fields = createFactory(FieldsComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -44,12 +42,7 @@ export default createClass({
         DOM.main(null,
           DOM.ul({ className: 'menu' },
             DOM.li(null, this._settings()),
-            DOM.li({ className: 'label' }, DOM.label(null, 'Fields')),
-            Fields(),
-            MenuGroup(null, DOM.li(null, Link({ to: 'new-field' },
-              DOM.i({ className: 'fa fa-plus' }),
-              ' Add field'
-            )))
+            MenuGroup(null, DOM.li(null, Link({ to: 'fields' }, 'Fields')))
           )
         )
       ),

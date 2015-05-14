@@ -8,6 +8,7 @@ import NewHouseComponent from './house/new-house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
 import SettingsComponent from './settings/settings';
+import FieldsComponent from './fields/fields';
 import FieldComponent from './field/field';
 import NewFieldComponent from './field/new-field';
 
@@ -18,9 +19,11 @@ const RootComponent = createClass({ render () { return RouteHandler(); } });
 
 export default Route({ handler: RootComponent, path: '/' },
   Route({ name: 'menu', handler: AppComponent, path: '/' },
-    Route({ name: 'settings', handler: SettingsComponent, path: 'settings' },
-      Route({ name: 'new-field', handler: NewFieldComponent, path: 'fields/new' }),
-      Route({ name: 'field', handler: FieldComponent, path: 'fields/:id' })
+    Route({ name: 'settings', handler: SettingsComponent },
+      Route({ name: 'fields', handler: FieldsComponent },
+        Route({ name: 'new-field', handler: NewFieldComponent, path: 'new' }),
+        Route({ name: 'field', handler: FieldComponent, path: ':id' })
+      )
     ),
     Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
     Route({ name: 'house', handler: HouseComponent, path: 'houses/:id' })

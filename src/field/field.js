@@ -53,7 +53,7 @@ export default createClass({
 
     return DOM.form({ className: 'fields full-screen', onSubmit: this._onSubmit },
       DOM.header(null,
-        Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+        Link({ to: 'fields' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
       DOM.fieldset(null,
@@ -86,7 +86,7 @@ export default createClass({
   _remove () {
     if (confirm('Remove this field?')) {
       actions.remove(this.state.field.id);
-      this.context.router.transitionTo('settings');
+      this.context.router.transitionTo('fields');
     }
   },
 
