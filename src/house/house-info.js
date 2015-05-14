@@ -2,7 +2,7 @@ import { createClass, PropTypes, DOM } from 'react';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import SettingsStore from '../settings/settings-store';
 import { listen, stopListening } from '../settings/settings-actions';
-import { numberFromString, currencyFromNumber } from '../lib/util';
+import { numberFromString, currencyFromNumber, decimalFromPercent } from '../lib/util';
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
@@ -50,8 +50,8 @@ export default createClass({
     const houseCost = this._houseField('cost');
     const downPayment = this._downPayment();
     const loanCost = houseCost - downPayment;
-    const interestRate = numberFromString(this.state.interestRate);
-    const insuranceRate = numberFromString(this.state.insuranceRate);
+    const interestRate = decimalFromPercent(numberFromString(this.state.interestRate));
+    const insuranceRate = decimalFromPercent(numberFromString(this.state.insuranceRate));
 
     const mortgage = this._mortgage(loanCost, interestRate, years);
     const monthlyTaxes = this._houseField('taxes') / 12;
@@ -68,7 +68,7 @@ export default createClass({
   },
 
   _pmi (loanCost) {
-    return loanCost * numberFromString(this.state.pmiRate) / 12;
+    return loanCost * decimalFromPercent(numberFromString(this.state.pmiRate)) / 12;
   },
 
   _downPayment () {

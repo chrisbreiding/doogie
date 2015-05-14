@@ -14,5 +14,9 @@ export default {
           (firstDigits ? numString.substr(0, firstDigits) + ',' : '') +
           numString.substr(firstDigits).replace(/(\d{3})(?=\d)/g, '$1,') +
           (cents !== '00' ? '.' + cents : '');
+  },
+
+  decimalFromPercent (percent) {
+    return percent / 100;
   }
 };
