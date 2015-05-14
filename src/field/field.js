@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { DEFAULT_FIELD_TYPE } from '../lib/constants';
 import { createFactory, createClass, PropTypes, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
@@ -51,10 +52,22 @@ export default createClass({
   render () {
     if (!this.state.field) return Loader();
 
+    const notesField = this.state.field.type === 'textarea' ? Textarea : DOM[DEFAULT_FIELD_TYPE];
+
     return DOM.form({ className: 'fields full-screen', onSubmit: this._onSubmit },
       DOM.header(null,
         Link({ to: 'fields' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
+      ),
+      DOM.fieldset(null,
+        DOM.label(null, 'Type'),
+        DOM.select({
+          ref: 'type',
+          value: this.state.field.type || DEFAULT_FIELD_TYPE,
+          onChange: _.partial(this._onChange, 'type')
+        }, _.map(this._types(), ({ label, value }) => {
+          return DOM.option({ key: value, value: value }, label);
+        }))
       ),
       DOM.fieldset(null,
         DOM.label(null, 'Label'),
@@ -66,7 +79,7 @@ export default createClass({
       ),
       DOM.fieldset(null,
         DOM.label(null, 'Default notes'),
-        Textarea({
+         notesField({
           ref: 'defaultNotes',
           key: this.state.field.id,
           value: this.state.field.defaultNotes || '',
@@ -75,6 +88,13 @@ export default createClass({
       ),
       DOM.button({ className: 'remove', onClick: this._remove }, 'Remove field')
     );
+  },
+
+  _types () {
+    return [
+      { label: 'Single', value: 'input' },
+      { label: 'Multi-line', value: 'textarea' }
+    ];
   },
 
   _onChange (key) {

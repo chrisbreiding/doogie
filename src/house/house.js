@@ -8,7 +8,7 @@ import FieldsStore from '../fields/fields-store';
 import fieldsActions from '../fields/fields-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
-import { HOUSE_NAME_KEY } from '../lib/constants';
+import { HOUSE_NAME_KEY, DEFAULT_FIELD_TYPE } from '../lib/constants';
 import HouseInfoComponent from './house-info';
 import LoaderComponent from '../loader/loader';
 import TextareaComponent from '../lib/growing-textarea';
@@ -107,9 +107,11 @@ export default createClass({
     if (!this.state.fields.fields.length) return Loader({ key: '__loading' });
 
     return _.map(this.state.fields.fields, (field) => {
+      const textField = field.type === 'textarea' ? Textarea : DOM[DEFAULT_FIELD_TYPE];
+
       return DOM.fieldset({ key: field.id },
         DOM.label(null, field.label),
-        Textarea({
+        textField({
           ref: field.id,
           value: this.state.house.house[field.id] || field.defaultNotes || '',
           onChange: _.partial(this._onChange, field.id)
