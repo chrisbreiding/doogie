@@ -63,6 +63,7 @@ export default createClass({
     const dropdownFields = [
       'Cost Field',
       'Taxes Field',
+      'HOA Field',
       'Visit Field',
       'Zillow Link Field'
     ]

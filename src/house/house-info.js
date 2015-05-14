@@ -57,7 +57,8 @@ export default createClass({
     const monthlyTaxes = this._houseField('taxes') / 12;
     const monthlyInsurance = houseCost * insuranceRate / 12;
     const pmi = this._requiresPMI() ? this._pmi(loanCost) : 0;
-    return currencyFromNumber(mortgage + monthlyTaxes + monthlyInsurance + pmi);
+    const hoaFee = this._houseField('hoa');
+    return currencyFromNumber(mortgage + monthlyTaxes + monthlyInsurance + pmi + hoaFee);
   },
 
   _mortgage (initialCost, interestRate, years) {
