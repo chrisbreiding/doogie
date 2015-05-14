@@ -3,7 +3,9 @@ import { createClass, createFactory, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HousesStore from './houses-store';
-import actions from './houses-actions';
+import houseActions from './houses-actions';
+import SettingsStore from '../settings/settings-store';
+import settingsActions from '../settings/settings-actions';
 import MenuGroupComponent from '../menu/menu-group';
 import { HOUSE_NAME_KEY } from '../lib/constants';
 
@@ -14,28 +16,42 @@ export default createClass({
   mixins: [ReactStateMagicMixin],
 
   statics: {
-    registerStore: HousesStore
+    registerStores: {
+      houses: HousesStore,
+      settings: SettingsStore
+    }
   },
 
   componentDidMount () {
-    actions.listen();
+    houseActions.listen();
+    settingsActions.listen();
   },
 
   componentWillUnmount () {
-    actions.stopListening();
+    houseActions.stopListening();
+    settingsActions.stopListening();
   },
 
   render () {
     const menuGroupProps = {
       sortable: true,
-      onSortingUpdate: actions.updateSorting.bind(actions)
+      onSortingUpdate: houseActions.updateSorting.bind(houseActions)
     };
 
-    return MenuGroup(menuGroupProps, _.map(this.state.houses, (house) => {
-      return DOM.li({ key: house.id, className: 'sortable-item', 'data-id': house.id },
-        DOM.i({ className: 'fa fa-bars' }),
-        Link({ to: 'house', params: house }, house[HOUSE_NAME_KEY])
-      );
-    }));
+    return MenuGroup(menuGroupProps, _.map(this.state.houses.houses, this._house));
+  },
+
+  _house (house) {
+    let description = '$' + house[this.state.settings.costField];
+    const visit = house[this.state.settings.visitField];
+    if (visit) description += ', ' + visit;
+
+    return DOM.li({ key: house.id, className: 'sortable-item list-house', 'data-id': house.id },
+      DOM.i({ className: 'fa fa-bars' }),
+      Link({ to: 'house', params: house },
+        DOM.h3(null, house[HOUSE_NAME_KEY]),
+        DOM.p(null, description)
+      )
+    );
   }
 });

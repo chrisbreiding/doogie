@@ -67,7 +67,12 @@ export default createClass({
       'PMI Rate'
     ];
     const textSettings = _.map(textFields, this._textSetting);
-    const dropdownSettings = _.map(['Cost Field', 'Taxes Field'], this._dropdownSetting);
+    const dropdownFields = [
+      'Cost Field',
+      'Taxes Field',
+      'Visit Field'
+    ]
+    const dropdownSettings = _.map(dropdownFields, this._dropdownSetting);
 
     return textSettings.concat(dropdownSettings);
   },
