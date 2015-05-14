@@ -29,13 +29,14 @@ export default createClass({
         'Closing cost: ',
         DOM.span({ className: 'value' }, this._closingCost())
       ),
-      DOM.p(null,
-        'Monthly cost (15 yr): ',
-        DOM.span({ className: 'value' }, this._monthlyCost(15))
-      ),
-      DOM.p(null,
-        'Monthly cost (30 yr): ',
-        DOM.span({ className: 'value' }, this._monthlyCost(30))
+      DOM.p(null, 'Monthly cost', this._requiresPMI() ? ' (includes PMI)' : null),
+      DOM.div(null,
+        DOM.p(null,
+          '15 yr: ', DOM.span({ className: 'value' }, this._monthlyCost(15))
+        ),
+        DOM.p(null,
+          '30 yr: ', DOM.span({ className: 'value' }, this._monthlyCost(30))
+        )
       )
     );
   },
@@ -48,13 +49,15 @@ export default createClass({
   _monthlyCost (years) {
     const houseCost = this._houseField('cost');
     const downPayment = this._downPayment();
+    const loanCost = houseCost - downPayment;
     const interestRate = numberFromString(this.state.interestRate);
     const insuranceRate = numberFromString(this.state.insuranceRate);
 
-    const mortgage = this._mortgage(houseCost - downPayment, interestRate, years);
+    const mortgage = this._mortgage(loanCost, interestRate, years);
     const monthlyTaxes = this._houseField('taxes') / 12;
     const monthlyInsurance = houseCost * insuranceRate / 12;
-    return currencyFromNumber(mortgage + monthlyTaxes + monthlyInsurance);
+    const pmi = this._requiresPMI() ? this._pmi(loanCost) : 0;
+    return currencyFromNumber(mortgage + monthlyTaxes + monthlyInsurance + pmi);
   },
 
   _mortgage (initialCost, interestRate, years) {
@@ -62,6 +65,10 @@ export default createClass({
     const monthlyRate = interestRate / 12;
     return (monthlyRate * initialCost * Math.pow(1 + monthlyRate, numPayments)) /
            (Math.pow(1 + monthlyRate, numPayments) - 1);
+  },
+
+  _pmi (loanCost) {
+    return loanCost * numberFromString(this.state.pmiRate) / 12;
   },
 
   _downPayment () {
@@ -73,5 +80,9 @@ export default createClass({
     if (!key) return 0;
 
     return numberFromString(this.props.house[key]);
+  },
+
+  _requiresPMI () {
+    return (this._downPayment() / this._houseField('cost')) < 0.2;
   }
 });
