@@ -58,10 +58,16 @@ export default createClass({
   },
 
   _settings () {
-    const textSettings = _.map(['Down Payment', 'Interest Rate', 'Insurance Rate', 'PMI Rate'],
-                               this._textSetting);
-    const dropdownSettings = _.map(['Cost Field', 'Taxes Field'],
-                                   this._dropdownSetting);
+    const textFields = [
+      'Max Upfront Cost',
+      'Down Payment',
+      'Closing Rate',
+      'Interest Rate',
+      'Insurance Rate',
+      'PMI Rate'
+    ];
+    const textSettings = _.map(textFields, this._textSetting);
+    const dropdownSettings = _.map(['Cost Field', 'Taxes Field'], this._dropdownSetting);
 
     return textSettings.concat(dropdownSettings);
   },

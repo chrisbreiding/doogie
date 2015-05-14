@@ -23,11 +23,12 @@ export default createClass({
     return DOM.div({ className: 'info' },
       DOM.p(null,
         'Down payment: ',
-        DOM.span({ className: 'value' }, currencyFromNumber(this._downPayment()))
+        DOM.span({ className: 'value' }, currencyFromNumber(this._downPayment())),
+        ` (${this._downPaymentPercent()}%)`
       ),
       DOM.p(null,
         'Closing cost: ',
-        DOM.span({ className: 'value' }, this._closingCost())
+        DOM.span({ className: 'value' }, currencyFromNumber(this._closingCost()))
       ),
       DOM.p(null, 'Monthly cost', this._requiresPMI() ? ' (includes PMI)' : null),
       DOM.div(null,
@@ -42,16 +43,15 @@ export default createClass({
   },
 
   _closingCost () {
-    const houseCost = this._houseField('cost');
-    return `${currencyFromNumber(houseCost * 0.02)} - ${currencyFromNumber(houseCost * 0.05)}`;
+    return this._houseField('cost') * this._decimalFor('closingRate');
   },
 
   _monthlyCost (years) {
     const houseCost = this._houseField('cost');
     const downPayment = this._downPayment();
     const loanCost = houseCost - downPayment;
-    const interestRate = decimalFromPercent(numberFromString(this.state.interestRate));
-    const insuranceRate = decimalFromPercent(numberFromString(this.state.insuranceRate));
+    const interestRate = this._decimalFor('interestRate');
+    const insuranceRate = this._decimalFor('insuranceRate');
 
     const mortgage = this._mortgage(loanCost, interestRate, years);
     const monthlyTaxes = this._houseField('taxes') / 12;
@@ -68,11 +68,26 @@ export default createClass({
   },
 
   _pmi (loanCost) {
-    return loanCost * decimalFromPercent(numberFromString(this.state.pmiRate)) / 12;
+    return loanCost * this._decimalFor('pmiRate') / 12;
   },
 
   _downPayment () {
-    return numberFromString(this.state.downPayment);
+    const houseCost = this._houseField('cost');
+    let downPayment = numberFromString(this.state.downPayment);
+    const maxUpfrontCost = numberFromString(this.state.maxUpfrontCost);
+    if (downPayment <= 100) {
+      downPayment = decimalFromPercent(downPayment) * houseCost;
+    }
+    const totalUpfrontCost = downPayment + this._closingCost();
+    if (totalUpfrontCost > maxUpfrontCost) {
+      downPayment = downPayment - (totalUpfrontCost - maxUpfrontCost);
+    }
+
+    return downPayment;
+  },
+
+  _downPaymentPercent () {
+    return ((this._downPayment() / this._houseField('cost')) * 100).toFixed(2);
   },
 
   _houseField (field) {
@@ -82,7 +97,11 @@ export default createClass({
     return numberFromString(this.props.house[key]);
   },
 
+  _decimalFor (field) {
+    return decimalFromPercent(numberFromString(this.state[field]));
+  },
+
   _requiresPMI () {
-    return (this._downPayment() / this._houseField('cost')) < 0.2;
+    return this._downPaymentPercent() < 20;
   }
 });
