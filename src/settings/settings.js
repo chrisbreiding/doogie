@@ -63,7 +63,8 @@ export default createClass({
     const dropdownFields = [
       'Cost Field',
       'Taxes Field',
-      'Visit Field'
+      'Visit Field',
+      'Zillow Link Field'
     ]
     const dropdownSettings = _.map(dropdownFields, this._dropdownSetting);
 

@@ -10,7 +10,6 @@
 
   .info {
     background: darken(light-color, 20%);
-    margin-bottom: 1em;
     padding: 0.4em 0.8em;
 
     p {
@@ -24,6 +23,18 @@
 
     .value {
       color: action-color;
+    }
+  }
+
+  .zillow-link {
+    background: action-color;
+    color: light-color;
+    margin-bottom: 1em;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: darken(action-color, 20%);
     }
   }
 }

@@ -6,6 +6,8 @@ import HouseStore from './house-store';
 import houseActions from './house-actions';
 import FieldsStore from '../fields/fields-store';
 import fieldsActions from '../fields/fields-actions';
+import SettingsStore from '../settings/settings-store';
+import settingsActions from '../settings/settings-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
 import HouseInfoComponent from './house-info';
 import LoaderComponent from '../loader/loader';
@@ -26,13 +28,15 @@ export default createClass({
   statics: {
     registerStores: {
       house: HouseStore,
-      fields: FieldsStore
+      fields: FieldsStore,
+      settings: SettingsStore
     }
   },
 
   componentDidMount () {
     houseActions.listen(this._getId());
     fieldsActions.listen();
+    settingsActions.listen();
     this._focusName();
   },
 
@@ -56,6 +60,7 @@ export default createClass({
   componentWillUnmount () {
     houseActions.stopListening(this.state.house.house.id);
     fieldsActions.stopListening();
+    settingsActions.stopListening();
   },
 
   render () {
@@ -75,14 +80,26 @@ export default createClass({
         DOM.h1()
       ),
       DOM.form({ onSubmit: this._onSubmit },
-        [nameField]
-          .concat(HouseInfo({ house: this.state.house.house, key: '__info'  }))
-          .concat(this._fields())
-          .concat(DOM.button({
+        nameField,
+        HouseInfo({ house: this.state.house.house, key: '__info'  }),
+        this._zillowLink(),
+        this._fields(),
+        DOM.button({
             key: '__remove',
             className: 'remove',
-            onClick: this._remove }, 'Remove house'))
+            onClick: this._remove
+          }, 'Remove house'
+        )
       )
+    );
+  },
+
+  _zillowLink () {
+    const link = this.state.house.house[this.state.settings.zillowLinkField];
+    if (!link) return null;
+
+    return DOM.a({ href: link, target: '_blank', className: 'zillow-link' },
+      'View on Zillow', DOM.i({ className: 'fa fa-external-link'})
     );
   },
 
