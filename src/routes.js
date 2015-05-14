@@ -12,8 +12,6 @@ import FieldComponent from './field/field';
 import NewFieldComponent from './field/new-field';
 
 const Route = createFactory(Router.Route);
-const Redirect = createFactory(Router.Redirect);
-const DefaultRoute = createFactory(Router.DefaultRoute);
 const RouteHandler = createFactory(Router.RouteHandler);
 
 const RootComponent = createClass({ render () { return RouteHandler(); } });
