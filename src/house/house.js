@@ -35,7 +35,10 @@ export default createClass({
           value: this.props.house.house[HOUSE_NAME_KEY] || '',
           onChange: _.partial(this._onChange, HOUSE_NAME_KEY)
         }),
-        HouseInfo({ house: this.props.house.house  }),
+        HouseInfo({
+          house: this.props.house.house,
+          settings: this.props.settings
+        }),
         this._zillowLink(),
         this._fields(),
         DOM.button({

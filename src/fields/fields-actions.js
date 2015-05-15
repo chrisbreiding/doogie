@@ -2,6 +2,8 @@ import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
 import { fieldsRef } from '../lib/firebase-ref';
 
+let _listenerCount = 0;
+
 class FieldsActions {
   addField (field) {
     this.dispatch(field);
@@ -22,6 +24,10 @@ class FieldsActions {
   }
 
   listen () {
+    _listenerCount++;
+
+    if (_listenerCount > 1) return;
+
     fieldsRef.on('child_added', (childSnapshot) => {
       this.actions.addField(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
     });
@@ -34,8 +40,12 @@ class FieldsActions {
   }
 
   stopListening () {
-    this.dispatch();
-    fieldsRef.off();
+    _listenerCount--;
+
+    if (!_listenerCount) {
+      this.dispatch();
+      fieldsRef.off();
+    }
   }
 }
 

@@ -2,6 +2,8 @@ import _ from 'lodash';
 import { createActions } from '../lib/dispatcher';
 import { housesRef } from '../lib/firebase-ref';
 
+let _listenerCount = 0;
+
 class HousesActions {
   didAddHouse (house) {
     this.dispatch(house);
@@ -30,6 +32,10 @@ class HousesActions {
   }
 
   listen () {
+    _listenerCount++;
+
+    if (_listenerCount > 1) return;
+
     housesRef.on('child_added', (childSnapshot) => {
       this.actions.didAddHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
     });
@@ -42,8 +48,12 @@ class HousesActions {
   }
 
   stopListening () {
-    this.dispatch();
-    housesRef.off();
+    _listenerCount--;
+
+    if (!_listenerCount) {
+      this.dispatch();
+      housesRef.off();
+    }
   }
 }
 

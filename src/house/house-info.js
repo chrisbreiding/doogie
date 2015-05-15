@@ -1,24 +1,7 @@
 import { createClass, PropTypes, DOM } from 'react';
-import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
-import SettingsStore from '../settings/settings-store';
-import { listen, stopListening } from '../settings/settings-actions';
 import { numberFromString, currencyFromNumber, decimalFromPercent } from '../lib/util';
 
 export default createClass({
-  mixins: [ReactStateMagicMixin],
-
-  statics: {
-    registerStore: SettingsStore
-  },
-
-  componentDidMount () {
-    listen();
-  },
-
-  componentWillUnmount () {
-    stopListening();
-  },
-
   render () {
     return DOM.div({ className: 'info' },
       DOM.p(null,
@@ -74,8 +57,8 @@ export default createClass({
 
   _downPayment () {
     const houseCost = this._houseField('cost');
-    let downPayment = numberFromString(this.state.downPayment);
-    const maxUpfrontCost = numberFromString(this.state.maxUpfrontCost);
+    let downPayment = numberFromString(this.props.settings.downPayment);
+    const maxUpfrontCost = numberFromString(this.props.settings.maxUpfrontCost);
     if (downPayment <= 100) {
       downPayment = decimalFromPercent(downPayment) * houseCost;
     }
@@ -92,14 +75,14 @@ export default createClass({
   },
 
   _houseField (field) {
-    const key = this.state[`${field}Field`];
+    const key = this.props.settings[`${field}Field`];
     if (!key) return 0;
 
     return numberFromString(this.props.house[key]);
   },
 
   _decimalFor (field) {
-    return decimalFromPercent(numberFromString(this.state[field]));
+    return decimalFromPercent(numberFromString(this.props.settings[field]));
   },
 
   _requiresPMI () {
