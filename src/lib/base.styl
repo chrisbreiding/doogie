@@ -40,15 +40,20 @@ textarea {
 header {
   background: primary-color;
   color: light-color;
-  margin: 0 0 1em;
   padding: 0.8em;
-  position: relative;
+  position: fixed;
   text-align: center;
+  width: 100%;
+  z-index: 10;
 }
 
 h1:empty:before {
   content: '\00A0';
   display: block;
+}
+
+main {
+  padding-top: 2.6em;
 }
 
 a {
@@ -120,6 +125,10 @@ button {
 
 p {
   margin: 0.8em;
+}
+
+form {
+  margin-top: 1em;
 }
 
 select {

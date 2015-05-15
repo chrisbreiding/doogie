@@ -54,39 +54,43 @@ export default createClass({
 
     const notesField = this.state.field.type === 'textarea' ? Textarea : DOM[DEFAULT_FIELD_TYPE];
 
-    return DOM.form({ className: 'fields full-screen', onSubmit: this._onSubmit },
+    return DOM.div({ className: 'field full-screen' },
       DOM.header(null,
         Link({ to: 'fields' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
-      DOM.fieldset(null,
-        DOM.label(null, 'Type'),
-        DOM.select({
-          ref: 'type',
-          value: this.state.field.type || DEFAULT_FIELD_TYPE,
-          onChange: _.partial(this._onChange, 'type')
-        }, _.map(this._types(), ({ label, value }) => {
-          return DOM.option({ key: value, value: value }, label);
-        }))
-      ),
-      DOM.fieldset(null,
-        DOM.label(null, 'Label'),
-        DOM.input({
-          ref: 'label',
-          value: this.state.field.label || '',
-          onChange: _.partial(this._onChange, 'label')
-        })
-      ),
-      DOM.fieldset(null,
-        DOM.label(null, 'Default notes'),
-         notesField({
-          ref: 'defaultNotes',
-          key: this.state.field.id,
-          value: this.state.field.defaultNotes || '',
-          onChange: _.partial(this._onChange, 'defaultNotes')
-        })
-      ),
-      DOM.button({ className: 'remove', onClick: this._remove }, 'Remove field')
+      DOM.main(null,
+        DOM.form({ onSubmit: this._onSubmit },
+          DOM.fieldset(null,
+            DOM.label(null, 'Type'),
+            DOM.select({
+              ref: 'type',
+              value: this.state.field.type || DEFAULT_FIELD_TYPE,
+              onChange: _.partial(this._onChange, 'type')
+            }, _.map(this._types(), ({ label, value }) => {
+              return DOM.option({ key: value, value: value }, label);
+            }))
+          ),
+          DOM.fieldset(null,
+            DOM.label(null, 'Label'),
+            DOM.input({
+              ref: 'label',
+              value: this.state.field.label || '',
+              onChange: _.partial(this._onChange, 'label')
+            })
+          ),
+          DOM.fieldset(null,
+            DOM.label(null, 'Default notes'),
+             notesField({
+              ref: 'defaultNotes',
+              key: this.state.field.id,
+              value: this.state.field.defaultNotes || '',
+              onChange: _.partial(this._onChange, 'defaultNotes')
+            })
+          ),
+          DOM.button({ className: 'remove', onClick: this._remove }, 'Remove field')
+        )
+      )
     );
   },
 

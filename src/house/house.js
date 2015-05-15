@@ -28,23 +28,25 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
-      DOM.form({ onSubmit: this._onSubmit },
-        DOM.input({
-          ref: HOUSE_NAME_KEY,
-          className: HOUSE_NAME_KEY,
-          value: this.props.house.house[HOUSE_NAME_KEY] || '',
-          onChange: _.partial(this._onChange, HOUSE_NAME_KEY)
-        }),
-        HouseInfo({
-          house: this.props.house.house,
-          settings: this.props.settings
-        }),
-        this._zillowLink(),
-        this._fields(),
-        DOM.button({
-          className: 'remove',
-          onClick: this._remove
-        }, 'Remove house')
+      DOM.main(null,
+        DOM.form({ onSubmit: this._onSubmit },
+          DOM.input({
+            ref: HOUSE_NAME_KEY,
+            className: HOUSE_NAME_KEY,
+            value: this.props.house.house[HOUSE_NAME_KEY] || '',
+            onChange: _.partial(this._onChange, HOUSE_NAME_KEY)
+          }),
+          HouseInfo({
+            house: this.props.house.house,
+            settings: this.props.settings
+          }),
+          this._zillowLink(),
+          this._fields(),
+          DOM.button({
+            className: 'remove',
+            onClick: this._remove
+          }, 'Remove house')
+        )
       )
     );
   },

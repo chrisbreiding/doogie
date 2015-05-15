@@ -48,8 +48,8 @@ export default createClass({
         Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
         DOM.h1()
       ),
-      DOM.div({ className: 'container' },
-        DOM.main({ style: { width: `${houses.length * 21.2}em` }}, _.map(houses, (house) => {
+      DOM.main(null,
+        DOM.div({ className: 'container', style: { width: `${houses.length * 21.2}em` }}, _.map(houses, (house) => {
           return House({
             key: house.id,
             house: { house },

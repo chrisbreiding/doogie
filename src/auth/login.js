@@ -17,18 +17,22 @@ export default createClass({
   },
 
   render () {
-    return DOM.form({ className: 'login', onSubmit: this._onSubmit },
+    return DOM.div(null,
       DOM.header(null, DOM.h1(null, 'Please Log In')),
-      DOM.label(null, 'Email'),
-      DOM.input({ ref: 'email', type: 'email' }),
-      DOM.label(null, 'Password'),
-      DOM.input({ ref: 'password', type: 'password' }),
-      this.state.loginFailed ?
-        DOM.p({ className: 'error' }, 'Login failed. Please try again.') :
-        null,
-      this.state.attemptingLogin ?
-        Loader({ size: 'regular' }) :
-        DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), 'Log In')
+      DOM.main(null,
+        DOM.form({ className: 'login', onSubmit: this._onSubmit },
+          DOM.label(null, 'Email'),
+          DOM.input({ ref: 'email', type: 'email' }),
+          DOM.label(null, 'Password'),
+          DOM.input({ ref: 'password', type: 'password' }),
+          this.state.loginFailed ?
+            DOM.p({ className: 'error' }, 'Login failed. Please try again.') :
+            null,
+          this.state.attemptingLogin ?
+            Loader({ size: 'regular' }) :
+            DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), 'Log In')
+        )
+      )
     );
   },
 
