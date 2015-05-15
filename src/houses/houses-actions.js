@@ -3,33 +3,41 @@ import { createActions } from '../lib/dispatcher';
 import { housesRef } from '../lib/firebase-ref';
 
 class HousesActions {
-  addHouse (house) {
+  didAddHouse (house) {
+    this.dispatch(house);
+  }
+
+  didUpdateHouse (house) {
+    this.dispatch(house);
+  }
+
+  didRemoveHouse (house) {
     this.dispatch(house);
   }
 
   updateHouse (house) {
-    this.dispatch(house);
+    housesRef.child(house.id).update(_.omit(house, 'id'));
   }
 
-  removeHouse (house) {
-    this.dispatch(house);
+  removeHouse (id) {
+    housesRef.child(id).remove();
   }
 
   updateSorting (ids) {
-    _.each(ids, (id, index) => {
-      housesRef.child(`${id}/order`).set(index);
+    _.each(ids, (id, order) => {
+      housesRef.child(id).update({ order });
     });
   }
 
   listen () {
     housesRef.on('child_added', (childSnapshot) => {
-      this.actions.addHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
+      this.actions.didAddHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
     });
     housesRef.on('child_changed', (childSnapshot) => {
-      this.actions.updateHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
+      this.actions.didUpdateHouse(_.extend({ id: childSnapshot.key() }, childSnapshot.val()));
     });
     housesRef.on('child_removed', (childSnapshot) => {
-      this.actions.removeHouse({ id: childSnapshot.key() });
+      this.actions.didRemoveHouse({ id: childSnapshot.key() });
     });
   }
 

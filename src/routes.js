@@ -3,7 +3,8 @@ import Router from 'react-router';
 
 import AppComponent from './app/app';
 import MenuComponent from './menu/menu';
-import HouseComponent from './house/house';
+import HouseControllerComponent from './house/house-controller';
+import HousesComponent from './houses/houses';
 import NewHouseComponent from './house/new-house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
@@ -25,8 +26,9 @@ export default Route({ handler: RootComponent, path: '/' },
         Route({ name: 'field', handler: FieldComponent, path: ':id' })
       )
     ),
+    Route({ name: 'houses', handler: HousesComponent }),
     Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
-    Route({ name: 'house', handler: HouseComponent, path: 'houses/:id' })
+    Route({ name: 'house', handler: HouseControllerComponent, path: 'houses/:id' })
   ),
   Route({ name: 'login', handler: LoginComponent, path: 'login' }),
   Route({ name: 'logout', handler: LogoutComponent, path: 'logout' })

@@ -7,12 +7,13 @@ class HousesStore {
     this.clearData();
 
     this.bindListeners({
-      addHouse: actions.ADD_HOUSE,
-      updateHouse: actions.UPDATE_HOUSE,
-      removeHouse: actions.REMOVE_HOUSE,
+      addHouse: actions.DID_ADD_HOUSE,
+      updateHouse: actions.DID_UPDATE_HOUSE,
+      removeHouse: actions.DID_REMOVE_HOUSE,
       clearData: actions.STOP_LISTENING
     });
   }
+
   addHouse (house) {
     if (house.order == null) {
       house.order = this._newOrder();
@@ -22,7 +23,7 @@ class HousesStore {
   }
 
   updateHouse (house) {
-    this._houses[house.id] = house;
+    this._houses[house.id] = _.extend({}, this._houses[house.id], house);
     this._updateHouses();
   }
 

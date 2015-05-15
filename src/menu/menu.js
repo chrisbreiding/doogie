@@ -1,17 +1,22 @@
 import { createClass, createFactory, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import auth from '../auth/auth';
-import HousesComponent from '../houses/houses';
+import HousesListComponent from '../houses/houses-list';
 import MenuGroupComponent from './menu-group';
 
 const Link = createFactory(LinkComponent);
-const Houses = createFactory(HousesComponent);
+const HousesList = createFactory(HousesListComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
 
 export default createClass({
   render () {
     return DOM.ul({ className: 'menu full-screen' },
-      Houses(),
+      MenuGroup({ className: 'houses-link' }, DOM.li(null,
+        Link({ to: 'houses' },
+          DOM.i({ className: 'fa fa-home' }), 'All houses'
+        )
+      )),
+      HousesList(),
       MenuGroup(null, DOM.li(null,
         Link({ to: 'house', params: { id: 'new' }},
           DOM.i({ className: 'fa fa-plus' }), 'Add house'

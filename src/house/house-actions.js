@@ -11,8 +11,7 @@ class HouseActions {
   }
 
   update (house) {
-    housesRef.child(house.id).set(_.omit(house, 'id'));
-    this.actions.didUpdate(house);
+    housesRef.child(house.id).update(_.omit(house, 'id'));
   }
 
   remove (id) {

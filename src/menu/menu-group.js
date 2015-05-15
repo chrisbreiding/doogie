@@ -26,7 +26,7 @@ export default createClass({
 
       DOM.ul(null, this.props.children);
 
-    return DOM.li(null, list);
+    return DOM.li(this.props, list);
   },
 
   _showLoading () {

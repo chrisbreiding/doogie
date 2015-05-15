@@ -1,57 +1,73 @@
 import _ from 'lodash';
-import { createClass, createFactory, DOM } from 'react';
+import { createClass, createFactory, PropTypes, DOM } from 'react';
 import { Link as LinkComponent } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HousesStore from './houses-store';
-import houseActions from './houses-actions';
+import housesActions from './houses-actions';
+import FieldsStore from '../fields/fields-store';
+import fieldsActions from '../fields/fields-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
-import MenuGroupComponent from '../menu/menu-group';
-import { HOUSE_NAME_KEY } from '../lib/constants';
+import HouseComponent from '../house/house';
 
+const House = createFactory(HouseComponent);
 const Link = createFactory(LinkComponent);
-const MenuGroup = createFactory(MenuGroupComponent);
 
 export default createClass({
   mixins: [ReactStateMagicMixin],
 
+  contextTypes: {
+    router: PropTypes.func
+  },
+
   statics: {
     registerStores: {
       houses: HousesStore,
+      fields: FieldsStore,
       settings: SettingsStore
     }
   },
 
   componentDidMount () {
-    houseActions.listen();
+    housesActions.listen();
+    fieldsActions.listen();
     settingsActions.listen();
   },
 
   componentWillUnmount () {
-    houseActions.stopListening();
+    housesActions.stopListening();
+    fieldsActions.stopListening();
     settingsActions.stopListening();
   },
 
   render () {
-    const menuGroupProps = {
-      sortable: true,
-      onSortingUpdate: houseActions.updateSorting.bind(houseActions)
-    };
+    const houses = this.state.houses.houses;
 
-    return MenuGroup(menuGroupProps, _.map(this.state.houses.houses, this._house));
-  },
-
-  _house (house) {
-    let description = '$' + house[this.state.settings.costField];
-    const visit = house[this.state.settings.visitField];
-    if (visit) description += ', ' + visit;
-
-    return DOM.li({ key: house.id, className: 'sortable-item list-house', 'data-id': house.id },
-      DOM.i({ className: 'fa fa-bars' }),
-      Link({ to: 'house', params: house },
-        DOM.h3(null, house[HOUSE_NAME_KEY]),
-        DOM.p(null, description)
+    return DOM.div({ className: 'houses full-screen' },
+      DOM.header(null,
+        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+        DOM.h1()
+      ),
+      DOM.div({ className: 'container' },
+        DOM.main({ style: { width: `${houses.length * 21.2}em` }}, _.map(houses, (house) => {
+          return House({
+            key: house.id,
+            house: { house },
+            fields: this.state.fields,
+            settings: this.state.settings,
+            onChange: _.partial(this._onChange, house.id),
+            onRemove: _.partial(this._onRemove, house.id)
+          });
+        }))
       )
     );
+  },
+
+  _onChange (id, key, value) {
+    housesActions.updateHouse({ id: id, [key]: value });
+  },
+
+  _onRemove (id) {
+    housesActions.removeHouse(id);
   }
 });
