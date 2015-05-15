@@ -51,25 +51,21 @@ export default createClass({
   },
 
   _settings () {
-    const textFields = [
+    return _.flatten([
+      this._textSettings(),
+      this._dropdownSettings()
+    ]);
+  },
+
+  _textSettings () {
+    return _.map([
       'Max Upfront Cost',
       'Down Payment',
       'Closing Rate',
       'Interest Rate',
       'Insurance Rate',
       'PMI Rate'
-    ];
-    const textSettings = _.map(textFields, this._textSetting);
-    const dropdownFields = [
-      'Cost Field',
-      'Taxes Field',
-      'HOA Field',
-      'Visit Field',
-      'Zillow Link Field'
-    ]
-    const dropdownSettings = _.map(dropdownFields, this._dropdownSetting);
-
-    return textSettings.concat(dropdownSettings);
+    ], this._textSetting);
   },
 
   _textSetting (setting) {
@@ -82,6 +78,16 @@ export default createClass({
         onChange: _.partial(this._onSettingChange, key)
       })
     );
+  },
+
+  _dropdownSettings () {
+    return _.map([
+      'Cost Field',
+      'Taxes Field',
+      'HOA Field',
+      'Visit Field',
+      'Zillow Link Field'
+    ], this._dropdownSetting);
   },
 
   _dropdownSetting (setting) {
