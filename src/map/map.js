@@ -162,12 +162,12 @@ export default createClass({
   },
 
   render () {
-    return DOM.div(null,
+    return DOM.div({ className: 'map full-screen' },
       DOM.header(null,
         Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()
       ),
-      DOM.main({ ref: 'map', className: 'map' })
+      DOM.main({ ref: 'map' })
     );
   }
 });
