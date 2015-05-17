@@ -107,7 +107,9 @@ export default createClass({
     });
 
     marker.addListener('click', () => {
-      this._info(house.id).open(this._map, marker);
+      if (this._infoWindow) this._infoWindow.close();
+      this._infoWindow = this._info(house.id);
+      this._infoWindow.open(this._map, marker);
     });
 
     this._getLatLng(house[HOUSE_NAME_KEY], (location) => {
