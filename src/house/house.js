@@ -5,6 +5,7 @@ import { HOUSE_NAME_KEY, DEFAULT_FIELD_TYPE } from '../lib/constants';
 import HouseInfoComponent from './house-info';
 import LoaderComponent from '../loader/loader';
 import TextareaComponent from '../lib/growing-textarea';
+import { directionsUrl } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const HouseInfo = createFactory(HouseInfoComponent);
@@ -41,6 +42,7 @@ export default createClass({
             settings: this.props.settings
           }),
           this._zillowLink(),
+          this._directionsLink(),
           this._fields(),
           DOM.button({
             className: 'remove',
@@ -55,8 +57,16 @@ export default createClass({
     const link = this.props.house.house[this.props.settings.zillowLinkField];
     if (!link) return null;
 
-    return DOM.a({ href: link, target: '_blank', className: 'zillow-link' },
-      'View on Zillow', DOM.i({ className: 'fa fa-external-link'})
+    return DOM.a({ href: link, target: '_blank', className: 'link' },
+      DOM.i({ className: 'fa fa-home'}), 'View on Zillow'
+    );
+  },
+
+  _directionsLink () {
+    const address = this.props.house.house[HOUSE_NAME_KEY];
+
+    return DOM.a({ href: directionsUrl(address), className: 'link' },
+      DOM.i({ className: 'fa fa-car'}), 'Driving Directions'
     );
   },
 

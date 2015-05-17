@@ -18,5 +18,9 @@ export default {
 
   decimalFromPercent (percent) {
     return percent / 100;
+  },
+
+  directionsUrl (address) {
+    return `comgooglemaps://?daddr=${address}&directionsmode=driving`;
   }
 };

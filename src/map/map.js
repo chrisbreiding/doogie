@@ -7,6 +7,7 @@ import houseActions from '../houses/houses-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
+import { directionsUrl } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 
@@ -115,7 +116,6 @@ export default createClass({
 
   _info (id) {
     const house = _.findWhere(this.state.houses.houses, { id });
-    const directionsHref = `comgooglemaps://?daddr=${house[HOUSE_NAME_KEY]}&directionsmode=driving`;
     const visit = house[this.state.settings.visitField];
     const visitHtml = visit ? `<p>${visit}</p>` : '';
 
@@ -125,7 +125,7 @@ export default createClass({
           <h2>${house[HOUSE_NAME_KEY]}</h2>
           ${visitHtml}
           <p><a href="#/houses/${house.id}">View</a></p>
-          <p><a href="${directionsHref}">Directions</a></p>
+          <p><a href="${directionsUrl(house[HOUSE_NAME_KEY])}">Directions</a></p>
         </div>
       `
     });
