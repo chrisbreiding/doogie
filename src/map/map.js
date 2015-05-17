@@ -102,6 +102,7 @@ export default createClass({
     const marker = this._markers[house.id] = new google.maps.Marker({
       map: this._map,
       title: house[HOUSE_NAME_KEY],
+      icon: 'icons/map-icon.png',
       position: { lat: 0, lng: 0 }
     });
 
