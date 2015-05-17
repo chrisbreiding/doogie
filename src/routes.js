@@ -12,6 +12,7 @@ import SettingsComponent from './settings/settings';
 import FieldsComponent from './fields/fields';
 import FieldComponent from './field/field';
 import NewFieldComponent from './field/new-field';
+import MapComponent from './map/map';
 
 const Route = createFactory(Router.Route);
 const RouteHandler = createFactory(Router.RouteHandler);
@@ -28,7 +29,8 @@ export default Route({ handler: RootComponent, path: '/' },
     ),
     Route({ name: 'houses', handler: HousesComponent }),
     Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
-    Route({ name: 'house', handler: HouseControllerComponent, path: 'houses/:id' })
+    Route({ name: 'house', handler: HouseControllerComponent, path: 'houses/:id' }),
+    Route({ name: 'map', handler: MapComponent })
   ),
   Route({ name: 'login', handler: LoginComponent, path: 'login' }),
   Route({ name: 'logout', handler: LogoutComponent, path: 'logout' })
