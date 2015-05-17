@@ -36,7 +36,7 @@ export default createClass({
     const fields = this.state.fields;
 
     return DOM.div(null,
-      DOM.div({ className: 'fields full-screen' },
+      DOM.div({ className: 'fields' },
         DOM.header(null,
           Link({ to: 'settings' }, icon('chevron-left', 'Back')),
           DOM.h1(null, 'Fields')

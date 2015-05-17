@@ -55,7 +55,7 @@ export default createClass({
 
     const notesField = this.state.field.type === 'textarea' ? Textarea : DOM[DEFAULT_FIELD_TYPE];
 
-    return DOM.div({ className: 'field full-screen' },
+    return DOM.div({ className: 'field' },
       DOM.header(null,
         Link({ to: 'fields' }, icon('chevron-left', 'Back')),
         DOM.h1()

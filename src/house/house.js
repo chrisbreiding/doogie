@@ -24,7 +24,7 @@ export default createClass({
   render () {
     if (!this.props.house.house) return Loader();
 
-    return DOM.div({ className: 'house full-screen' },
+    return DOM.div({ className: 'house' },
       DOM.header(null,
         Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()

@@ -162,7 +162,7 @@ export default createClass({
   },
 
   render () {
-    return DOM.div({ className: 'full-screen' },
+    return DOM.div(null,
       DOM.header(null,
         Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()

@@ -35,7 +35,7 @@ export default createClass({
 
   render () {
     return DOM.div(null,
-      DOM.div({ className: 'settings full-screen' },
+      DOM.div({ className: 'settings' },
         DOM.header(null,
           Link({ to: 'menu' }, icon('chevron-left', 'Back')),
           DOM.h1(null, 'Settings')

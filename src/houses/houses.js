@@ -44,7 +44,7 @@ export default createClass({
   render () {
     const houses = this.state.houses.houses;
 
-    return DOM.div({ className: 'houses full-screen' },
+    return DOM.div({ className: 'houses' },
       DOM.header(null,
         Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()

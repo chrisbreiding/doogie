@@ -9,7 +9,7 @@ const HousesList = createFactory(HousesListComponent);
 
 export default createClass({
   render () {
-    return DOM.div({ className: 'archived-houses full-screen' },
+    return DOM.div({ className: 'archived-houses' },
       DOM.header(null,
         Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()
