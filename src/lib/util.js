@@ -1,4 +1,13 @@
+import { DOM } from 'react';
+
 export default {
+  icon (iconName, text) {
+    return DOM.span({ className: 'icon' },
+      DOM.i({ className: `fa fa-${iconName}` }),
+      text ? text : null
+    );
+  },
+
   numberFromString (numString = '0') {
     return Number(numString.replace(/[^0-9\.]/g, ''));
   },

@@ -7,6 +7,7 @@ import FieldStore from './field-store';
 import actions from './field-actions';
 import LoaderComponent from '../loader/loader';
 import TextareaComponent from '../lib/growing-textarea';
+import { icon } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const Loader = createFactory(LoaderComponent);
@@ -56,7 +57,7 @@ export default createClass({
 
     return DOM.div({ className: 'field full-screen' },
       DOM.header(null,
-        Link({ to: 'fields' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+        Link({ to: 'fields' }, icon('chevron-left', 'Back')),
         DOM.h1()
       ),
       DOM.main(null,

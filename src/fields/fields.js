@@ -6,6 +6,7 @@ import FieldsStore from './fields-store';
 import actions from './fields-actions';
 import LoaderComponent from '../loader/loader';
 import FieldsComponent from '../fields/fields';
+import { icon } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
@@ -37,20 +38,20 @@ export default createClass({
     return DOM.div(null,
       DOM.div({ className: 'fields full-screen' },
         DOM.header(null,
-          Link({ to: 'settings' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+          Link({ to: 'settings' }, icon('chevron-left', 'Back')),
           DOM.h1(null, 'Fields')
         ),
         DOM.main(null,
           DOM.ul({ className: 'menu' },
             MenuGroup(menuProps, _.map(fields, (field) => {
               return DOM.li({ key: field.id, className: 'sortable-item', 'data-id': field.id },
-                DOM.i({ className: 'fa fa-bars' }),
+                icon('bars'),
                 Link({ to: 'field', params: { id: field.id }}, field.label)
               );
             })),
             MenuGroup(null, DOM.li(null, Link({ to: 'new-field' },
-              DOM.i({ className: 'fa fa-plus' }), 'Add field'
-            )))
+              icon('plus', 'Add Field'))
+            ))
           )
         )
       ),

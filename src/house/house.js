@@ -5,7 +5,7 @@ import { HOUSE_NAME_KEY, DEFAULT_FIELD_TYPE } from '../lib/constants';
 import HouseInfoComponent from './house-info';
 import LoaderComponent from '../loader/loader';
 import TextareaComponent from '../lib/growing-textarea';
-import { directionsUrl } from '../lib/util';
+import { icon, directionsUrl } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const HouseInfo = createFactory(HouseInfoComponent);
@@ -26,7 +26,7 @@ export default createClass({
 
     return DOM.div({ className: 'house full-screen' },
       DOM.header(null,
-        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+        Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()
       ),
       DOM.main(null,
@@ -47,13 +47,11 @@ export default createClass({
           DOM.button({
             className: 'archive',
             onClick: this._archive
-          },
-            DOM.i({ className: 'fa fa-archive' }),
-            this.props.house.house.archived ? 'Unarchive' : 'Archive'),
+          }, icon('archive', this.props.house.house.archived ? 'Unarchive' : 'Archive')),
           DOM.button({
             className: 'remove',
             onClick: this._remove
-          }, DOM.i({ className: 'fa fa-ban' }), 'Remove')
+          }, icon('ban', 'Remove'))
         )
       )
     );
@@ -64,7 +62,7 @@ export default createClass({
     if (!link) return null;
 
     return DOM.a({ href: link, target: '_blank', className: 'link' },
-      DOM.i({ className: 'fa fa-home'}), 'View on Zillow'
+      icon('home', 'View on Zillow')
     );
   },
 
@@ -72,7 +70,7 @@ export default createClass({
     const address = this.props.house.house[HOUSE_NAME_KEY];
 
     return DOM.a({ href: directionsUrl(address), className: 'link' },
-      DOM.i({ className: 'fa fa-car'}), 'Driving Directions'
+      icon('car', 'Driving Directions')
     );
   },
 

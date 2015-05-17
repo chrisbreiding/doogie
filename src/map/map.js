@@ -7,7 +7,7 @@ import houseActions from '../houses/houses-actions';
 import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
 import { HOUSE_NAME_KEY } from '../lib/constants';
-import { directionsUrl } from '../lib/util';
+import { icon, directionsUrl } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 
@@ -161,7 +161,7 @@ export default createClass({
   render () {
     return DOM.div({ className: 'full-screen' },
       DOM.header(null,
-        Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+        Link({ to: 'menu' }, icon('chevron-left', 'Back')),
         DOM.h1()
       ),
       DOM.main({ ref: 'map', className: 'map' })

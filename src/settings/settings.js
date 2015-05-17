@@ -7,6 +7,7 @@ import fieldsActions from '../fields/fields-actions';
 import SettingsStore from './settings-store';
 import settingsActions from './settings-actions';
 import MenuGroupComponent from '../menu/menu-group';
+import { icon } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
@@ -36,7 +37,7 @@ export default createClass({
     return DOM.div(null,
       DOM.div({ className: 'settings full-screen' },
         DOM.header(null,
-          Link({ to: 'menu' }, DOM.i({ className: 'fa fa-chevron-left' }), 'Back'),
+          Link({ to: 'menu' }, icon('chevron-left', 'Back')),
           DOM.h1(null, 'Settings')
         ),
         DOM.main(null,

@@ -8,6 +8,7 @@ import SettingsStore from '../settings/settings-store';
 import settingsActions from '../settings/settings-actions';
 import MenuGroupComponent from '../menu/menu-group';
 import { HOUSE_NAME_KEY } from '../lib/constants';
+import { icon } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
@@ -47,7 +48,7 @@ export default createClass({
     if (visit) description += ', ' + visit;
 
     return DOM.li({ key: house.id, className: 'sortable-item list-house', 'data-id': house.id },
-      DOM.i({ className: 'fa fa-bars' }),
+      icon('bars'),
       Link({ to: 'house', params: house },
         DOM.h3(null, house[HOUSE_NAME_KEY]),
         DOM.p(null, description)

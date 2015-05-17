@@ -3,6 +3,7 @@ import { Link as LinkComponent } from 'react-router';
 import auth from '../auth/auth';
 import HousesListComponent from '../houses/houses-list';
 import MenuGroupComponent from './menu-group';
+import { icon } from '../lib/util';
 
 const Link = createFactory(LinkComponent);
 const HousesList = createFactory(HousesListComponent);
@@ -13,29 +14,29 @@ export default createClass({
     return DOM.ul({ className: 'menu full-screen' },
       MenuGroup(null,
         DOM.li({ className: 'houses-link' }, Link({ to: 'houses' },
-          DOM.i({ className: 'fa fa-home' }), 'All houses'
+          icon('home', 'All houses')
         )),
         DOM.li(null, Link({ to: 'map' },
-          DOM.i({ className: 'fa fa-map-marker' }), 'Map'
+          icon('map-marker', 'Map')
         ))
       ),
       HousesList({ dataKey: 'houses' }),
       MenuGroup(null,
         DOM.li(null, Link({ to: 'house', params: { id: 'new' }},
-          DOM.i({ className: 'fa fa-plus' }), 'Add house'
+          icon('plus', 'Add house')
         ))
       ),
       MenuGroup(null,
         DOM.li(null, Link({ to: 'archived-houses' },
-          DOM.i({ className: 'fa fa-archive' }), 'Archived houses'
+          icon('archive', 'Archived houses')
         )),
         DOM.li(null, Link({ to: 'settings' },
-          DOM.i({ className: 'fa fa-cog' }), 'Settings'
+          icon('cog', 'Settings')
         ))
       ),
       MenuGroup(null,
         DOM.li(null, Link({ to: 'logout' },
-          DOM.i({ className: 'fa fa-sign-out' }), 'Logout'
+          icon('sign-out', 'Logout')
         ))
       )
     );

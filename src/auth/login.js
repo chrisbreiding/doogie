@@ -1,6 +1,7 @@
 import { createFactory, createClass, PropTypes, DOM } from 'react';
 import auth from './auth';
 import LoaderComponent from '../loader/loader';
+import { icon } from '../lib/util';
 
 const Loader = createFactory(LoaderComponent);
 
@@ -30,7 +31,7 @@ export default createClass({
             null,
           this.state.attemptingLogin ?
             Loader({ size: 'regular' }) :
-            DOM.button(null, DOM.i({ className: 'fa fa-sign-in' }), 'Log In')
+            DOM.button(null, icon('sign-in', 'Log In'))
         )
       )
     );
