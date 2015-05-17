@@ -38,7 +38,7 @@ export default createClass({
       onSortingUpdate: houseActions.updateSorting.bind(houseActions)
     };
 
-    return MenuGroup(menuGroupProps, _.map(this.state.houses.houses, this._house));
+    return MenuGroup(menuGroupProps, _.map(this.state.houses[this.props.dataKey], this._house));
   },
 
   _house (house) {

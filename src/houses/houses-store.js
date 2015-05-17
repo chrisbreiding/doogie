@@ -35,6 +35,7 @@ class HousesStore {
   clearData () {
     this._houses = {};
     this.houses = [];
+    this.archivedHouses = [];
   }
 
   _newOrder (orders) {
@@ -44,12 +45,22 @@ class HousesStore {
   }
 
   _updateHouses () {
-    this.houses = this._sortedHouses();
+    this.houses = this._activeHouses();
+    this.archivedHouses = this._archivedHouses();
   }
 
-  _sortedHouses () {
+  _activeHouses () {
     return _(this._houses)
       .values()
+      .filter((house) => !house.archived)
+      .sortBy('order')
+      .value();
+  }
+
+  _archivedHouses () {
+    return _(this._houses)
+      .values()
+      .filter((house) => house.archived)
       .sortBy('order')
       .value();
   }

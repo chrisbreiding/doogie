@@ -5,6 +5,7 @@ import AppComponent from './app/app';
 import MenuComponent from './menu/menu';
 import HouseControllerComponent from './house/house-controller';
 import HousesComponent from './houses/houses';
+import ArchivedHousesComponent from './houses/archived-houses';
 import NewHouseComponent from './house/new-house';
 import LoginComponent from './auth/login';
 import LogoutComponent from './auth/logout';
@@ -28,6 +29,7 @@ export default Route({ handler: RootComponent, path: '/' },
       )
     ),
     Route({ name: 'houses', handler: HousesComponent }),
+    Route({ name: 'archived-houses', handler: ArchivedHousesComponent, path: 'houses/archived' }),
     Route({ name: 'new-house', handler: NewHouseComponent, path: 'houses/new' }),
     Route({ name: 'house', handler: HouseControllerComponent, path: 'houses/:id' }),
     Route({ name: 'map', handler: MapComponent })

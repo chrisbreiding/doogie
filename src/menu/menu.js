@@ -19,22 +19,25 @@ export default createClass({
           DOM.i({ className: 'fa fa-map-marker' }), 'Map'
         ))
       ),
-      HousesList(),
-      MenuGroup(null, DOM.li(null,
-        Link({ to: 'house', params: { id: 'new' }},
+      HousesList({ dataKey: 'houses' }),
+      MenuGroup(null,
+        DOM.li(null, Link({ to: 'house', params: { id: 'new' }},
           DOM.i({ className: 'fa fa-plus' }), 'Add house'
-        )
-      )),
-      MenuGroup(null, DOM.li(null,
-        Link({ to: 'settings' },
+        ))
+      ),
+      MenuGroup(null,
+        DOM.li(null, Link({ to: 'archived-houses' },
+          DOM.i({ className: 'fa fa-archive' }), 'Archived houses'
+        )),
+        DOM.li(null, Link({ to: 'settings' },
           DOM.i({ className: 'fa fa-cog' }), 'Settings'
-        )
-      )),
-      MenuGroup(null, DOM.li(null,
-        Link({ to: 'logout' },
+        ))
+      ),
+      MenuGroup(null,
+        DOM.li(null, Link({ to: 'logout' },
           DOM.i({ className: 'fa fa-sign-out' }), 'Logout'
-        )
-      ))
+        ))
+      )
     );
   }
 });

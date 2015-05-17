@@ -45,9 +45,15 @@ export default createClass({
           this._directionsLink(),
           this._fields(),
           DOM.button({
+            className: 'archive',
+            onClick: this._archive
+          },
+            DOM.i({ className: 'fa fa-archive' }),
+            this.props.house.house.archived ? 'Unarchive' : 'Archive'),
+          DOM.button({
             className: 'remove',
             onClick: this._remove
-          }, 'Remove house')
+          }, DOM.i({ className: 'fa fa-ban' }), 'Remove')
         )
       )
     );
@@ -89,6 +95,10 @@ export default createClass({
 
   _onChange (key) {
     this.props.onChange(key, this.refs[key].getDOMNode().value);
+  },
+
+  _archive () {
+    this.props.onChange('archived', !this.props.house.house.archived);
   },
 
   _remove (e) {
