@@ -53,11 +53,15 @@ export default createClass({
   },
 
   componentDidUpdate (__, prevState) {
+    this._updateHouses(this.state.houses.houses, prevState.houses.houses);
+  },
+
+  _updateHouses (houses, prevHouses) {
     if (!this._map) return;
 
-    const houseIds = _.reduce(this.state.houses.houses, (memo, house) => {
+    const houseIds = _.reduce(houses, (memo, house) => {
       if (this._markers[house.id]) {
-        this._updateHouse(house, _.findWhere(prevState.houses.houses, { id: house.id }));
+        this._updateHouse(house, _.findWhere(prevHouses, { id: house.id }));
       } else {
         this._addHouse(house);
       }
@@ -94,6 +98,7 @@ export default createClass({
 
     houseActions.listen();
     settingsActions.listen();
+    this._updateHouses(this.state.houses.houses);
   },
 
   _addHouse (house) {
@@ -140,7 +145,7 @@ export default createClass({
   },
 
   _updateHouse (house, prevHouse) {
-    if (house[HOUSE_NAME_KEY] === prevHouse[HOUSE_NAME_KEY]) return;
+    if (prevHouse && house[HOUSE_NAME_KEY] === prevHouse[HOUSE_NAME_KEY]) return;
 
     this._markers[house.id].setTitle(house[HOUSE_NAME_KEY]);
     this._getLatLng(house[HOUSE_NAME_KEY], (location) => {
