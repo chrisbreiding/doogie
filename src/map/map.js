@@ -96,6 +96,8 @@ export default createClass({
       center: { lat: 40.0755702, lng: -75.28691950000001 }
     });
 
+    this._map.addListener('click', this._removeCurrentInfoWindow);
+
     houseActions.listen();
     settingsActions.listen();
     this._updateHouses(this.state.houses.houses);
@@ -118,7 +120,7 @@ export default createClass({
     });
 
     marker.addListener('click', () => {
-      if (this._infoWindow) this._infoWindow.close();
+      this._removeCurrentInfoWindow();
       this._infoWindow = this._info(house.id);
       this._infoWindow.open(this._map, marker);
     });
@@ -126,6 +128,10 @@ export default createClass({
     this._getLatLng(house[HOUSE_NAME_KEY], (location) => {
       marker.setPosition(location);
     });
+  },
+
+  _removeCurrentInfoWindow () {
+    if (this._infoWindow) this._infoWindow.close();
   },
 
   _info (id) {
