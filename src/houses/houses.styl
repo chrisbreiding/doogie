@@ -14,17 +14,23 @@
 
   .container {
     padding: 0.5em;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
 
     .house {
       border: solid 0.1em darken(light-color, 40%);
-      bottom: auto;
-      float: left;
-      left: auto;
       margin: 0.5em;
-      position: static;
-      right: auto;
-      top: auto;
       width: 20em;
+
+      main {
+        bottom: auto;
+        left: auto;
+        position: static;
+        right: auto;
+        top: auto;
+      }
     }
 
     header {
