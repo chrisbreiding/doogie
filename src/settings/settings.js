@@ -85,7 +85,8 @@ export default createClass({
     return _.map([
       'Cost Field',
       'Taxes Field',
-      'HOA Field',
+      'Misc Upfront Costs Field',
+      'Misc Monthly Costs Field',
       'Visit Field',
       'Zillow Link Field'
     ], this._dropdownSetting);
