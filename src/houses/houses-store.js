@@ -38,7 +38,7 @@ class HousesStore {
     this.archivedHouses = [];
   }
 
-  _newOrder (orders) {
+  _newOrder () {
     var orders = _.map(this._houses, (house) => house.order || 0);
     if (!orders.length) return 0;
     return Math.max.apply(Math, orders);

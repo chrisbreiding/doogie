@@ -1,5 +1,6 @@
 import Firebase from 'firebase';
-const firebaseRef = new Firebase('https://doogie.firebaseio.com');
+const appName = localStorage.appName || 'doogie';
+const firebaseRef = new Firebase(`https://${appName}.firebaseio.com`);
 
 export const fieldsRef = firebaseRef.child('fields');
 export const housesRef = firebaseRef.child('houses');
