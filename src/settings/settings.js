@@ -42,8 +42,8 @@ export default createClass({
         ),
         DOM.main(null,
           DOM.ul({ className: 'menu' },
-            DOM.li(null, this._settings()),
-            MenuGroup(null, DOM.li(null, Link({ to: 'fields' }, 'Fields')))
+            MenuGroup(null, DOM.li(null, Link({ to: 'fields' }, 'Fields'))),
+            DOM.li(null, this._settings())
           )
         )
       ),
@@ -84,10 +84,15 @@ export default createClass({
   _dropdownSettings () {
     return _.map([
       'Cost Field',
+      'Zestimate Field',
       'Taxes Field',
       'Misc Upfront Costs Field',
       'Misc Monthly Costs Field',
       'Visit Field',
+      'Rooms Field',
+      'Year Built Field',
+      'A/C Field',
+      'Heating Field',
       'Zillow Link Field'
     ], this._dropdownSetting);
   },
