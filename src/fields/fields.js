@@ -39,7 +39,7 @@ export default createClass({
       DOM.div({ className: 'fields' },
         DOM.header(null,
           Link({ to: 'settings' }, icon('chevron-left', 'Back')),
-          DOM.h1(null, 'Fields')
+          DOM.h1(null, icon('tasks', 'Fields'))
         ),
         DOM.main(null,
           DOM.ul({ className: 'menu' },

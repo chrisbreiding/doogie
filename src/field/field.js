@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { DEFAULT_FIELD_TYPE } from '../lib/constants';
 import { createFactory, createClass, PropTypes, DOM } from 'react';
-import { Link as LinkComponent } from 'react-router';
+import { Link as LinkComponent, State, Navigation } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import FieldStore from './field-store';
 import actions from './field-actions';
@@ -14,11 +14,7 @@ const Loader = createFactory(LoaderComponent);
 const Textarea = createFactory(TextareaComponent);
 
 export default createClass({
-  mixins: [ReactStateMagicMixin],
-
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [ReactStateMagicMixin, State, Navigation],
 
   statics: {
     registerStore: FieldStore,
@@ -39,7 +35,7 @@ export default createClass({
   },
 
   _getId () {
-    return this.context.router.getCurrentParams().id;
+    return this.getParams().id;
   },
 
   _focusLabel () {
@@ -111,7 +107,7 @@ export default createClass({
   _remove () {
     if (confirm('Remove this field?')) {
       actions.remove(this.state.field.id);
-      this.context.router.transitionTo('fields');
+      this.transitionTo('fields');
     }
   },
 

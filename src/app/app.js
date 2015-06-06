@@ -1,5 +1,5 @@
 import { createClass, createFactory, PropTypes, DOM } from 'react';
-import { RouteHandler as RouteHandlerComponent } from 'react-router';
+import { RouteHandler as RouteHandlerComponent, Navigation } from 'react-router';
 import auth from '../auth/auth';
 import MenuComponent from '../menu/menu';
 
@@ -7,9 +7,7 @@ const Menu = createFactory(MenuComponent);
 const RouteHandler = createFactory(RouteHandlerComponent);
 
 export default createClass({
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [Navigation],
 
   statics: {
     willTransitionTo (transition) {
@@ -22,7 +20,7 @@ export default createClass({
   componentDidMount () {
     auth.onAuthChange(() => {
       if (!auth.isAuthenticated()) {
-        this.context.router.transitionTo('/login');
+        this.transitionTo('login');
       }
     });
   },

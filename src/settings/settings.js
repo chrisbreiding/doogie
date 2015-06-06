@@ -38,11 +38,13 @@ export default createClass({
       DOM.div({ className: 'settings' },
         DOM.header(null,
           Link({ to: 'menu' }, icon('chevron-left', 'Back')),
-          DOM.h1(null, icon('cog', ' Settings'))
+          DOM.h1(null, icon('cog', 'Settings'))
         ),
         DOM.main(null,
           DOM.ul({ className: 'menu' },
-            MenuGroup(null, DOM.li(null, Link({ to: 'fields' }, 'Fields'))),
+            MenuGroup(null, DOM.li(null,
+              Link({ to: 'fields' }, icon('tasks', 'Fields')))
+            ),
             DOM.li(null, this._settings())
           )
         )

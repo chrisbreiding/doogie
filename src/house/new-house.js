@@ -1,17 +1,16 @@
 import { createFactory, createClass, PropTypes, DOM } from 'react';
+import { Navigation } from 'react-router';
 import { add } from './house-actions';
 import LoaderComponent from '../loader/loader';
 
 const Loader = createFactory(LoaderComponent);
 
 export default createClass({
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [Navigation],
 
   componentDidMount () {
     add((id) => {
-      this.context.router.transitionTo('house', { id });
+      this.transitionTo('house', { id });
     });
   },
 

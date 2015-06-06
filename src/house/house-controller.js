@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { createFactory, createClass, PropTypes } from 'react';
+import { createFactory, createClass } from 'react';
+import { State } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import HouseStore from './house-store';
 import houseActions from './house-actions';
@@ -12,11 +13,7 @@ import HouseComponent from './house';
 const House = createFactory(HouseComponent);
 
 export default createClass({
-  mixins: [ReactStateMagicMixin],
-
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [ReactStateMagicMixin, State],
 
   statics: {
     registerStores: {
@@ -41,7 +38,7 @@ export default createClass({
   },
 
   _getId () {
-    return this.props.id || this.context.router.getCurrentParams().id;
+    return this.props.id || this.getParams().id;
   },
 
   componentWillUnmount () {

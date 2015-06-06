@@ -1,4 +1,5 @@
 import { createFactory, createClass, PropTypes, DOM } from 'react';
+import { Navigation } from 'react-router';
 import auth from './auth';
 import LoaderComponent from '../loader/loader';
 import { icon } from '../lib/util';
@@ -6,9 +7,7 @@ import { icon } from '../lib/util';
 const Loader = createFactory(LoaderComponent);
 
 export default createClass({
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [Navigation],
 
   getInitialState () {
     return {
@@ -46,7 +45,7 @@ export default createClass({
     this.setState({ attemptingLogin: true }, () => {
       auth.login(email, password).then((didSucceed) => {
         if (didSucceed) {
-          this.context.router.transitionTo('menu');
+          this.transitionTo('menu');
         } else {
           this.setState({
             attemptingLogin: false,

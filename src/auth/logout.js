@@ -1,14 +1,13 @@
 import { createClass, PropTypes, DOM } from 'react';
+import { Navigation } from 'react-router';
 import auth from './auth';
 
 export default createClass({
-  contextTypes: {
-    router: PropTypes.func
-  },
+  mixins: [Navigation],
 
   componentDidMount () {
     auth.logout();
-    this.context.router.transitionTo('login');
+    this.transitionTo('login');
   },
 
   render () {
