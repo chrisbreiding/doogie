@@ -111,7 +111,7 @@ export default createClass({
   },
 
   _backRoute () {
-    return this.props.house.house.archived ? 'archived-houses' : 'menu';
+    return this.props.prevPath || (this.props.house.house.archived ? 'archived-houses' : 'menu');
   },
 
   _onSubmit (e) {

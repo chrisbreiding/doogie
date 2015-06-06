@@ -49,7 +49,7 @@ export default createClass({
           )
         )
       ),
-      RouteHandler()
+      RouteHandler(this.props)
     );
   },
 

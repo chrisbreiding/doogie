@@ -49,6 +49,7 @@ export default createClass({
 
   render () {
     return House(_.extend({
+      prevPath: this.props.prevPath,
       onChange: this._onChange,
       onRemove: this._onRemove
     }, this.state));

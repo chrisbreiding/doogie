@@ -17,9 +17,11 @@ RSVP.on('error', (e) => {
 const router = createRouter({ routes: routes });
 const savedRoute = localStorage.savedRoute;
 
+let prevPath = null;
 router.run((Handler, state) => {
   localStorage.savedRoute = state.path;
-  render(createFactory(Handler)(), document.getElementById('app'));
+  render(createFactory(Handler)({ prevPath }), document.getElementById('app'));
+  prevPath = state.path;
 });
 
 if (savedRoute) router.transitionTo(savedRoute);

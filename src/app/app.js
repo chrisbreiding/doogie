@@ -26,6 +26,6 @@ export default createClass({
   },
 
   render () {
-    return DOM.div(null, Menu(), RouteHandler());
+    return DOM.div(null, Menu(), RouteHandler(this.props));
   }
 });
