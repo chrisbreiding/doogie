@@ -1,8 +1,8 @@
 import { DOM } from 'react';
 
 export default {
-  icon (iconName, text) {
-    return DOM.span({ className: 'icon' },
+  icon (iconName, text, className) {
+    return DOM.span({ className: `icon ${className || ''}` },
       DOM.i({ className: `fa fa-${iconName}` }),
       text ? text : null
     );

@@ -28,8 +28,11 @@ export default createClass({
   },
 
   render () {
+    const handleClass = 'handle-icon';
+
     const menuProps = {
       sortable: true,
+      handleClass: handleClass,
       onSortingUpdate: actions.updateSorting.bind(actions)
     };
 
@@ -45,7 +48,7 @@ export default createClass({
           DOM.ul({ className: 'menu' },
             MenuGroup(menuProps, _.map(fields, (field) => {
               return DOM.li({ key: field.id, className: 'sortable-item', 'data-id': field.id },
-                icon('bars'),
+                icon('bars', null, handleClass),
                 Link({ to: 'field', params: { id: field.id }}, field.label)
               );
             })),

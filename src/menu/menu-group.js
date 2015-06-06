@@ -21,6 +21,7 @@ export default createClass({
 
       SortableList({
         el: 'ul',
+        handleClass: this.props.handleClass,
         onSortingUpdate: this.props.onSortingUpdate
       }, this.props.children) :
 

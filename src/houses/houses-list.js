@@ -13,6 +13,8 @@ import { icon } from '../lib/util';
 const Link = createFactory(LinkComponent);
 const MenuGroup = createFactory(MenuGroupComponent);
 
+const handleClass = 'handle-icon';
+
 export default createClass({
   mixins: [ReactStateMagicMixin],
 
@@ -36,6 +38,7 @@ export default createClass({
   render () {
     const menuGroupProps = {
       sortable: true,
+      handleClass: handleClass,
       onSortingUpdate: houseActions.updateSorting.bind(houseActions)
     };
 
@@ -48,7 +51,7 @@ export default createClass({
     if (visit) description += ', ' + visit;
 
     return DOM.li({ key: house.id, className: 'sortable-item list-house', 'data-id': house.id },
-      icon('bars'),
+      icon('bars', null, handleClass),
       Link({ to: 'house', params: house },
         DOM.h3(null, house[HOUSE_NAME_KEY]),
         DOM.p(null, description)

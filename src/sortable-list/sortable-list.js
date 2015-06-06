@@ -9,7 +9,6 @@ function idsAndIndex (els, el) {
 }
 
 export default createClass({
-
   componentDidMount () {
     this._setupSorting();
   },
@@ -22,7 +21,19 @@ export default createClass({
     this._tearDownSorting();
 
     let originalIndex;
-    this.drake = dragula([this.getDOMNode()])
+    this.drake = dragula([this.getDOMNode()], {
+      moves: (el, container, handle) => {
+        if (!this.props.handleClass) return true;
+
+        let handleEl = handle;
+        while (handleEl !== el) {
+          if (this._hasHandleClass(handleEl)) return true;
+          handleEl = handleEl.parentElement;
+        }
+
+        return false;
+      }
+    })
       .on('drag', (el, container) => {
         originalIndex = idsAndIndex(container.children, el).index;
       })
@@ -37,6 +48,10 @@ export default createClass({
         }
         this.props.onSortingUpdate(ids);
       });
+  },
+
+  _hasHandleClass (el) {
+    return el.className.indexOf(this.props.handleClass) >= 0;
   },
 
   _tearDownSorting () {
