@@ -63,6 +63,5 @@ export default createClass({
 
   _onRemove () {
     houseActions.remove(this.state.house.house.id);
-    this.context.router.transitionTo('menu');
   }
 });

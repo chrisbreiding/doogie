@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { createFactory, createClass, DOM } from 'react';
-import { Link as LinkComponent } from 'react-router';
+import { Link as LinkComponent, Navigation } from 'react-router';
 import { HOUSE_NAME_KEY, DEFAULT_FIELD_TYPE } from '../lib/constants';
 import HouseInfoComponent from './house-info';
 import LoaderComponent from '../loader/loader';
@@ -13,6 +13,8 @@ const Loader = createFactory(LoaderComponent);
 const Textarea = createFactory(TextareaComponent);
 
 export default createClass({
+  mixins: [Navigation],
+
   getDefaultProps () {
     return {
       house: { house: {} },
@@ -26,7 +28,7 @@ export default createClass({
 
     return DOM.div({ className: 'house' },
       DOM.header(null,
-        Link({ to: 'menu' }, icon('chevron-left', 'Back')),
+        Link({ to: this._backRoute() }, icon('chevron-left', 'Back')),
         DOM.h1()
       ),
       DOM.main(null,
@@ -104,7 +106,12 @@ export default createClass({
 
     if (confirm('Remove this house?')) {
       this.props.onRemove();
+      this.transitionTo(this._backRoute());
     }
+  },
+
+  _backRoute () {
+    return this.props.house.house.archived ? 'archived-houses' : 'menu';
   },
 
   _onSubmit (e) {
