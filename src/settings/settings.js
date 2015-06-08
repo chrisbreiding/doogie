@@ -67,7 +67,8 @@ export default createClass({
       'Closing Rate',
       'Interest Rate',
       'Insurance Rate',
-      'PMI Rate'
+      'PMI Rate',
+      'Mortgage Lengths'
     ], this._textSetting);
   },
 

@@ -19,14 +19,20 @@ export default createClass({
       ),
       DOM.p(null, 'Monthly cost', this._requiresPMI() ? ' (includes PMI)' : null),
       DOM.div(null,
-        DOM.p(null,
-          '15 yr: ', DOM.span({ className: 'value' }, this._monthlyCost(15))
-        ),
-        DOM.p(null,
-          '30 yr: ', DOM.span({ className: 'value' }, this._monthlyCost(30))
-        )
+        _.map(this._mortgageLengths(), (length) => {
+          return DOM.p({ key: `mortlen-${length}` },
+            `${length} yr: `, DOM.span({ className: 'value' }, this._monthlyCost(length))
+          );
+        })
       )
     );
+  },
+
+  _mortgageLengths () {
+    const lengthsString = this.props.settings.mortgageLengths || '30';
+    return _.map(lengthsString.split(/[^0-9]+/), (length) => {
+      return parseInt(length, 10);
+    });
   },
 
   _closingCost () {
