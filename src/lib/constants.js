@@ -1,4 +1,3 @@
-export default {
-  HOUSE_NAME_KEY: '__name',
-  DEFAULT_FIELD_TYPE: 'input'
-}
+export const HOUSE_NAME_KEY = '__name'
+
+export const DEFAULT_FIELD_TYPE = 'input'

@@ -6,14 +6,68 @@
     width: 100%;
   }
 
-  .info {
-    p {
-      margin-left: 0;
-      margin-right: 0;
+  marker-height = 30px;
+
+  .marker {
+    align-items: center;
+    background: action-color;
+    border: solid 3px white;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    font-size: 16px;
+    height: marker-height;
+    justify-content: center;
+    left: -11px;
+    position: absolute;
+    top: -11px;
+    width: 30px;
+
+    &.hover {
+      background: darken(action-color, 40%);
+      cursor: pointer;
     }
 
-    a {
-      text-align: center;
+    .info {
+      background: white;
+      border-radius: 5px;
+      bottom: marker-height + 12;
+      color: #333;
+      display: none;
+      left: -100px;
+      padding: 10px;
+      position: absolute;
+      width: 220px;
+
+      h2 {
+        line-height: 1.5;
+        margin-top: 0;
+        text-align: center;
+      }
+
+      p {
+        color: #8b8b8b;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .arrow {
+        fill: white;
+        left: 50%;
+        margin-left: -8px;
+        position: absolute;
+        stroke: white;
+        top: 100%;
+      }
+    }
+
+    &.clicked .info {
+      display: block;
     }
   }
 }

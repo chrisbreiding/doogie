@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "plugin:crb/general",
+    "plugin:crb/react"
+  ],
+  "globals": {
+    "process": true
+  }
+}

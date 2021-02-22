@@ -1,23 +1,23 @@
-import _ from 'lodash';
-import { createStore } from '../lib/dispatcher';
-import actions from './settings-actions';
+import { observable } from 'mobx'
 
 class SettingsStore {
-  constructor () {
-    _.extend(this, {
-      downPayment: '0',
-      interestRate: '0',
-      insuranceRate: '0'
-    });
+  @observable settings = observable.map({
+    downPayment: '0',
+    interestRate: '0',
+    insuranceRate: '0',
+    maxUpfrontCost: '0',
+    pmiRate: '0',
+    closingRate: '0',
+    mortgageLengths: '30',
+  })
 
-    this.bindListeners({
-      updateSetting: actions.DID_UPDATE_SETTING
-    });
+  get (key) {
+    return this.settings.get(key)
   }
 
-  updateSetting ({ key, value }) {
-    this[key] = value;
+  updateSetting = (props) => {
+    this.settings.set(props.id, props.value)
   }
 }
 
-export default createStore(SettingsStore, 'SettingsStore');
+export const settingsStore = new SettingsStore()

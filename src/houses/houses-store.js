@@ -1,69 +1,62 @@
-import _ from 'lodash';
-import { createStore } from '../lib/dispatcher';
-import actions from './houses-actions';
+import _ from 'lodash'
+import { action, computed, observable, values } from 'mobx'
+
+import { HouseModel } from '../house/house-model'
 
 class HousesStore {
-  constructor () {
-    this.clearData();
+  @observable _houses = observable.map()
 
-    this.bindListeners({
-      addHouse: actions.DID_ADD_HOUSE,
-      updateHouse: actions.DID_UPDATE_HOUSE,
-      removeHouse: actions.DID_REMOVE_HOUSE,
-      clearData: actions.STOP_LISTENING
-    });
+  @computed get houses () {
+    return _(values(this._houses))
+    .filter((house) => !house.get('archived'))
+    .sortBy((house) => house.get('order'))
+    .value()
   }
 
-  addHouse (house) {
-    if (house.order == null) {
-      house.order = this._newOrder();
+  @computed get archivedHouses () {
+    return _(values(this._houses))
+    .filter((house) => house.get('archived'))
+    .sortBy((house) => house.get('order'))
+    .value()
+  }
+
+  @action updateSorting (ids) {
+    _.each(ids, (id, order) => {
+      this.getHouseById(id).update({ order })
+    })
+  }
+
+  getHouseById (id) {
+    return this._houses.get(id)
+  }
+
+  addHouse = (props) => {
+    const house = new HouseModel(props)
+
+    if (house.get('order') == null) {
+      house.update({ order: this._newOrder() })
     }
-    this._houses[house.id] = house;
-    this._updateHouses();
+
+    this._houses.set(house.get('id'), house)
   }
 
-  updateHouse (house) {
-    this._houses[house.id] = _.extend({}, this._houses[house.id], house);
-    this._updateHouses();
+  updateHouse = (props) => {
+    this._houses.get(props.id).update(props)
   }
 
-  removeHouse (house) {
-    delete this._houses[house.id];
-    this._updateHouses();
-  }
-
-  clearData () {
-    this._houses = {};
-    this.houses = [];
-    this.archivedHouses = [];
+  removeHouse = ({ id }) => {
+    this._houses.delete(id)
   }
 
   _newOrder () {
-    var orders = _.map(this._houses, (house) => house.order || 0);
-    if (!orders.length) return 0;
-    return Math.max.apply(Math, orders);
-  }
+    const orders = _.map(this.houses, (house) => (
+      house.get('order') || 0
+    ))
 
-  _updateHouses () {
-    this.houses = this._activeHouses();
-    this.archivedHouses = this._archivedHouses();
-  }
+    if (!orders.length) return 0
 
-  _activeHouses () {
-    return _(this._houses)
-      .values()
-      .filter((house) => !house.archived)
-      .sortBy('order')
-      .value();
-  }
-
-  _archivedHouses () {
-    return _(this._houses)
-      .values()
-      .filter((house) => house.archived)
-      .sortBy('order')
-      .value();
+    return Math.max(...orders)
   }
 }
 
-export default createStore(HousesStore, 'HousesStore');
+export const housesStore = new HousesStore()

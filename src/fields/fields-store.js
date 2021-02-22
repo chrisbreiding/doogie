@@ -1,58 +1,49 @@
-import _ from 'lodash';
-import { createStore } from '../lib/dispatcher';
-import actions from './fields-actions';
+import _ from 'lodash'
+import { action, computed, observable, values } from 'mobx'
+import { FieldModel } from './field-model'
 
 class FieldsStore {
-  constructor () {
-    this.clearData();
+  @observable _fields = observable.map()
 
-    this.bindListeners({
-      addField: actions.ADD_FIELD,
-      updateField: actions.UPDATE_FIELD,
-      removeField: actions.REMOVE_FIELD,
-      clearData: actions.STOP_LISTENING
-    });
+  @computed get fields () {
+    return _.sortBy(values(this._fields), 'order')
   }
 
-  addField (field) {
+  @action updateSorting (ids) {
+    _.each(ids, (id, order) => {
+      this.getFieldById(id).update({ order })
+    })
+  }
+
+  getFieldById (id) {
+    return this._fields.get(id)
+  }
+
+  addField = (props) => {
+    const field = new FieldModel(props)
+
     if (field.order == null) {
-      field.order = this._newOrder();
+      field.order = this._newOrder()
     }
-    this._fields[field.id] = field;
-    this._updateFields();
+
+    this._fields.set(field.id, field)
   }
 
-  updateField (field) {
-    this._fields[field.id] = field;
-    this._updateFields();
+  updateField = (props) => {
+    this._fields.get(props.id).update(props)
   }
 
-  removeField (field) {
-    delete this._fields[field.id];
-    this._updateFields();
+  removeField = (field) => {
+    this._fields.delete(field.id)
   }
 
-  clearData () {
-    this._fields = {};
-    this.fields = [];
-  }
+  _newOrder () {
+    const orders = _.map(values(this._fields), (field) => field.order || 0)
 
-  _newOrder (orders) {
-    var orders = _.map(this._fields, (field) => field.order || 0);
-    if (!orders.length) return 0;
-    return Math.max.apply(Math, orders);
-  }
+    if (!orders.length) return 0
 
-  _updateFields () {
-    this.fields = this._sortedFields();
-  }
-
-  _sortedFields () {
-    return _(this._fields)
-      .values()
-      .sortBy('order')
-      .value();
+    return Math.max(...orders)
   }
 }
 
-export default createStore(FieldsStore, 'FieldsStore');
+export const fieldsStore = new FieldsStore()
