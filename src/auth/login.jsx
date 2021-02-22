@@ -35,7 +35,7 @@ export const Login = observer(() => {
       if (didSucceed) {
         history.push('/')
       } else {
-        state.setAtttemptingLogin(false)
+        state.setAttemptingLogin(false)
         state.setLoginFailed(true)
       }
     })
