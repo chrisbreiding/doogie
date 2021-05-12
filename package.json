@@ -20,7 +20,7 @@
     "fastclick": "^1.0.6",
     "firebase": "^7.15.1",
     "google-map-react": "^2.1.9",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mobx": "^5.15.7",
     "mobx-react": "^6.3.1",
     "react": "^17.0.1",
