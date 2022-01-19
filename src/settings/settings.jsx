@@ -56,7 +56,7 @@ const DropdownSetting = observer(({ setting }) => {
       <select value={settingsStore.get(key)} onChange={_.partial(onChange, key)}>
         {_.map(fieldsStore.fields, (field) => (
           <option key={field.id} value={field.id}>
-            {field.label}
+            {field.displayLabel}
           </option>
         ))}
       </select>
@@ -76,7 +76,6 @@ const DropdownSettings = observer(() => (
     'Year Built Field',
     'A/C Field',
     'Heating Field',
-    'Zillow Link Field',
   ], (setting) => (
     <DropdownSetting key={setting} setting={setting} />
   ))

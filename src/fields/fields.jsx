@@ -19,7 +19,7 @@ const FieldItem = observer(({ field, url }) => (
   <li className='sortable-item' data-id={field.id}>
     <Icon name='bars' className={handleClass} />
     <Link to={`${url}/${field.id}`}>
-      {field.label}
+      {field.displayLabel}
     </Link>
   </li>
 ))

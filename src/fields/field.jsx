@@ -54,6 +54,7 @@ export const Field = observer(() => {
             >
               <option value='input'>Single</option>
               <option value='textarea'>Mult-line</option>
+              <option value='link'>Link</option>
             </select>
           </fieldset>
           <fieldset>

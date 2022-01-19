@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 
 import { DEFAULT_FIELD_TYPE } from '../lib/constants'
 
@@ -12,6 +12,10 @@ export class FieldModel {
 
   constructor (props) {
     this.update(props)
+  }
+
+  @computed get displayLabel () {
+    return this.type === 'link' ? `${this.label} Link` : this.label
   }
 
   @action update (props) {

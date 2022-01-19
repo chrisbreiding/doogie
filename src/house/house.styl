@@ -30,10 +30,20 @@
     }
   }
 
-  .link {
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  li {
+    flex-grow: 2;
+    padding: 0.2em;
+    min-width: 50%;
+  }
+
+  a {
     background: action-color;
     color: light-color;
-    margin-bottom: 0.4em;
 
     &:hover,
     &:focus,

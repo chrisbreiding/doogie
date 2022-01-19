@@ -9,7 +9,6 @@ import { fieldsStore } from '../fields/fields-store'
 import { HOUSE_NAME_KEY } from '../lib/constants'
 import { housesApi } from '../lib/api'
 import { housesStore } from '../houses/houses-store'
-import { settingsStore } from '../settings/settings-store'
 import * as backHistory from '../lib/back-history'
 
 import { Header } from '../app/header'
@@ -45,7 +44,7 @@ const Fields = observer(({ house }) => {
 
     return (
       <fieldset key={field.id}>
-        <label>{field.label}</label>
+        <label>{field.displayLabel}</label>
         <TextField
           value={value != null ? value : field.defaultNotes}
           onChange={_.partial(onChange, house, field.id)}
@@ -77,8 +76,6 @@ export const House = observer(({ house }) => {
     }
   }
 
-  const zillowLink = house.get(settingsStore.get('zillowLinkField'))
-
   return (
     <div className='house'>
       <Header />
@@ -90,19 +87,30 @@ export const House = observer(({ house }) => {
             onChange={_.partial(onChange, house, HOUSE_NAME_KEY)}
           />
           <HouseInfo house={house} />
-          {zillowLink &&
-            <a
-              className='link'
-              href={zillowLink}
-              target='_blank'
-              rel='noreferrer'
-            >
-              <Icon name='home'>View on Zillow</Icon>
-            </a>
-          }
-          <a href={directionsUrl(house.get(HOUSE_NAME_KEY))} className='link'>
-            <Icon name='car'>Driving Directions</Icon>
-          </a>
+          <ul className='links'>
+            {fieldsStore.linkFields
+            .filter((field) => !!house.get(field.id))
+            .map((field) => (
+              <li key={field.id}>
+                <a
+                  href={house.get(field.id)}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Icon name='home'>View on {field.label}</Icon>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={directionsUrl(house.get(HOUSE_NAME_KEY))}
+                target='_blank'
+                rel='noreferrer'
+              >
+                <Icon name='car'>Driving Directions</Icon>
+              </a>
+            </li>
+          </ul>
           <Fields house={house} />
           <button className='archive' onClick={archive}>
             <Icon name='archive'>{house.get('archived') ? 'Unarchive' : 'Archive'}</Icon>
