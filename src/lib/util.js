@@ -22,7 +22,9 @@ export const decimalFromPercent = (percent) => {
 }
 
 export const directionsUrl = (address) => {
-  return `comgooglemaps://?daddr=${address}&directionsmode=driving`
+  return 'ontouchstart' in window
+    ? `comgooglemaps://?daddr=${address}&directionsmode=driving`
+    : `https://www.google.com/maps/dir/Current+Location/${address}`
 }
 
 export const isStandalone = () => {
