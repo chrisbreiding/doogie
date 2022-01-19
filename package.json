@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "zunder build-prod",
-    "deploy": "echo 'Push to production branch manually to deploy. Build happens on netlify.'",
+    "deploy": "echo 'Deploying via netlify' && git push origin master:production",
     "lint": "eslint 'src/*.+(js|jsx)' 'src/**/*.+(js|jsx)'",
     "lint-fix": "yarn lint --fix",
     "start": "zunder watch"
