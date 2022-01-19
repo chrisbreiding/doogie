@@ -31,6 +31,35 @@ const onChange = (house, key, e) => {
   })
 }
 
+const listItemRegex = /(^\s*)\-/
+
+const onKeyUp = (house, field, e) => {
+  if (field.type !== 'textarea' || e.code !== 'Enter') return
+
+  const textarea = e.target
+  const text = textarea.value
+  const cursorPosition = textarea.selectionStart
+  const textBefore = text.substr(0, cursorPosition)
+  const textAfter = text.substr(cursorPosition, text.length - cursorPosition)
+  const lines = textBefore.split('\n')
+  // does previous line have "- ", indicating it's a list item?
+  const listItemmatch = _.nth(lines, -2).match(listItemRegex)
+
+  if (!listItemmatch) return
+
+  const indent = listItemmatch[1] || ''
+  const addition = `${indent}- `
+
+  update(house, {
+    [field.id]: `${textBefore}${addition}${textAfter}`,
+  })
+
+  requestAnimationFrame(() => {
+    // put the cursor back in the right place or else it will be at the end
+    textarea.selectionStart = textarea.selectionEnd = cursorPosition + addition.length
+  })
+}
+
 const onSubmit = (e) => {
   e.preventDefault()
 }
@@ -48,6 +77,7 @@ const Fields = observer(({ house }) => {
         <TextField
           value={value != null ? value : field.defaultNotes}
           onChange={_.partial(onChange, house, field.id)}
+          onKeyUp={_.partial(onKeyUp, house, field)}
         />
       </fieldset>
     )
