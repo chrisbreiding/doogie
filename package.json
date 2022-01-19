@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "zunder build-prod",
-    "deploy": "echo 'Deploying via netlify' && git push origin master:production",
+    "deploy": "echo 'Deploying via netlify' && git push origin $(git rev-parse --abbrev-ref HEAD):production",
     "lint": "eslint 'src/*.+(js|jsx)' 'src/**/*.+(js|jsx)'",
     "lint-fix": "yarn lint --fix",
     "start": "zunder watch"
