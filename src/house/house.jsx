@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
 import React from 'react'
 
-import { directionsUrl } from '../lib/util'
+import { directionsUrl, mapUrl } from '../lib/util'
 import { fieldsStore } from '../fields/fields-store'
 import { HOUSE_NAME_KEY } from '../lib/constants'
 import { housesApi } from '../lib/api'
@@ -131,6 +131,15 @@ export const House = observer(({ house }) => {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={mapUrl(house.get(HOUSE_NAME_KEY))}
+                target='_blank'
+                rel='noreferrer'
+              >
+                <Icon name='map-marker'>View On Map</Icon>
+              </a>
+            </li>
             <li>
               <a
                 href={directionsUrl(house.get(HOUSE_NAME_KEY))}
