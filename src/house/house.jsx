@@ -120,39 +120,43 @@ export const House = observer(({ house }) => {
             onChange={_.partial(onChange, house, HOUSE_NAME_KEY)}
           />
           <HouseInfo house={house} />
-          <ul className='links'>
-            {fieldsStore.linkFields
-            .filter((field) => !!house.get(field.id))
-            .map((field) => (
-              <li key={field.id}>
+          <div className='links'>
+            <ul>
+              {fieldsStore.linkFields
+              .filter((field) => !!house.get(field.id))
+              .map((field) => (
+                <li key={field.id}>
+                  <a
+                    href={house.get(field.id)}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <Icon icon={faLaptopHouse}>View on {field.label}</Icon>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <ul>
+              <li>
                 <a
-                  href={house.get(field.id)}
+                  href={mapUrl(house.get(HOUSE_NAME_KEY))}
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <Icon icon={faLaptopHouse}>View on {field.label}</Icon>
+                  <Icon icon={faMapMarkedAlt}>View On Map</Icon>
                 </a>
               </li>
-            ))}
-            <li>
-              <a
-                href={mapUrl(house.get(HOUSE_NAME_KEY))}
-                target='_blank'
-                rel='noreferrer'
-              >
-                <Icon icon={faMapMarkedAlt}>View On Map</Icon>
-              </a>
-            </li>
-            <li>
-              <a
-                href={directionsUrl(house.get(HOUSE_NAME_KEY))}
-                target='_blank'
-                rel='noreferrer'
-              >
-                <Icon icon={faRoute}>Driving Directions</Icon>
-              </a>
-            </li>
-          </ul>
+              <li>
+                <a
+                  href={directionsUrl(house.get(HOUSE_NAME_KEY))}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Icon icon={faRoute}>Driving Directions</Icon>
+                </a>
+              </li>
+            </ul>
+          </div>
           <Fields house={house} />
           <button className='archive' onClick={archive}>
             <Icon icon={faArchive}>{house.get('archived') ? 'Unarchive' : 'Archive'}</Icon>
