@@ -1,3 +1,5 @@
+import { faMap } from '@fortawesome/free-regular-svg-icons'
+import { faArchive, faCogs, faHome, faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
@@ -45,12 +47,12 @@ export const Menu = observer(() => {
       <MenuGroup>
         <li className='houses-link'>
           <Link to='houses'>
-            <Icon name='home'>Compare houses</Icon>
+            <Icon icon={faHome}>Compare houses</Icon>
           </Link>
         </li>
         <li>
           <Link to='map'>
-            <Icon name='map-marker'>Map</Icon>
+            <Icon icon={faMap}>Map</Icon>
           </Link>
         </li>
       </MenuGroup>
@@ -58,7 +60,7 @@ export const Menu = observer(() => {
       <MenuGroup>
         <li>
           <a onClick={addHouse} href='#'>
-            <Icon name='plus'>Add house</Icon>
+            <Icon icon={faPlus}>Add house</Icon>
           </a>
         </li>
       </MenuGroup>
@@ -66,20 +68,20 @@ export const Menu = observer(() => {
         {!!housesStore.archivedHouses.length &&
           <li>
             <Link to='archived-houses'>
-              <Icon name='archive'>Archived houses</Icon>
+              <Icon icon={faArchive}>Archived houses</Icon>
             </Link>
           </li>
         }
         <li>
           <Link to='settings'>
-            <Icon name='cog'>Settings</Icon>
+            <Icon icon={faCogs}>Settings</Icon>
           </Link>
         </li>
       </MenuGroup>
       <MenuGroup>
         <li>
           <a onClick={logout} href='#'>
-            <Icon name='sign-out'>Log out</Icon>
+            <Icon icon={faSignOutAlt}>Log out</Icon>
           </a>
         </li>
       </MenuGroup>

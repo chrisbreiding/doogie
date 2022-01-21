@@ -1,4 +1,7 @@
 import _ from 'lodash'
+
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { faArchive, faLaptopHouse, faMapMarkedAlt, faRoute } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
 import { useHistory, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
@@ -127,7 +130,7 @@ export const House = observer(({ house }) => {
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <Icon name='home'>View on {field.label}</Icon>
+                  <Icon icon={faLaptopHouse}>View on {field.label}</Icon>
                 </a>
               </li>
             ))}
@@ -137,7 +140,7 @@ export const House = observer(({ house }) => {
                 target='_blank'
                 rel='noreferrer'
               >
-                <Icon name='map-marker'>View On Map</Icon>
+                <Icon icon={faMapMarkedAlt}>View On Map</Icon>
               </a>
             </li>
             <li>
@@ -146,16 +149,16 @@ export const House = observer(({ house }) => {
                 target='_blank'
                 rel='noreferrer'
               >
-                <Icon name='car'>Driving Directions</Icon>
+                <Icon icon={faRoute}>Driving Directions</Icon>
               </a>
             </li>
           </ul>
           <Fields house={house} />
           <button className='archive' onClick={archive}>
-            <Icon name='archive'>{house.get('archived') ? 'Unarchive' : 'Archive'}</Icon>
+            <Icon icon={faArchive}>{house.get('archived') ? 'Unarchive' : 'Archive'}</Icon>
           </button>
           <button className='remove' onClick={remove}>
-            <Icon name='remove'>Remove</Icon>
+            <Icon icon={faTrashAlt}>Remove</Icon>
           </button>
         </form>
       </main>

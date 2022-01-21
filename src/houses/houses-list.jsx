@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -27,7 +28,7 @@ const House = observer(({ house }) => {
       className='sortable-item list-house'
       data-id={id}
     >
-      <Icon name='bars' className={handleClass} />
+      <Icon icon={faBars} outerClassName={handleClass} />
       <Link to={`/houses/${id}`}>
         <h3>{house.get(HOUSE_NAME_KEY)}</h3>
         <p>{description}&nbsp;</p>

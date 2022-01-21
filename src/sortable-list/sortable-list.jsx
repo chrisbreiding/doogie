@@ -59,6 +59,8 @@ export class SortableList extends Component {
   }
 
   _hasHandleClass (el) {
+    if (!el.className?.indexOf) return false
+
     return el.className.indexOf(this.props.handleClass) >= 0
   }
 

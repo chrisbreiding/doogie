@@ -1,11 +1,12 @@
 import { observer, useLocalStore } from 'mobx-react'
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import React, { useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { auth } from './auth'
 
-import { Loader } from '../loader/loader'
 import { Icon } from '../lib/icon'
+import { Loader } from '../loader/loader'
 
 export const Login = observer(() => {
   const state = useLocalStore(() => ({
@@ -56,7 +57,7 @@ export const Login = observer(() => {
           {state.attemptingLogin ?
             <Loader size='regular' /> :
             <button>
-              <Icon name='sign-in'>Log In</Icon>
+              <Icon icon={faSignInAlt}>Log In</Icon>
             </button>
           }
         </form>

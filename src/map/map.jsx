@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { faHome, faRoute } from '@fortawesome/free-solid-svg-icons'
 import { action, observable } from 'mobx'
 import { Link } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
@@ -47,13 +48,21 @@ const Marker = observer(({ marker, $hover, isClicked }) => {
         <h2>{address1}<br />{address2}</h2>
         {visit && <p>{visit}</p>}
         <p>
-          <Link to={`/houses/${house.get('id')}`}>View</Link>
+          <Link to={`/houses/${house.get('id')}`}>
+            <Icon icon={faHome}>View</Icon>
+          </Link>
         </p>
         <p>
-          <a href={`${directionsUrl(house.get(HOUSE_NAME_KEY))}`}>Directions</a>
+          <a
+            href={`${directionsUrl(house.get(HOUSE_NAME_KEY))}`}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <Icon icon={faRoute}>Directions</Icon>
+          </a>
         </p>
       </div>
-      <Icon name='home' />
+      <Icon icon={faHome} />
     </div>
   )
 })

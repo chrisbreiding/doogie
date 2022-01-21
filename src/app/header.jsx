@@ -1,3 +1,4 @@
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -16,7 +17,7 @@ export const Header = ({ children }) => {
   return (
     <header>
       <a onClick={goBack} href='#'>
-        <Icon name='chevron-left'>Back</Icon>
+        <Icon icon={faChevronLeft}>Back</Icon>
       </a>
       <h1>{children}</h1>
     </header>

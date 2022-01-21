@@ -1,3 +1,4 @@
+import { faCogs, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
 import { Link, Route, useRouteMatch } from 'react-router-dom'
 import { observer } from 'mobx-react'
@@ -87,14 +88,14 @@ export const Settings = observer(() => {
   return (<>
     <div className='settings'>
       <Header>
-        <Icon name='cog'>Settings</Icon>
+        <Icon icon={faCogs}>Settings</Icon>
       </Header>
       <main>
         <ul className='menu'>
           <MenuGroup>
             <li>
               <Link to={`${match.url}/fields`}>
-                <Icon name='tasks'>Fields</Icon>
+                <Icon icon={faSlidersH}>Fields</Icon>
               </Link>
             </li>
           </MenuGroup>

@@ -1,3 +1,4 @@
+import { faArchive } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
 import { Header } from '../app/header'
@@ -7,7 +8,7 @@ import { Icon } from '../lib/icon'
 export const ArchivedHouses = () => (
   <div className='archived-houses'>
     <Header>
-      <Icon name='archive'>Archived Houses</Icon>
+      <Icon icon={faArchive}>Archived Houses</Icon>
     </Header>
     <main>
       <ul>

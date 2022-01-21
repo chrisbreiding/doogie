@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { faBars, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
@@ -17,7 +18,7 @@ const handleClass = 'handle-icon'
 
 const FieldItem = observer(({ field, url }) => (
   <li className='sortable-item' data-id={field.id}>
-    <Icon name='bars' className={handleClass} />
+    <Icon icon={faBars} outerClassName={handleClass} />
     <Link to={`${url}/${field.id}`}>
       {field.displayLabel}
     </Link>
@@ -55,7 +56,7 @@ export const Fields = observer(() => {
     <>
       <div className='fields'>
         <Header>
-          <Icon name='tasks'>Fields</Icon>
+          <Icon icon={faSlidersH}>Fields</Icon>
         </Header>
         <main>
           <ul className='menu'>
@@ -71,7 +72,7 @@ export const Fields = observer(() => {
             <MenuGroup>
               <li>
                 <button onClick={addField}>
-                  <Icon name='plus'>Add Field</Icon>
+                  <Icon icon={faPlus}>Add Field</Icon>
                 </button>
               </li>
             </MenuGroup>
