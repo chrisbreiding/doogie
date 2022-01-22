@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { faBars, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { faAlignJustify, faBars, faGripLines, faHeading, faLink, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
@@ -16,11 +16,24 @@ import { MenuGroup } from '../menu/menu-group'
 
 const handleClass = 'handle-icon'
 
+const getIcon = (type) => {
+  switch (type) {
+    case 'heading':
+      return faHeading
+    case 'link':
+      return faLink
+    case 'textarea':
+      return faAlignJustify
+    default:
+      return faGripLines
+  }
+}
+
 const FieldItem = observer(({ field, url }) => (
-  <li className={`sortable-item field-type-${field.type}`} data-id={field.id}>
+  <li className={`sortable-item field-item field-type-${field.type}`} data-id={field.id}>
     <Icon icon={faBars} outerClassName={handleClass} />
     <Link to={`${url}/${field.id}`}>
-      {field.displayLabel}
+      {field.displayLabel} <Icon icon={getIcon(field.type)} />
     </Link>
   </li>
 ))
