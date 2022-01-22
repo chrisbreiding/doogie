@@ -73,10 +73,6 @@ const DropdownSettings = observer(() => (
     'Misc Upfront Costs Field',
     'Misc Monthly Costs Field',
     'Visit Field',
-    'Rooms Field',
-    'Year Built Field',
-    'A/C Field',
-    'Heating Field',
   ], (setting) => (
     <DropdownSetting key={setting} setting={setting} />
   ))
