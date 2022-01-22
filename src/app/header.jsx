@@ -16,7 +16,7 @@ export const Header = ({ children }) => {
 
   return (
     <header>
-      <a onClick={goBack} href='#'>
+      <a className='back' onClick={goBack} href='#'>
         <Icon icon={faChevronLeft}>Back</Icon>
       </a>
       <h1>{children}</h1>

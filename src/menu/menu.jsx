@@ -1,5 +1,5 @@
 import { faMap } from '@fortawesome/free-regular-svg-icons'
-import { faArchive, faCogs, faHome, faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faArchive, faCogs, faColumns, faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
@@ -47,7 +47,7 @@ export const Menu = observer(() => {
       <MenuGroup>
         <li className='houses-link'>
           <Link to='houses'>
-            <Icon icon={faHome}>Compare houses</Icon>
+            <Icon icon={faColumns}>Compare houses</Icon>
           </Link>
         </li>
         <li>

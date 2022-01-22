@@ -147,7 +147,7 @@ export const House = observer(({ house }) => {
                   target='_blank'
                   rel='noreferrer'
                 >
-                  <Icon icon={faMapMarkedAlt}>View On Map</Icon>
+                  <Icon icon={faMapMarkedAlt}>View on Map</Icon>
                 </a>
               </li>
               <li>
