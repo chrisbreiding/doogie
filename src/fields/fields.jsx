@@ -14,7 +14,7 @@ import { Icon } from '../lib/icon'
 import { Loader } from '../loader/loader'
 import { MenuGroup } from '../menu/menu-group'
 
-const handleClass = 'handle-icon'
+const handleClass = 'handle-icon gu-unselectable'
 
 const getIcon = (type) => {
   switch (type) {

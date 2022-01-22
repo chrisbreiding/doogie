@@ -12,7 +12,7 @@ import { settingsStore } from '../settings/settings-store'
 import { Icon } from '../lib/icon'
 import { MenuGroup } from '../menu/menu-group'
 
-const handleClass = 'handle-icon'
+const handleClass = 'handle-icon gu-unselectable'
 
 const House = observer(({ house }) => {
   const cost = house.get(settingsStore.get('costField'))
@@ -25,7 +25,7 @@ const House = observer(({ house }) => {
 
   return (
     <li
-      className='sortable-item list-house'
+      className='list-house sortable-item'
       data-id={id}
     >
       <Icon icon={faBars} outerClassName={handleClass} />
