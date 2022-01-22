@@ -71,6 +71,10 @@ const Fields = observer(({ house }) => {
   if (!fieldsStore.fields.length) return <Loader />
 
   return _.map(fieldsStore.fields, (field) => {
+    if (field.type === 'heading') {
+      return <h3 key={field.id}>{field.displayLabel}</h3>
+    }
+
     const TextField = field.type === 'textarea' ? AutosizeTextarea : Input
     const value = house.get(field.id)
 

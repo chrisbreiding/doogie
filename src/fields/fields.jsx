@@ -17,7 +17,7 @@ import { MenuGroup } from '../menu/menu-group'
 const handleClass = 'handle-icon'
 
 const FieldItem = observer(({ field, url }) => (
-  <li className='sortable-item' data-id={field.id}>
+  <li className={`sortable-item field-type-${field.type}`} data-id={field.id}>
     <Icon icon={faBars} outerClassName={handleClass} />
     <Link to={`${url}/${field.id}`}>
       {field.displayLabel}

@@ -55,6 +55,7 @@ export const Field = observer(() => {
               <option value='input'>Single</option>
               <option value='textarea'>Mult-line</option>
               <option value='link'>Link</option>
+              <option value='heading'>Heading</option>
             </select>
           </fieldset>
           <fieldset>
@@ -65,13 +66,15 @@ export const Field = observer(() => {
               onChange={_.partial(onChange, 'label')}
             />
           </fieldset>
-          <fieldset>
-            <label>Default notes</label>
-            <NotesField
-              value={field.defaultNotes || ''}
-              onChange={_.partial(onChange, 'defaultNotes')}
-            />
-          </fieldset>
+          {field.type !== 'heading' &&
+            <fieldset>
+              <label>Default notes</label>
+              <NotesField
+                value={field.defaultNotes || ''}
+                onChange={_.partial(onChange, 'defaultNotes')}
+              />
+            </fieldset>
+          }
           <button className='remove' onClick={remove}>
             Remove Field
           </button>
