@@ -8,14 +8,7 @@ class HousesStore {
 
   @computed get houses () {
     return _(values(this._houses))
-    .filter((house) => !house.get('archived'))
-    .sortBy((house) => house.get('order'))
-    .value()
-  }
-
-  @computed get archivedHouses () {
-    return _(values(this._houses))
-    .filter((house) => house.get('archived'))
+    .filter((house) => !house.archiveId)
     .sortBy((house) => house.get('order'))
     .value()
   }
@@ -24,6 +17,13 @@ class HousesStore {
     _.each(ids, (id, order) => {
       this.getHouseById(id).update({ order })
     })
+  }
+
+  archivedHouses (archiveId) {
+    return _(values(this._houses))
+    .filter((house) => house.get('archiveId') === archiveId)
+    .sortBy((house) => house.get('order'))
+    .value()
   }
 
   getHouseById (id) {

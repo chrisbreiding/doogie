@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
 import { useHistory, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
@@ -10,6 +11,7 @@ import { fieldsStore } from './fields-store'
 import * as backHistory from '../lib/back-history'
 
 import { Header } from '../app/header'
+import { Icon } from '../lib/icon'
 import { Loader } from '../loader/loader'
 
 const Input = (props) => <input {...props} />
@@ -76,7 +78,7 @@ export const Field = observer(() => {
             </fieldset>
           }
           <button className='remove' onClick={remove}>
-            Remove Field
+            <Icon icon={faTrashAlt}>Remove</Icon>
           </button>
         </form>
       </main>

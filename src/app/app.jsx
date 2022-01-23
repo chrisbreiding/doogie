@@ -4,12 +4,13 @@ import React, { useEffect } from 'react'
 import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom'
 
 import { auth } from '../auth/auth'
+import { archivesStore } from '../archives/archives-store'
 import { housesStore } from '../houses/houses-store'
 import { fieldsStore } from '../fields/fields-store'
 import { settingsStore } from '../settings/settings-store'
-import { fieldsApi, housesApi, settingsApi, onLoad, offLoad } from '../lib/api'
+import { fieldsApi, housesApi, settingsApi, onLoad, offLoad, archivesApi } from '../lib/api'
 
-import { ArchivedHouses } from '../houses/archived-houses'
+import { Archives } from '../archives/archives'
 import { House } from '../house/house'
 import { Houses } from '../houses/houses'
 import { Loader } from '../loader/loader'
@@ -62,6 +63,11 @@ export const App = observer(() => {
       }
     })
 
+    archivesApi.listen({
+      onAdd: archivesStore.addArchive,
+      onUpdate: archivesStore.updateArchive,
+      onRemove: archivesStore.removeArchive,
+    })
     housesApi.listen({
       onAdd: housesStore.addHouse,
       onUpdate: housesStore.updateHouse,
@@ -111,7 +117,7 @@ export const App = observer(() => {
     <Switch>
       <Route path='/settings' component={Settings} />
       <Route exact path='/houses' component={Houses} />
-      <Route path='/archived-houses' component={ArchivedHouses} />
+      <Route path='/archives' component={Archives} />
       <Route path='/houses/:id' component={House} />
       <Route path='/map' component={Map} />
     </Switch>

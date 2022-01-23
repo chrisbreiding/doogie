@@ -94,7 +94,7 @@ export const Settings = observer(() => {
   return (<>
     <div className='settings'>
       <Header>
-        <Icon icon={faCogs}>Settings</Icon>
+        <h1><Icon icon={faCogs}>Settings</Icon></h1>
       </Header>
       <main>
         <ul className='menu'>

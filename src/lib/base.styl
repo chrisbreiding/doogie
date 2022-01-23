@@ -26,7 +26,7 @@ label {
   margin-left: 0.8em;
 }
 
-input,
+input:not([type=checkbox]),
 textarea {
   border: none;
   border-bottom: solid 1px #d3d3d3;
@@ -38,14 +38,8 @@ textarea {
   width: 100%;
 }
 
-header {
-  background: primary-color;
-  color: light-color;
-  padding: 0.8em;
-  position: fixed;
-  text-align: center;
-  width: 100%;
-  z-index: 10;
+input[type=checkbox] {
+  margin-right: 0.6em;
 }
 
 h1:empty:before {
@@ -77,25 +71,6 @@ a {
   &:focus {
     background: action-color;
     color: light-color;
-  }
-}
-
-header a {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  top: 0;
-
-  &:link,
-  &:visited {
-    background: none;
-    color: light-color;
-  }
-
-  &:hover,
-  &:focus {
-    background: light-color;
-    color: action-color;
   }
 }
 
@@ -141,4 +116,8 @@ form {
 select {
   font-size: 1em;
   margin: 0.2em 0.8em 1em;
+}
+
+.checkbox-label {
+  cursor: pointer;
 }

@@ -1,3 +1,33 @@
+header {
+  background: primary-color;
+  color: light-color;
+  padding: 0.8em;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+
+  a,
+  button {
+    &,
+    &:link,
+    &:visited {
+      background: none;
+      color: light-color;
+    }
+
+    &:hover,
+    &:focus {
+      background: light-color;
+      color: action-color;
+    }
+  }
+}
+
 .back {
+  bottom: 0;
   padding-left: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
 }

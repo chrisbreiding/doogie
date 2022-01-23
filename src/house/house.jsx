@@ -7,6 +7,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
 import React from 'react'
 
+import { archivesStore } from '../archives/archives-store'
 import { directionsUrl, mapUrl } from '../lib/util'
 import { fieldsStore } from '../fields/fields-store'
 import { HOUSE_NAME_KEY } from '../lib/constants'
@@ -101,7 +102,9 @@ export const House = observer(({ house }) => {
   }
 
   const archive = () => {
-    update(house, { archived: !house.get('archived') })
+    const archiveId = house.archiveId ? null : archivesStore.current.id
+
+    update(house, { archiveId })
   }
 
   const remove = (e) => {
@@ -162,9 +165,11 @@ export const House = observer(({ house }) => {
             </ul>
           </div>
           <Fields house={house} />
-          <button className='archive' onClick={archive}>
-            <Icon icon={faArchive}>{house.get('archived') ? 'Unarchive' : 'Archive'}</Icon>
-          </button>
+          {archivesStore.archives.length &&
+            <button className='archive' onClick={archive}>
+              <Icon icon={faArchive}>{house.archiveId ? 'Unarchive' : `Archive (${archivesStore.current.name})`}</Icon>
+            </button>
+          }
           <button className='remove' onClick={remove}>
             <Icon icon={faTrashAlt}>Remove</Icon>
           </button>

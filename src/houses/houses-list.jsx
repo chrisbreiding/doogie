@@ -38,10 +38,10 @@ const updateSorting = (ids) => {
   housesApi.updateSorting(ids)
 }
 
-export const HousesList = observer(({ dataKey }) => (
+export const HousesList = observer(({ houses }) => (
   <MenuGroup
     sortable={true}
-    items={housesStore[dataKey]}
+    items={houses}
     onSortingUpdate={updateSorting}
   >
     {(house) => (

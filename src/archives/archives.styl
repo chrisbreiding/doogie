@@ -1,0 +1,46 @@
+.archive-item {
+  a {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .num-houses {
+      color: lighten(dark-color, 20%);
+    }
+
+    &:hover,
+    &:focus {
+      .num-houses {
+        color: light-color;
+      }
+    }
+  }
+
+  .spacer {
+    flex-grow: 2;
+  }
+}
+
+.archive {
+  .edit {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: auto;
+  }
+
+  main {
+    padding-bottom: 10em;
+  }
+
+  .empty {
+    font-size: 1.2em;
+    margin: 3em 1em;
+    text-align: center;
+  }
+
+  .remove {
+    margin-top: 1em;
+  }
+}

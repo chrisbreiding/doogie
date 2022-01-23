@@ -68,6 +68,8 @@ const makeApi = (path, additionKey) => {
   }
 }
 
+export const archivesApi = makeApi('archives', 'name')
+
 export const fieldsApi = makeApi('fields', 'label')
 
 export const housesApi = makeApi('houses', HOUSE_NAME_KEY)

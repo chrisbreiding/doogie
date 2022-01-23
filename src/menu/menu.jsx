@@ -46,7 +46,7 @@ export const Menu = observer(() => {
           </Link>
         </li>
       </MenuGroup>
-      <HousesList dataKey='houses' />
+      <HousesList houses={housesStore.houses} />
       <MenuGroup>
         <li>
           <a onClick={addHouse} href='#'>
@@ -55,13 +55,11 @@ export const Menu = observer(() => {
         </li>
       </MenuGroup>
       <MenuGroup>
-        {!!housesStore.archivedHouses.length &&
-          <li>
-            <Link to='archived-houses'>
-              <Icon icon={faArchive}>Archived houses</Icon>
-            </Link>
-          </li>
-        }
+        <li>
+          <Link to='archives'>
+            <Icon icon={faArchive}>Archives</Icon>
+          </Link>
+        </li>
         <li>
           <Link to='settings'>
             <Icon icon={faCogs}>Settings</Icon>

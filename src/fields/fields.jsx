@@ -75,7 +75,7 @@ export const Fields = observer(() => {
     <>
       <div className='fields'>
         <Header>
-          <Icon icon={faSlidersH}>Fields</Icon>
+          <h1><Icon icon={faSlidersH}>Fields</Icon></h1>
         </Header>
         <main>
           <ul className='menu'>

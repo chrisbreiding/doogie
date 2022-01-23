@@ -1,9 +1,11 @@
 import _ from 'lodash'
 import { action, observable } from 'mobx'
 
+import { archivesStore } from '../archives/archives-store'
+
 export class HouseModel {
   @observable house = observable.map({
-    archived: false,
+    archiveId: null,
   })
 
   constructor (props) {
@@ -12,6 +14,13 @@ export class HouseModel {
 
   get id () {
     return this.house.get('id')
+  }
+
+  get archiveId () {
+    const archiveId = this.house.get('archiveId')
+
+    // archiveId could be stale & invalid if its archive was removed
+    return archivesStore.has(archiveId) ? archiveId : null
   }
 
   get (key) {
