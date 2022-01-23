@@ -8,7 +8,6 @@
 .sortable-item {
   color: action-color;
   display: flex;
-  touch-action: none;
 
   &.is-dragging {
     visibility: hidden;
@@ -22,6 +21,7 @@
     cursor: -moz-grab;
     cursor: -webkit-grab;
     flex-shrink: 0;
+    touch-action: none;
     width: 2.8em;
   }
 
