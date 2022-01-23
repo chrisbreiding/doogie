@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import { faAlignJustify, faBars, faGripLines, faHeading, faLink, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import cs from 'classnames'
+import { faAlignJustify, faGripLines, faHeading, faLink, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
@@ -13,8 +13,7 @@ import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
 import { Loader } from '../loader/loader'
 import { MenuGroup } from '../menu/menu-group'
-
-const handleClass = 'handle-icon gu-unselectable'
+import { SortableItem } from '../sortable-list/sortable-item'
 
 const getIcon = (type) => {
   switch (type) {
@@ -30,12 +29,19 @@ const getIcon = (type) => {
 }
 
 const FieldItem = observer(({ field, url }) => (
-  <li className={`sortable-item field-item field-type-${field.type}`} data-id={field.id}>
-    <Icon icon={faBars} outerClassName={handleClass} />
-    <Link to={`${url}/${field.id}`}>
-      {field.displayLabel} <Icon icon={getIcon(field.type)} />
-    </Link>
-  </li>
+  <SortableItem id={field.id}>
+    {({ attributes, className, handle }) => (
+      <li
+        className={cs('field-item sortable-item', `field-type-${field.type}`, className)}
+        {...attributes}
+      >
+        {handle}
+        <Link to={`${url}/${field.id}`}>
+          {field.displayLabel} <Icon icon={getIcon(field.type)} />
+        </Link>
+      </li>
+    )}
+  </SortableItem>
 ))
 
 export const Fields = observer(() => {
@@ -75,12 +81,12 @@ export const Fields = observer(() => {
           <ul className='menu'>
             <MenuGroup
               sortable={true}
-              handleClass={handleClass}
+              items={fieldsStore.fields}
               onSortingUpdate={updateSorting}
             >
-              {_.map(fieldsStore.fields, (field) => (
+              {(field) => (
                 <FieldItem key={field.id} field={field} url={match.url} />
-              ))}
+              )}
             </MenuGroup>
             <MenuGroup>
               <li>

@@ -10,6 +10,10 @@ export class HouseModel {
     this.update(props)
   }
 
+  get id () {
+    return this.house.get('id')
+  }
+
   get (key) {
     return this.house.get(key)
   }

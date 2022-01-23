@@ -37,7 +37,7 @@ class HousesStore {
       house.update({ order: this._newOrder() })
     }
 
-    this._houses.set(house.get('id'), house)
+    this._houses.set(house.id, house)
   }
 
   updateHouse = (props) => {

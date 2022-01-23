@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import cs from 'classnames'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -9,10 +8,8 @@ import { HOUSE_NAME_KEY } from '../lib/constants'
 import { housesApi } from '../lib/api'
 import { settingsStore } from '../settings/settings-store'
 
-import { Icon } from '../lib/icon'
 import { MenuGroup } from '../menu/menu-group'
-
-const handleClass = 'handle-icon gu-unselectable'
+import { SortableItem } from '../sortable-list/sortable-item'
 
 const House = observer(({ house }) => {
   const cost = house.get(settingsStore.get('costField'))
@@ -21,19 +18,18 @@ const House = observer(({ house }) => {
 
   if (cost && visit) description += `, ${visit}`
 
-  const id = house.get('id')
-
   return (
-    <li
-      className='list-house sortable-item'
-      data-id={id}
-    >
-      <Icon icon={faBars} outerClassName={handleClass} />
-      <Link to={`/houses/${id}`}>
-        <h3>{house.get(HOUSE_NAME_KEY)}</h3>
-        <p>{description}&nbsp;</p>
-      </Link>
-    </li>
+    <SortableItem id={house.id}>
+      {({ attributes, className, handle }) => (
+        <li className={cs('list-house sortable-item', className)} {...attributes}>
+          {handle}
+          <Link to={`/houses/${house.id}`}>
+            <h3>{house.get(HOUSE_NAME_KEY)}</h3>
+            <p>{description}&nbsp;</p>
+          </Link>
+        </li>
+      )}
+    </SortableItem>
   )
 })
 
@@ -45,11 +41,11 @@ const updateSorting = (ids) => {
 export const HousesList = observer(({ dataKey }) => (
   <MenuGroup
     sortable={true}
-    handleClass={handleClass}
+    items={housesStore[dataKey]}
     onSortingUpdate={updateSorting}
   >
-    {_.map(housesStore[dataKey], (house) => (
-      <House key={house.get('id')} house={house} />
-    ))}
+    {(house) => (
+      <House key={house.id} house={house} />
+    )}
   </MenuGroup>
 ))

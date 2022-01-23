@@ -1,7 +1,19 @@
+.unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
 .sortable-item {
   background: light-color;
   color: action-color;
   display: flex;
+  touch-action: manipulation;
+
+  &.is-dragging {
+    visibility: hidden;
+  }
 
   > .icon {
     @extends .center-contents;
@@ -17,27 +29,10 @@
   }
 }
 
-.gu-mirror {
-  position: fixed !important;
-  margin: 0 !important;
-  z-index: 9999 !important;
-}
-
-.gu-hide {
-  display: none !important;
-}
-
-.gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
-.gu-transit {
-  opacity: 0.2;
-}
-
-.gu-mirror {
-  opacity: 0.8;
+.sortable-overlay {
+  background: active-color;
+  color: white;
+  opacity: 0.5;
+  height: 20px;
+  width: 200px;
 }

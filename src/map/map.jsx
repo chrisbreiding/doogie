@@ -22,7 +22,7 @@ class MarkerModel {
   @observable lng
 
   constructor (house) {
-    this.id = house.get('id')
+    this.id = house.id
     this.house = house
   }
 
@@ -48,7 +48,7 @@ const Marker = observer(({ marker, $hover, isClicked }) => {
         <h2>{address1}<br />{address2}</h2>
         {visit && <p>{visit}</p>}
         <p>
-          <Link to={`/houses/${house.get('id')}`}>
+          <Link to={`/houses/${house.id}`}>
             <Icon icon={faHome}>View</Icon>
           </Link>
         </p>

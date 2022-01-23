@@ -15,12 +15,13 @@
     "zunder": "^6.4.6"
   },
   "dependencies": {
+    "@dnd-kit/core": "^5.0.1",
+    "@dnd-kit/sortable": "^6.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "classnames": "^2.2.6",
-    "dragula": "^3.7.3",
     "fastclick": "^1.0.6",
     "firebase": "^7.15.1",
     "google-map-react": "^2.1.9",

@@ -13,7 +13,7 @@ export const Houses = observer(() => (
     <main>
       <div className='container' style={{ width: `${housesStore.houses.length * 21.5}em` }}>
         {_.map(housesStore.houses, (house) => (
-          <House key={house.get('id')} house={house} />
+          <House key={house.id} house={house} />
         ))}
       </div>
     </main>

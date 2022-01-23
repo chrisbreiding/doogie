@@ -22,7 +22,7 @@ import { Loader } from '../loader/loader'
 const Input = (props) => <input {...props} />
 
 const update = (house, props) => {
-  props.id = house.get('id')
+  props.id = house.id
 
   house.update(props)
   housesApi.update(props)
@@ -108,7 +108,7 @@ export const House = observer(({ house }) => {
     e.preventDefault()
 
     if (confirm('Remove this house?')) {
-      housesApi.remove(house.get('id'))
+      housesApi.remove(house.id)
       history.push(backHistory.pop())
     }
   }

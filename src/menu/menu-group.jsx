@@ -5,8 +5,8 @@ import { SortableList } from '../sortable-list/sortable-list'
 
 export const MenuGroup = observer((props) => {
   const {
+    items,
     children,
-    handleClass,
     onSortingUpdate = () => {},
     sortable = false,
   } = props
@@ -21,13 +21,13 @@ export const MenuGroup = observer((props) => {
 
   return (
     <li>
-      <SortableList
-        el='ul'
-        handleClass={handleClass}
-        onSortingUpdate={onSortingUpdate}
-      >
-        {children}
-      </SortableList>
+      <ul>
+        <SortableList
+          items={items}
+          renderItem={children}
+          onSortingUpdate={onSortingUpdate}
+        />
+      </ul>
     </li>
   )
 })

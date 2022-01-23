@@ -14,11 +14,19 @@
 
 .field-item {
   a {
+    align-items: center;
     display: flex;
     justify-content: space-between;
 
     .icon {
       color: lighten(dark-color, 20%);
+    }
+
+    &:hover,
+    &:focus {
+      .icon {
+        color: light-color;
+      }
     }
   }
 
