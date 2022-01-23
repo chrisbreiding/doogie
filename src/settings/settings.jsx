@@ -1,9 +1,10 @@
-import { faCogs, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { faCogs, faSignOutAlt, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
 import { Link, Route, useRouteMatch } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import React from 'react'
 
+import { auth } from '../auth/auth'
 import { fieldsStore } from '../fields/fields-store'
 import { settingsApi } from '../lib/api'
 import { settingsStore } from './settings-store'
@@ -12,6 +13,15 @@ import { Fields } from '../fields/fields'
 import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
 import { MenuGroup } from '../menu/menu-group'
+
+const logout = (e) => {
+  e.preventDefault()
+
+  if (!confirm('Log out?')) return
+
+  auth.logout()
+  history.push('/login')
+}
 
 const onChange = (id, e) => {
   const value = e.target.value
@@ -99,6 +109,13 @@ export const Settings = observer(() => {
             <TextSettings />
             <DropdownSettings />
           </li>
+          <MenuGroup>
+            <li>
+              <a onClick={logout} href='#'>
+                <Icon icon={faSignOutAlt}>Log out</Icon>
+              </a>
+            </li>
+          </MenuGroup>
         </ul>
       </main>
     </div>
