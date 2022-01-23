@@ -14,14 +14,14 @@ export const MenuGroup = observer((props) => {
   if (!sortable) {
     return (
       <li>
-        <ul>{children}</ul>
+        <ul className='menu-group'>{children}</ul>
       </li>
     )
   }
 
   return (
     <li>
-      <ul>
+      <ul className='menu-group'>
         <SortableList
           items={items}
           renderItem={children}

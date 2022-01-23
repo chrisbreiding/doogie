@@ -11,7 +11,7 @@ export const ArchivedHouses = () => (
       <Icon icon={faArchive}>Archived Houses</Icon>
     </Header>
     <main>
-      <ul>
+      <ul className='menu'>
         <HousesList dataKey='archivedHouses' />
       </ul>
     </main>

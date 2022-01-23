@@ -1,10 +1,11 @@
+import { observer } from 'mobx-react'
 import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '../lib/icon'
 
-export const SortableItem = ({ id, children }) => {
+export const SortableItem = observer(({ id, children }) => {
   const {
     attributes,
     isDragging,
@@ -36,4 +37,4 @@ export const SortableItem = ({ id, children }) => {
     className: isDragging ? 'is-dragging' : '',
     handle,
   })
-}
+})

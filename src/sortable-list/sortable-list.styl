@@ -6,10 +6,9 @@
 }
 
 .sortable-item {
-  background: light-color;
   color: action-color;
   display: flex;
-  touch-action: manipulation;
+  touch-action: none;
 
   &.is-dragging {
     visibility: hidden;
@@ -17,6 +16,7 @@
 
   > .icon {
     @extends .center-contents;
+    background: light-color;
     cursor: move;
     cursor: grab;
     cursor: -moz-grab;
