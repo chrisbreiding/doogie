@@ -138,7 +138,7 @@ export const House = observer(({ house }) => {
                     target='_blank'
                     rel='noreferrer'
                   >
-                    <Icon icon={faLaptopHouse}>View on {field.label}</Icon>
+                    <Icon icon={faLaptopHouse}>{field.label}</Icon>
                   </a>
                 </li>
               ))}
