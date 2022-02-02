@@ -12,6 +12,7 @@ import * as backHistory from '../lib/back-history'
 import { Header } from '../app/header'
 import { HousesList } from '../houses/houses-list'
 import { Icon } from '../lib/icon'
+import { NoHouses } from '../houses/no-houses'
 
 const ArchiveEditor = observer(({ archive }) => {
   const history = useHistory()
@@ -94,7 +95,7 @@ export const Archive = observer(() => {
         <ul className='menu'>
           <HousesList houses={houses} />
         </ul>
-        {!houses.length && <p className='empty'>No houses</p>}
+        {!houses.length && <NoHouses />}
       </main>
     </div>
   )

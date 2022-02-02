@@ -36,9 +36,11 @@ export const Menu = observer(() => {
     <ul className='menu full-screen'>
       <MenuGroup>
         <li>
-          <Link to='compare'>
-            <Icon icon={faColumns}>Compare houses</Icon>
-          </Link>
+          {housesStore.houses.length > 1 && (
+            <Link to='compare'>
+              <Icon icon={faColumns}>Compare houses</Icon>
+            </Link>
+          )}
         </li>
         <li>
           <Link to='map'>
