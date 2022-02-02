@@ -42,7 +42,7 @@ header-color = dark-color
       top: 0;
     }
 
-    @media screen and (min-width: 740px) {
+    @media screen and (min-width: 700px) {
       thead th:first-child,
       .field-label {
         left: 0;
@@ -56,7 +56,8 @@ header-color = dark-color
 
     th,
     td {
-      padding: 0.6em 0.8em;
+      line-height: 1.5;
+      padding: 0.4em 0.8em;
       max-width: 20em;
     }
 
@@ -71,10 +72,6 @@ header-color = dark-color
       border-right: solid 1px tint(header-color, 30%);
       background: header-color;
       color: darken(light-color, 10%);
-    }
-
-    .field-label {
-      white-space: nowrap;
     }
 
     th {
