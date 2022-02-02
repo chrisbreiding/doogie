@@ -42,9 +42,12 @@ header-color = dark-color
       top: 0;
     }
 
-    thead th:first-child {
-      left: 0;
-      position: sticky;
+    @media screen and (min-width: 740px) {
+      thead th:first-child,
+      .field-label {
+        left: 0;
+        position: sticky;
+      }
     }
 
     .row-odd {
@@ -71,8 +74,6 @@ header-color = dark-color
     }
 
     .field-label {
-      left: 0;
-      position: sticky;
       white-space: nowrap;
     }
 
