@@ -4,7 +4,7 @@ import { action, computed, observable } from 'mobx'
 import { DEFAULT_FIELD_TYPE } from '../lib/constants'
 
 export class FieldModel {
-  @observable type = DEFAULT_FIELD_TYPE
+  @observable type = DEFAULT_FIELD_TYPE // input | textarea | link | heading
   @observable label
   @observable order
   @observable defaultNotes = ''

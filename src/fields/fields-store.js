@@ -9,6 +9,14 @@ class FieldsStore {
     return _.sortBy(values(this._fields), 'order')
   }
 
+  @computed get valueFields () {
+    const linkFields = values(this._fields).filter((field) => {
+      return field.type !== 'heading' && field.type !== 'link'
+    })
+
+    return _.sortBy(linkFields, 'order')
+  }
+
   @computed get linkFields () {
     const linkFields = values(this._fields).filter((field) => {
       return field.type === 'link'

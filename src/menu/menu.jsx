@@ -35,8 +35,8 @@ export const Menu = observer(() => {
   return (
     <ul className='menu full-screen'>
       <MenuGroup>
-        <li className='houses-link'>
-          <Link to='houses'>
+        <li>
+          <Link to='compare'>
             <Icon icon={faColumns}>Compare houses</Icon>
           </Link>
         </li>

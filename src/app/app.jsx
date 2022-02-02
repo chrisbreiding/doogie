@@ -12,7 +12,7 @@ import { fieldsApi, housesApi, settingsApi, onLoad, offLoad, archivesApi } from 
 
 import { Archives } from '../archives/archives'
 import { House } from '../house/house'
-import { Houses } from '../houses/houses'
+import { CompareHouses } from '../houses/compare'
 import { Loader } from '../loader/loader'
 import { Map } from '../map/map'
 import { Menu } from '../menu/menu'
@@ -116,7 +116,7 @@ export const App = observer(() => {
 
     <Switch>
       <Route path='/settings' component={Settings} />
-      <Route exact path='/houses' component={Houses} />
+      <Route exact path='/compare' component={CompareHouses} />
       <Route path='/archives' component={Archives} />
       <Route path='/houses/:id' component={House} />
       <Route path='/map' component={Map} />

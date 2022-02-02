@@ -10,6 +10,14 @@ const set = (history) => {
 }
 
 export const push = (path) => {
+  // if we're on "/", there should be no back history. clear it in case
+  // something odd happened and there's history left
+  if (path === '/') {
+    clear()
+
+    return
+  }
+
   const history = get()
 
   history.push(path)
@@ -29,7 +37,7 @@ export const pop = () => {
   set(history)
 
   // "/" never gets saved, so that's where we're going if there's nothing left
-  // it's also the fallback if you visit a deeper page direclty without
+  // it's also the fallback if you visit a deeper page directly without
   // visiting the previous page first
   return last || '/'
 }

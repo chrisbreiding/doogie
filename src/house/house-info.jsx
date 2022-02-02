@@ -88,7 +88,7 @@ const requiresPMI = (house) => {
 }
 
 export const HouseInfo = observer(({ house }) => (
-  <div className='info'>
+  <div className='house-info'>
     <p>
       Down payment:{' '}
       <span className='value'>
