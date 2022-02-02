@@ -54,6 +54,7 @@ header-color = dark-color
     th,
     td {
       padding: 0.6em 0.8em;
+      max-width: 20em;
     }
 
     td {
@@ -77,11 +78,10 @@ header-color = dark-color
 
     th {
       @extend .truncate-text;
-      max-width: 13em;
     }
 
     td:not(.field-label) {
-      white-space: pre;
+      white-space: pre-wrap;
     }
 
     .field-label {
