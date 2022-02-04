@@ -9,7 +9,10 @@ import { housesStore } from '../houses/houses-store'
 import { fieldsStore } from '../fields/fields-store'
 import { settingsStore } from '../settings/settings-store'
 import { fieldsApi, housesApi, settingsApi, onLoad, offLoad, archivesApi } from '../lib/api'
+import { isStandalone } from '../lib/util'
+import * as backHistory from '../lib/back-history'
 
+import { AddHouse } from '../houses/add'
 import { Archives } from '../archives/archives'
 import { House } from '../house/house'
 import { CompareHouses } from '../houses/compare'
@@ -17,8 +20,6 @@ import { Loader } from '../loader/loader'
 import { Map } from '../map/map'
 import { Menu } from '../menu/menu'
 import { Settings } from '../settings/settings'
-import { isStandalone } from '../lib/util'
-import * as backHistory from '../lib/back-history'
 
 const updateBackHistory = (pathname, action) => {
   if (_.includes(['/', '/login'], pathname)) {
@@ -116,9 +117,10 @@ export const App = observer(() => {
 
     <Switch>
       <Route path='/settings' component={Settings} />
-      <Route exact path='/compare' component={CompareHouses} />
+      <Route path='/compare' component={CompareHouses} />
       <Route path='/archives' component={Archives} />
       <Route path='/houses/:id' component={House} />
+      <Route path='/add' component={AddHouse} />
       <Route path='/map' component={Map} />
     </Switch>
   </>)

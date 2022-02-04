@@ -4,3 +4,4 @@ dist
 dist-prod
 *.log
 .env
+*.min.js

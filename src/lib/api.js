@@ -52,6 +52,12 @@ const makeApi = (path, additionKey) => {
       })
     },
 
+    addWithData (data, onAdd) {
+      const newRef = ref.push(data, () => {
+        onAdd(newRef.key)
+      })
+    },
+
     update (props) {
       if (path === 'settings') {
         ref.update(props)
