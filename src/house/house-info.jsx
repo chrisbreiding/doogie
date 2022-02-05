@@ -54,7 +54,7 @@ const LoanAmount = observer(({ amount, overage }) => (
     prefix='Loan amount:'
     value={currencyFromNumber(amount)}
     valueClass={{ 'is-over-limit': overage > 0 }}
-    suffix={overage > 0 && ` (Over by ${currencyFromNumber(overage)})`}
+    suffix={overage > 0 && `(Over by ${currencyFromNumber(overage)})`}
   />
 ))
 
