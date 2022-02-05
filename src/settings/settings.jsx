@@ -48,11 +48,13 @@ const TextSettings = observer(() => (
   _.map([
     'Max Upfront Cost',
     'Down Payment',
+    'Loan Limit',
     'Closing Rate',
     'Interest Rate',
     'Insurance Rate',
     'PMI Rate',
     'Mortgage Lengths',
+    'Hypotheticals',
   ], (setting) => (
     <TextSetting key={setting} setting={setting} />
   ))

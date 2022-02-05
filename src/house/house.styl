@@ -56,11 +56,37 @@
     margin-right: 0;
   }
 
-  div p {
+  .monthly-costs p {
     margin-left: 0.8em;
   }
 
   .value {
     color: action-color;
+    margin: 0 0.4em;
+  }
+
+  .is-over-limit {
+    color: warning-color;
+  }
+
+  .break,
+  .hypothetical,
+  .toggle-hypotheticals {
+    border-top: solid 1px lighten(dark-color, 40%);
+    margin-top: 0.8em;
+  }
+
+  .toggle-hypotheticals {
+    cursor: pointer;
+    padding-top: 0.8em;
+    padding-bottom: 0.2em;
+
+    &:hover {
+      color: action-color;
+    }
+
+    svg {
+      margin-right: 0.4em;
+    }
   }
 }

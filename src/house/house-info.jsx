@@ -1,124 +1,124 @@
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import cs from 'classnames'
 import _ from 'lodash'
-import { observer } from 'mobx-react'
+import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
 
-import { numberFromString, currencyFromNumber, decimalFromPercent } from '../lib/util'
+import { currencyFromNumber } from '../lib/util'
+import { getClosingCost, getDownPayment, getDownPaymentPercent, getHouseCost, getHypotheticals, getLoanAmount, getLoanLimitOverage, getMonthlyCost, getMortgageLengths, getUpfrontCost, requiresPMI } from './house-info-util'
 import { settingsStore } from '../settings/settings-store'
 
-const mortgageLengths = () => {
-  const lengthsString = settingsStore.get('mortgageLengths') || '30'
+import { Icon } from '../lib/icon'
 
-  return _.map(lengthsString.split(/[^0-9]+/), (length) => {
-    return parseInt(length, 10)
-  })
-}
+const Info = ({ prefix, value, valueClass, suffix }) => (
+  <p>
+    {prefix}
+    <span className={cs('value', valueClass)}>
+      {value}
+    </span>
+    {suffix}
+  </p>
+)
 
-const closingCost = (house) => {
-  return houseField(house, 'cost') * decimalFor('closingRate')
-}
+const HouseCost = observer(({ amount }) => (
+  <Info
+    prefix='House cost:'
+    value={currencyFromNumber(amount)}
+  />
+))
 
-const monthlyCost = (house, years) => {
-  const houseCost = houseField(house, 'cost')
-  const downPaymentCost = downPayment(house)
-  const loanCost = houseCost - downPaymentCost
-  const interestRate = decimalFor('interestRate')
-  const insuranceRate = decimalFor('insuranceRate')
+const ClosingCost = observer(({ amount }) => (
+  <Info
+    prefix='Closing cost:'
+    value={currencyFromNumber(amount)}
+  />
+))
 
-  const mortgageCost = mortgage(loanCost, interestRate, years)
-  const monthlyTaxes = houseField(house, 'taxes') / 12
-  const monthlyInsurance = houseCost * insuranceRate / 12
-  const pmiCost = requiresPMI(house) ? pmi(loanCost) : 0
-  const miscMonthlyCosts = houseField(house, 'miscMonthlyCosts')
+const DownPayment = observer(({ amount, percent }) => (
+  <Info
+    prefix='Down payment:'
+    value={currencyFromNumber(amount)}
+    suffix={`(${percent}%)`}
+  />
+))
 
-  return currencyFromNumber(mortgageCost + monthlyTaxes + monthlyInsurance + pmiCost + miscMonthlyCosts)
-}
+const UpfrontCost = observer(({ amount }) => (
+  <Info
+    prefix='Upfront cost:'
+    value={currencyFromNumber(amount)}
+  />
+))
 
-const mortgage = (initialCost, interestRate, years) => {
-  const numPayments = years * 12
-  const monthlyRate = interestRate / 12
+const LoanAmount = observer(({ amount, overage }) => (
+  <Info
+    prefix='Loan amount:'
+    value={currencyFromNumber(amount)}
+    valueClass={{ 'is-over-limit': overage > 0 }}
+    suffix={overage > 0 && ` (Over by ${currencyFromNumber(overage)})`}
+  />
+))
 
-  return (monthlyRate * initialCost * Math.pow(1 + monthlyRate, numPayments)) /
-         (Math.pow(1 + monthlyRate, numPayments) - 1)
-}
+const MonthlyCosts = observer(({ house, downPayment }) => (
+  <>
+    <p>
+      Monthly cost{requiresPMI(house, downPayment) ? ' (includes PMI)' : ''}
+    </p>
+    <div className='monthly-costs'>
+      {_.map(getMortgageLengths(), (length) => (
+        <Info
+          key={length}
+          prefix={`${length} yr:`}
+          value={getMonthlyCost(house, length, downPayment)}
+        />
+      ))}
+    </div>
+  </>
+))
 
-const pmi = (loanCost) => {
-  return loanCost * decimalFor('pmiRate') / 12
-}
+const HypotheticalsContent = observer(({ house, hypotheticals }) => {
+  return _.map(hypotheticals, (hypothetical) => (
+    <div key={hypothetical.percent} className='hypothetical'>
+      <DownPayment amount={hypothetical.downPayment} percent={hypothetical.percent} />
+      <UpfrontCost amount={hypothetical.upfrontCost} />
+      <LoanAmount amount={hypothetical.loanAmount} overage={hypothetical.loanLimitOverage} />
+      <MonthlyCosts house={house} downPayment={hypothetical.downPayment} />
+    </div>
+  ))
+})
 
-const downPayment = (house) => {
-  const houseCost = houseField(house, 'cost')
-  let downPaymentCost = numberFromString(settingsStore.get('downPayment'))
-  const maxUpfrontCost = numberFromString(settingsStore.get('maxUpfrontCost'))
+const Hypotheticals = observer(({ house }) => {
+  const hypotheticals = getHypotheticals(house)
+  const state = useLocalStore(() => ({
+    isShowingHypotheticals: false,
+    toggleShowingHypotheticals () {
+      this.isShowingHypotheticals = !this.isShowingHypotheticals
+    },
+  }))
 
-  if (downPaymentCost <= 100) {
-    downPaymentCost = decimalFromPercent(downPaymentCost) * houseCost
-  }
+  if (!settingsStore.get('hypotheticals') || !hypotheticals.length) return null
 
-  const totalUpfrontCost = downPaymentCost + closingCost(house) + houseField(house, 'miscUpfrontCosts')
-
-  if (totalUpfrontCost > maxUpfrontCost) {
-    downPaymentCost = downPaymentCost - (totalUpfrontCost - maxUpfrontCost)
-  }
-
-  return downPaymentCost
-}
-
-const downPaymentPercent = (house) => {
-  return ((downPayment(house) / houseField(house, 'cost')) * 100).toFixed(2)
-}
-
-const upfrontCost = (house) => {
-  return downPayment(house) + closingCost(house) + houseField(house, 'miscUpfrontCosts')
-}
-
-const houseField = (house, field) => {
-  const key = settingsStore.get(`${field}Field`)
-
-  if (!key) return 0
-
-  return numberFromString(house.get(key))
-}
-
-const decimalFor = (field) => {
-  return decimalFromPercent(numberFromString(settingsStore.get(field)))
-}
-
-const requiresPMI = (house) => {
-  return downPaymentPercent(house) < 20
-}
+  return (
+    <>
+      <div className='toggle-hypotheticals' onClick={state.toggleShowingHypotheticals}>
+        <Icon icon={state.isShowingHypotheticals ? faCaretDown : faCaretRight}>
+          {state.isShowingHypotheticals ? 'Hide' : 'Show'} Hypotheticals
+        </Icon>
+      </div>
+      {state.isShowingHypotheticals &&
+        <HypotheticalsContent house={house} hypotheticals={hypotheticals} />}
+    </>
+  )
+})
 
 export const HouseInfo = observer(({ house }) => (
   <div className='house-info'>
-    <p>
-      Down payment:{' '}
-      <span className='value'>
-        {currencyFromNumber(downPayment(house))}
-      </span>
-      {' '}({downPaymentPercent(house)}%)
-    </p>
-    <p>
-      Closing cost:{' '}
-      <span className='value'>
-        {currencyFromNumber(closingCost(house))}
-      </span>
-    </p>
-    <p>
-      Upfront cost:{' '}
-      <span className='value'>
-        {currencyFromNumber(upfrontCost(house))}
-      </span>
-    </p>
-    <p>
-      Monthly cost{requiresPMI(house) ? ' (includes PMI)' : ''}
-    </p>
-    <div>
-      {_.map(mortgageLengths(), (length) => (
-        <p key={`mortlen-${length}`}>
-          {length} yr: <span className='value'>
-            {monthlyCost(house, length)}
-          </span>
-        </p>
-      ))}
-    </div>
+    <HouseCost amount={getHouseCost(house)} />
+    <ClosingCost amount={getClosingCost(house)} />
+    <div className='break' />
+    <DownPayment amount={getDownPayment(house)} percent={getDownPaymentPercent(house)} />
+    <UpfrontCost amount={getUpfrontCost(house)} />
+    <LoanAmount amount={getLoanAmount(house)} overage={getLoanLimitOverage(house)} />
+    <MonthlyCosts house={house} />
+    <Hypotheticals house={house} />
   </div>
 ))
