@@ -82,6 +82,14 @@ const getLatLng = (maps, address, cb) => {
   })
 }
 
+const isWithinInfo = (el) => {
+  if (!el) return false
+
+  if (el.className === 'info') return true
+
+  return isWithinInfo(el.parentElement)
+}
+
 export const Map = observer(() => {
   const defaultZoom = 10
 
@@ -101,8 +109,10 @@ export const Map = observer(() => {
         state.centerLat = lat
         state.centerLng = lng
       },
-      clearClickedId () {
-        state.clickedId = null
+      clearClickedId ({ event }) {
+        if (!isWithinInfo(event.target)) {
+          state.clickedId = null
+        }
       },
       setZoom (zoom) {
         state.zoom = zoom
