@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { faArchive, faLaptopHouse, faMapMarkedAlt, faRoute } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
 import React from 'react'
 
@@ -13,7 +13,6 @@ import { fieldsStore } from '../fields/fields-store'
 import { HOUSE_NAME_KEY } from '../lib/constants'
 import { housesApi } from '../lib/api'
 import { housesStore } from '../houses/houses-store'
-import * as backHistory from '../lib/back-history'
 
 import { Header } from '../app/header'
 import { HouseInfo } from './house-info'
@@ -92,14 +91,11 @@ const Fields = observer(({ house }) => {
   })
 })
 
-export const House = observer(({ house }) => {
-  const params = useParams()
-  const id = house?.id || params.id
-  const history = useHistory()
+export const House = observer(() => {
+  const { houseId } = useParams()
+  const navigate = useNavigate()
 
-  if (!house) {
-    house = housesStore.getHouseById(id)
-  }
+  const house = housesStore.getHouseById(houseId)
 
   const archive = () => {
     const archiveId = house.archiveId ? null : archivesStore.current.id
@@ -112,7 +108,7 @@ export const House = observer(({ house }) => {
 
     if (confirm('Remove this house?')) {
       housesApi.remove(house.id)
-      history.push(backHistory.pop())
+      navigate('..')
     }
   }
 

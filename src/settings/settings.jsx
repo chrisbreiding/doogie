@@ -1,27 +1,17 @@
 import { faCogs, faSignOutAlt, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
-import { Link, Route, useRouteMatch } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import React from 'react'
+import { Link, useNavigate, Outlet } from 'react-router-dom'
 
 import { auth } from '../auth/auth'
 import { fieldsStore } from '../fields/fields-store'
 import { settingsApi } from '../lib/api'
 import { settingsStore } from './settings-store'
 
-import { Fields } from '../fields/fields'
 import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
 import { MenuGroup } from '../menu/menu-group'
-
-const logout = (e) => {
-  e.preventDefault()
-
-  if (!confirm('Log out?')) return
-
-  auth.logout()
-  history.push('/login')
-}
 
 const onChange = (id, e) => {
   const value = e.target.value
@@ -101,7 +91,16 @@ const DropdownSettings = observer(() => (
 ))
 
 export const Settings = observer(() => {
-  const match = useRouteMatch()
+  const navigate = useNavigate()
+
+  const logout = (e) => {
+    e.preventDefault()
+
+    if (!confirm('Log out?')) return
+
+    auth.logout()
+    navigate('/login')
+  }
 
   return (<>
     <div className='settings'>
@@ -112,7 +111,7 @@ export const Settings = observer(() => {
         <ul className='menu'>
           <MenuGroup>
             <li>
-              <Link to={`${match.url}/fields`}>
+              <Link to='fields'>
                 <Icon icon={faSlidersH}>Fields</Icon>
               </Link>
             </li>
@@ -131,6 +130,6 @@ export const Settings = observer(() => {
         </ul>
       </main>
     </div>
-    <Route path={`${match.path}/fields`} component={Fields} />
+    <Outlet />
   </>)
 })

@@ -1,6 +1,6 @@
 import { action } from 'mobx'
 import React, { useEffect, useMemo } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { housesApi } from '../lib/api'
 import { HOUSE_NAME_KEY } from '../lib/constants'
@@ -16,7 +16,7 @@ const useQuery = () => {
 
 export const AddHouse = () => {
   const query = useQuery()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const houseData = {
@@ -36,7 +36,7 @@ export const AddHouse = () => {
 
     housesApi.addWithData(houseData, action((id) => {
       housesStore.addHouse({ ...houseData, id })
-      history.push(`/houses/${id}`)
+      navigate(`/houses/${id}`)
     }))
   }, [true])
 

@@ -1,14 +1,13 @@
 import _ from 'lodash'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
 import React, { useRef } from 'react'
 
 import { DEFAULT_FIELD_TYPE } from '../lib/constants'
 import { fieldsApi } from '../lib/api'
 import { fieldsStore } from './fields-store'
-import * as backHistory from '../lib/back-history'
 
 import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
@@ -18,10 +17,10 @@ const Input = (props) => <input {...props} />
 
 export const Field = observer(() => {
   const labelRef = useRef()
-  const history = useHistory()
+  const navigate = useNavigate()
 
-  const { id } = useParams()
-  const field = fieldsStore.getFieldById(id)
+  const { fieldId } = useParams()
+  const field = fieldsStore.getFieldById(fieldId)
 
   if (!field) return <Loader />
 
@@ -31,8 +30,8 @@ export const Field = observer(() => {
 
   const remove = () => {
     if (confirm('Remove this field?')) {
-      fieldsApi.remove(id)
-      history.push(backHistory.pop())
+      fieldsApi.remove(field.id)
+      navigate('..')
     }
   }
 

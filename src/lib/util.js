@@ -30,8 +30,3 @@ export const directionsUrl = (address) => {
 export const mapUrl = (address) => {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 }
-
-export const isStandalone = () => {
-  // means it's saved to the home screen on iOS
-  return window.navigator.standalone
-}

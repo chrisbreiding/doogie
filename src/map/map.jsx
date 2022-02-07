@@ -1,11 +1,11 @@
+import cs from 'classnames'
+import GoogleMapReact from 'google-map-react'
 import _ from 'lodash'
 import { faHome, faRoute } from '@fortawesome/free-solid-svg-icons'
 import { action, observable } from 'mobx'
-import { Link } from 'react-router-dom'
-import { observer, useLocalStore } from 'mobx-react'
-import cs from 'classnames'
-import GoogleMapReact from 'google-map-react'
 import React from 'react'
+import { Link, Outlet } from 'react-router-dom'
+import { observer, useLocalStore } from 'mobx-react'
 
 import { directionsUrl } from '../lib/util'
 import { HOUSE_NAME_KEY } from '../lib/constants'
@@ -48,7 +48,7 @@ const Marker = observer(({ marker, $hover, isClicked }) => {
         <h2>{address1}<br />{address2}</h2>
         {visit && <p>{visit}</p>}
         <p>
-          <Link to={`/houses/${house.id}`}>
+          <Link to={`houses/${house.id}`}>
             <Icon icon={faHome}>View</Icon>
           </Link>
         </p>
@@ -160,28 +160,31 @@ export const Map = observer(() => {
   })
 
   return (
-    <div className='map full-screen'>
-      <Header />
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
-        center={{ lat: state.centerLat, lng: state.centerLng }}
-        defaultZoom={defaultZoom}
-        onClick={state.clearClickedId}
-        onChildClick={onMarkerClick}
-        onBoundsChange={onBoundsChange}
-        onGoogleApiLoaded={onGoogleApiLoaded}
-        yesIWantToUseGoogleMapApiInternals
-      >
-        {_.map(markers, (marker) => (
-          <Marker
-            key={marker.id}
-            marker={marker}
-            isClicked={state.clickedId === marker.id}
-            lat={marker.lat}
-            lng={marker.lng}
-          />
-        ))}
-      </GoogleMapReact>
-    </div>
+    <>
+      <div className='map full-screen'>
+        <Header />
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
+          center={{ lat: state.centerLat, lng: state.centerLng }}
+          defaultZoom={defaultZoom}
+          onClick={state.clearClickedId}
+          onChildClick={onMarkerClick}
+          onBoundsChange={onBoundsChange}
+          onGoogleApiLoaded={onGoogleApiLoaded}
+          yesIWantToUseGoogleMapApiInternals
+        >
+          {_.map(markers, (marker) => (
+            <Marker
+              key={marker.id}
+              marker={marker}
+              isClicked={state.clickedId === marker.id}
+              lat={marker.lat}
+              lng={marker.lng}
+            />
+          ))}
+        </GoogleMapReact>
+      </div>
+      <Outlet />
+    </>
   )
 })

@@ -1,7 +1,6 @@
-import _ from 'lodash'
 import { observer, useLocalStore } from 'mobx-react'
 import React, { useEffect } from 'react'
-import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { Redirect, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { auth } from '../auth/auth'
 import { archivesStore } from '../archives/archives-store'
@@ -9,8 +8,6 @@ import { housesStore } from '../houses/houses-store'
 import { fieldsStore } from '../fields/fields-store'
 import { settingsStore } from '../settings/settings-store'
 import { fieldsApi, housesApi, settingsApi, onLoad, offLoad, archivesApi } from '../lib/api'
-import { isStandalone } from '../lib/util'
-import * as backHistory from '../lib/back-history'
 
 import { AddHouse } from '../houses/add'
 import { Archives } from '../archives/archives'
@@ -20,31 +17,9 @@ import { Loader } from '../loader/loader'
 import { Map } from '../map/map'
 import { Menu } from '../menu/menu'
 import { Settings } from '../settings/settings'
-
-const updateBackHistory = (pathname, action) => {
-  if (_.includes(['/', '/login'], pathname)) {
-    backHistory.clear()
-
-    return
-  }
-
-  // this is a redirect for standalone, don't push or there will
-  // it will be duplicated
-  if (action === 'REPLACE') return
-
-  backHistory.push(pathname)
-}
-
-const updateSavedRoute = (pathname) => {
-  // only redirect to saved route on a standalone installation
-  // otherwise, there's a url bar for that sake
-  if (!isStandalone()) return
-
-  // never want to redirect to login
-  if (pathname === '/login') return
-
-  localStorage.savedRoute = pathname
-}
+import { Archive } from '../archives/archive'
+import { Fields } from '../fields/fields'
+import { Field } from '../fields/field'
 
 export const App = observer(() => {
   const state = useLocalStore(() => ({
@@ -54,13 +29,12 @@ export const App = observer(() => {
     },
   }))
 
-  const history = useHistory()
-  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const offAuthChange = auth.onAuthChange((isAuthenticated) => {
       if (!auth.isAuthenticating && !isAuthenticated) {
-        history.push('/login')
+        navigate('/login')
       }
     })
 
@@ -87,41 +61,47 @@ export const App = observer(() => {
       state.setIsLoading(false)
     })
 
-    const stopListeningToHistory = history.listen(({ pathname }, action) => {
-      updateBackHistory(pathname, action)
-      updateSavedRoute(pathname)
-    })
-
-    if (localStorage.savedRoute && location.pathname !== localStorage.savedRoute) {
-      history.replace(localStorage.savedRoute)
-    }
-
     return () => {
       offAuthChange()
+      archivesApi.stopListening()
       housesApi.stopListening()
       fieldsApi.stopListening()
       settingsApi.stopListening()
       offLoad()
-      stopListeningToHistory()
     }
   }, [true])
 
-  if (!auth.isAuthenticating && !auth.isAuthenticated) {
-    return <Redirect to='/login' />
+  if (
+    (!auth.isAuthenticating && !auth.isAuthenticated)
+    || state.isLoading
+  ) {
+    return <Loader />
   }
 
-  if (state.isLoading) return <Loader />
+  const HouseRoute = <Route path='houses/:houseId' element={<House />} />
 
   return (<>
     <Menu />
 
-    <Switch>
-      <Route path='/settings' component={Settings} />
-      <Route path='/compare' component={CompareHouses} />
-      <Route path='/archives' component={Archives} />
-      <Route path='/houses/:id' component={House} />
-      <Route path='/add' component={AddHouse} />
-      <Route path='/map' component={Map} />
-    </Switch>
+    <Routes>
+      {HouseRoute}
+      <Route path='add' element={<AddHouse />} />
+      <Route path='settings' element={<Settings />}>
+        <Route path='fields' element={<Fields />}>
+          <Route path=':fieldId' element={<Field />} />
+        </Route>
+      </Route>
+      <Route path='compare' element={<CompareHouses />}>
+        {HouseRoute}
+      </Route>
+      <Route path='archives' element={<Archives />}>
+        <Route path=':archiveId' element={<Archive />}>
+          {HouseRoute}
+        </Route>
+      </Route>
+      <Route path='map' element={<Map />}>
+        {HouseRoute}
+      </Route>
+    </Routes>
   </>)
 })

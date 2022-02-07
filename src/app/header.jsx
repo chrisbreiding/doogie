@@ -1,26 +1,15 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import * as backHistory from '../lib/back-history'
 import { Icon } from '../lib/icon'
 
-export const Header = ({ children, onBack }) => {
-  const history = useHistory()
-
-  const goBack = (e) => {
-    e.preventDefault()
-
-    onBack && onBack()
-
-    history.push(backHistory.pop())
-  }
-
+export const Header = ({ children }) => {
   return (
     <header>
-      <a className='back' onClick={goBack} href='#'>
+      <Link className='back' to='..'>
         <Icon icon={faChevronLeft}>Back</Icon>
-      </a>
+      </Link>
       {children || <h1>&nbsp;</h1>}
     </header>
   )

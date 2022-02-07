@@ -3,7 +3,7 @@ import { faArchive, faCogs, faColumns, faPlus } from '@fortawesome/free-solid-sv
 import { action } from 'mobx'
 import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { housesApi } from '../lib/api'
 import { HousesList } from '../houses/houses-list'
@@ -12,7 +12,7 @@ import { MenuGroup } from './menu-group'
 import { housesStore } from '../houses/houses-store'
 
 export const Menu = observer(() => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const state = useLocalStore(() => ({
     addingHouse: false,
     setAddingHouse (adding) {
@@ -28,7 +28,7 @@ export const Menu = observer(() => {
     housesApi.add(action((id) => {
       housesStore.addHouse({ id })
       state.setAddingHouse(false)
-      history.push(`/houses/${id}`)
+      navigate(`/houses/${id}`)
     }))
   }
 

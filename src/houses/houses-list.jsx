@@ -23,7 +23,7 @@ const House = observer(({ house }) => {
       {({ attributes, className, handle }) => (
         <li className={cs('list-house sortable-item', className)} {...attributes}>
           {handle}
-          <Link to={`/houses/${house.id}`}>
+          <Link to={`houses/${house.id}`}>
             <h3>{house.get(HOUSE_NAME_KEY)}</h3>
             <p>{description}&nbsp;</p>
           </Link>

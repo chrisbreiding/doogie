@@ -1,14 +1,13 @@
 import cs from 'classnames'
 import { faAlignJustify, faGripLines, faHeading, faLink, faPlus, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
-import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
+import { Link, useNavigate, Outlet } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
 
 import { fieldsApi } from '../lib/api'
 import { fieldsStore } from './fields-store'
 
-import { Field } from './field'
 import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
 import { Loader } from '../loader/loader'
@@ -28,7 +27,7 @@ const getIcon = (type) => {
   }
 }
 
-const FieldItem = observer(({ field, url }) => (
+const FieldItem = observer(({ field }) => (
   <SortableItem id={field.id}>
     {({ attributes, className, handle }) => (
       <li
@@ -36,7 +35,7 @@ const FieldItem = observer(({ field, url }) => (
         {...attributes}
       >
         {handle}
-        <Link to={`${url}/${field.id}`}>
+        <Link to={field.id}>
           {field.displayLabel} <Icon icon={getIcon(field.type)} />
         </Link>
       </li>
@@ -45,8 +44,7 @@ const FieldItem = observer(({ field, url }) => (
 ))
 
 export const Fields = observer(() => {
-  const match = useRouteMatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const state = useLocalStore(() => ({
     addingField: false,
     setAddingField (adding) {
@@ -60,7 +58,7 @@ export const Fields = observer(() => {
     fieldsApi.add(action((id) => {
       fieldsStore.addField({ id })
       state.setAddingField(false)
-      history.push(`${match.path}/${id}`)
+      navigate(id)
     }))
   }
 
@@ -85,7 +83,7 @@ export const Fields = observer(() => {
               onSortingUpdate={updateSorting}
             >
               {(field) => (
-                <FieldItem key={field.id} field={field} url={match.url} />
+                <FieldItem key={field.id} field={field} />
               )}
             </MenuGroup>
             <MenuGroup>
@@ -98,7 +96,7 @@ export const Fields = observer(() => {
           </ul>
         </main>
       </div>
-      <Route path={`${match.path}/:id`} component={Field} />
+      <Outlet />
     </>
   )
 })

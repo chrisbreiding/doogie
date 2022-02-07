@@ -2,25 +2,24 @@ import { faArchive, faMapPin, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { action } from 'mobx'
 import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
-import { Link, Route, useHistory, useRouteMatch } from 'react-router-dom'
+import { Link, useNavigate, Outlet } from 'react-router-dom'
 
 import { archivesApi } from '../lib/api'
 import { archivesStore } from './archives-store'
 import { housesStore } from '../houses/houses-store'
 
-import { Archive } from './archive'
 import { Header } from '../app/header'
 import { Icon } from '../lib/icon'
 import { Loader } from '../loader/loader'
 import { MenuGroup } from '../menu/menu-group'
 
-const ArchiveItem = observer(({ archive, match }) => {
+const ArchiveItem = observer(({ archive }) => {
   const houses = housesStore.archivedHouses(archive.id)
   const label = houses.length === 1 ? ' house' : ' houses'
 
   return (
     <li className='archive-item'>
-      <Link to={`${match.url}/${archive.id}`}>
+      <Link to={archive.id}>
         <Icon icon={faArchive}>{archive.name}</Icon>
         {archive.isCurrent && <Icon icon={faMapPin} />}
         <span className='spacer' />
@@ -33,8 +32,7 @@ const ArchiveItem = observer(({ archive, match }) => {
 })
 
 export const Archives = observer(() => {
-  const match = useRouteMatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const state = useLocalStore(() => ({
     addingArchive: false,
     setAddingArchive (adding) {
@@ -48,7 +46,7 @@ export const Archives = observer(() => {
     archivesApi.add(action((id) => {
       archivesStore.addArchive({ id })
       state.setAddingArchive(false)
-      history.push(`${match.path}/${id}`)
+      navigate(id)
     }))
   }
 
@@ -67,7 +65,6 @@ export const Archives = observer(() => {
                 <ArchiveItem
                   key={archive.id}
                   archive={archive}
-                  match={match}
                 />
               ))}
             </MenuGroup>
@@ -81,7 +78,7 @@ export const Archives = observer(() => {
           </ul>
         </main>
       </div>
-      <Route path={`${match.path}/:id`} component={Archive} />
+      <Outlet />
     </>
   )
 })

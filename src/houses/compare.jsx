@@ -2,6 +2,7 @@ import { faHome } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
 import { observer } from 'mobx-react'
 import React from 'react'
+import { Link, Outlet } from 'react-router-dom'
 
 import { fieldsStore } from '../fields/fields-store'
 import { housesStore } from './houses-store'
@@ -9,7 +10,6 @@ import { HOUSE_NAME_KEY } from '../lib/constants'
 
 import { Header } from '../app/header'
 import { HouseInfo } from '../house/house-info'
-import { Link } from 'react-router-dom'
 import { Icon } from '../lib/icon'
 import { NoHouses } from './no-houses'
 
@@ -33,7 +33,7 @@ const Content = observer(() => {
           <td className='field-label'></td>
           {_.map(housesStore.houses, (house) => (
             <td key={house.id}>
-              <Link to={`/houses/${house.id}`}>
+              <Link to={`houses/${house.id}`}>
                 <Icon icon={faHome}>View House</Icon>
               </Link>
               <HouseInfo house={house} />
@@ -56,10 +56,13 @@ const Content = observer(() => {
 })
 
 export const CompareHouses = observer(() => (
-  <div className='compare'>
-    <Header />
-    <main>
-      <Content />
-    </main>
-  </div>
+  <>
+    <div className='compare'>
+      <Header />
+      <main>
+        <Content />
+      </main>
+    </div>
+    <Outlet />
+  </>
 ))

@@ -1,7 +1,7 @@
 import { observer, useLocalStore } from 'mobx-react'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import React, { useRef } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { auth } from './auth'
 
@@ -20,7 +20,7 @@ export const Login = observer(() => {
     },
   }))
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -34,7 +34,7 @@ export const Login = observer(() => {
     state.setAttemptingLogin(true)
     auth.login(email, password).then((didSucceed) => {
       if (didSucceed) {
-        history.push('/')
+        navigate('/')
       } else {
         state.setAttemptingLogin(false)
         state.setLoginFailed(true)

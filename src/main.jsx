@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { render } from 'react-dom'
 import FastClick from 'fastclick'
@@ -21,10 +21,10 @@ const Root = observer(() => {
   }
 
   return (
-    <Switch>
-      <Route path='/login' component={Login} />
-      <Route path='/' component={App} />
-    </Switch>
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='*' element={<App />} />
+    </Routes>
   )
 })
 
