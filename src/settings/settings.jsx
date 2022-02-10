@@ -76,15 +76,16 @@ const DropdownSettings = observer(() => (
     'Misc Monthly Costs Field',
     'Visit Field',
     // these are used for bookmarklet import from compass
-    'Rooms Field',
-    'House Size Field',
-    'Lot Size Field',
+    'Compass Link Field',
     'Cooling Field',
     'Heating Field',
+    'House Size Field',
+    'Lot Size Field',
+    'Parking Field',
+    'Rooms Field',
     'Sewer Field',
     'Water Source Field',
     'Year Field',
-    'Compass Link Field',
   ], (setting) => (
     <DropdownSetting key={setting} setting={setting} />
   ))

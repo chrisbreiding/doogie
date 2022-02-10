@@ -21,17 +21,18 @@ export const AddHouse = () => {
   useEffect(() => {
     const houseData = {
       [HOUSE_NAME_KEY]: query.get('address'),
+      [settingsStore.get('compassLinkField')]: query.get('compassLink'),
+      [settingsStore.get('coolingField')]: query.get('cooling'),
       [settingsStore.get('costField')]: query.get('cost'),
-      [settingsStore.get('taxesField')]: query.get('taxes'),
-      [settingsStore.get('roomsField')]: query.get('rooms'),
+      [settingsStore.get('heatingField')]: query.get('heating'),
       [settingsStore.get('houseSizeField')]: query.get('houseSize'),
       [settingsStore.get('lotSizeField')]: query.get('lotSize'),
-      [settingsStore.get('coolingField')]: query.get('cooling'),
-      [settingsStore.get('heatingField')]: query.get('heating'),
+      [settingsStore.get('parkingField')]: query.get('parking'),
+      [settingsStore.get('roomsField')]: query.get('rooms'),
       [settingsStore.get('sewerField')]: query.get('sewer'),
+      [settingsStore.get('taxesField')]: query.get('taxes'),
       [settingsStore.get('waterSourceField')]: query.get('waterSource'),
       [settingsStore.get('yearBuiltField')]: query.get('yearBuilt'),
-      [settingsStore.get('compassLinkField')]: query.get('compassLink'),
     }
 
     housesApi.addWithData(houseData, action((id) => {
