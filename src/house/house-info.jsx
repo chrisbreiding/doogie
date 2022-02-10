@@ -24,9 +24,9 @@ const getPriceDifference = (offerPrice, askingPrice) => {
   if (!offerPrice || offerPrice === askingPrice) return null
 
   const difference = offerPrice - askingPrice
-  const comparator = difference < 0 ? 'less' : 'more'
+  const comparator = difference < 0 ? 'under' : 'over'
 
-  return `(${currencyFromNumber(Math.abs(difference))} ${comparator} than asking)`
+  return `(${currencyFromNumber(Math.abs(difference))} ${comparator} asking)`
 }
 
 const HouseCost = observer(({ house }) => {
