@@ -21,12 +21,13 @@ export const AddHouse = () => {
   useEffect(() => {
     const houseData = {
       [HOUSE_NAME_KEY]: query.get('address'),
+      [settingsStore.get('askingPriceField')]: query.get('askingPrice'),
       [settingsStore.get('compassLinkField')]: query.get('compassLink'),
       [settingsStore.get('coolingField')]: query.get('cooling'),
-      [settingsStore.get('costField')]: query.get('cost'),
       [settingsStore.get('heatingField')]: query.get('heating'),
       [settingsStore.get('houseSizeField')]: query.get('houseSize'),
       [settingsStore.get('lotSizeField')]: query.get('lotSize'),
+      [settingsStore.get('offerPriceField')]: query.get('askingPrice'),
       [settingsStore.get('parkingField')]: query.get('parking'),
       [settingsStore.get('roomsField')]: query.get('rooms'),
       [settingsStore.get('sewerField')]: query.get('sewer'),

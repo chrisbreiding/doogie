@@ -38,9 +38,9 @@
 
   const details = {
     address: guard(() => $('[data-tn=listing-page-address]').parentElement.innerText.replace(/\n+/, ', ')),
+    askingPrice: guard(() => $('[data-tn=listing-page-summary-price] .textIntent-title2').innerText.replace('$', '')),
     compassLink: guard(() => location.href.replace(location.search, '')),
     cooling: guard(() => `${getInfo('Cooling Type')}, ${getInfo('Cooling Fuel')}`),
-    cost: guard(() => $('[data-tn=listing-page-summary-price] .textIntent-title2').innerText.replace('$', '')),
     heating: guard(() => `${getInfo('Heating Type')}, ${getInfo('Heating Fuel')}`),
     houseSize: guard(() => $('[data-tn=listing-page-summary-sq-ft] .textIntent-title2').innerText.replace('Sq. Ft.', 'sq ft')),
     lotSize: guard(() => `${getInfo('Lot SQFT')} sq ft / ${getInfo('Lot Size Acres')} acre`),

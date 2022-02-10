@@ -11,14 +11,18 @@ export const getMortgageLengths = () => {
   })
 }
 
-export const getHouseCost = (house) => houseField(house, 'cost')
+export const getHouseAskingPrice = (house) => houseField(house, 'askingPrice')
+
+export const getHouseOfferPrice = (house) => {
+  return houseField(house, 'offerPrice') || houseField(house, 'askingPrice')
+}
 
 export const getClosingCost = (house) => {
-  return getHouseCost(house) * decimalFor('closingRate')
+  return getHouseOfferPrice(house) * decimalFor('closingRate')
 }
 
 export const getMonthlyCost = (house, years, downPayment) => {
-  const houseCost = getHouseCost(house)
+  const houseCost = getHouseOfferPrice(house)
   const downPaymentCost = downPayment || getDownPayment(house)
   const loanCost = houseCost - downPaymentCost
   const interestRate = decimalFor('interestRate')
@@ -46,7 +50,7 @@ const pmi = (loanCost) => {
 }
 
 export const getDownPayment = (house) => {
-  const houseCost = getHouseCost(house)
+  const houseCost = getHouseOfferPrice(house)
   let downPaymentCost = numberFromString(settingsStore.get('downPayment'))
   const maxUpfrontCost = numberFromString(settingsStore.get('maxUpfrontCost'))
 
@@ -64,7 +68,7 @@ export const getDownPayment = (house) => {
 }
 
 export const getDownPaymentPercent = (house, downPayment) => {
-  return Number((((downPayment || getDownPayment(house)) / getHouseCost(house)) * 100).toFixed(2))
+  return Number((((downPayment || getDownPayment(house)) / getHouseOfferPrice(house)) * 100).toFixed(2))
 }
 
 export const getUpfrontCost = (house, downPayment) => {
@@ -72,7 +76,7 @@ export const getUpfrontCost = (house, downPayment) => {
 }
 
 export const getLoanAmount = (house, downPayment) => {
-  return getHouseCost(house) - (downPayment || getDownPayment(house))
+  return getHouseOfferPrice(house) - (downPayment || getDownPayment(house))
 }
 
 export const getLoanLimitOverage = (house, downPayment) => {
@@ -100,7 +104,7 @@ export const getHypotheticals = (house) => {
 
   if (!lengthsString) return []
 
-  const cost = getHouseCost(house)
+  const cost = getHouseOfferPrice(house)
 
   return _.compact(_.map(lengthsString.split(/[^0-9]+/), (percentString) => {
     const percent = parseInt(percentString, 10)

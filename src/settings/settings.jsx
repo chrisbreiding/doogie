@@ -69,7 +69,8 @@ const DropdownSetting = observer(({ setting }) => {
 
 const DropdownSettings = observer(() => (
   _.map([
-    'Cost Field',
+    'Asking Price Field',
+    'Offer Price Field',
     'Zestimate Field',
     'Taxes Field',
     'Misc Upfront Costs Field',

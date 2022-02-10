@@ -5,7 +5,7 @@ import { observer, useLocalStore } from 'mobx-react'
 import React from 'react'
 
 import { currencyFromNumber } from '../lib/util'
-import { getClosingCost, getDownPayment, getDownPaymentPercent, getHouseCost, getHypotheticals, getLoanAmount, getLoanLimitOverage, getMonthlyCost, getMortgageLengths, getUpfrontCost, requiresPMI } from './house-info-util'
+import { getClosingCost, getDownPayment, getDownPaymentPercent, getHouseAskingPrice, getHouseOfferPrice, getHypotheticals, getLoanAmount, getLoanLimitOverage, getMonthlyCost, getMortgageLengths, getUpfrontCost, requiresPMI } from './house-info-util'
 import { settingsStore } from '../settings/settings-store'
 
 import { Icon } from '../lib/icon'
@@ -20,17 +20,32 @@ const Info = ({ prefix, value, valueClass, suffix }) => (
   </p>
 )
 
-const HouseCost = observer(({ amount }) => (
-  <Info
-    prefix='House cost:'
-    value={currencyFromNumber(amount)}
-  />
-))
+const getPriceDifference = (offerPrice, askingPrice) => {
+  if (!offerPrice || offerPrice === askingPrice) return null
 
-const ClosingCost = observer(({ amount }) => (
+  const difference = offerPrice - askingPrice
+  const comparator = difference < 0 ? 'less' : 'more'
+
+  return `(${currencyFromNumber(Math.abs(difference))} ${comparator} than asking)`
+}
+
+const HouseCost = observer(({ house }) => {
+  const offerPrice = getHouseOfferPrice(house)
+  const askingPrice = getHouseAskingPrice(house)
+
+  return (
+    <Info
+      prefix='House cost:'
+      value={currencyFromNumber(offerPrice)}
+      suffix={getPriceDifference(offerPrice, askingPrice)}
+    />
+  )
+})
+
+const ClosingCost = observer(({ house }) => (
   <Info
     prefix='Closing cost:'
-    value={currencyFromNumber(amount)}
+    value={currencyFromNumber(getClosingCost(house))}
   />
 ))
 
@@ -112,8 +127,8 @@ const Hypotheticals = observer(({ house }) => {
 
 export const HouseInfo = observer(({ house }) => (
   <div className='house-info'>
-    <HouseCost amount={getHouseCost(house)} />
-    <ClosingCost amount={getClosingCost(house)} />
+    <HouseCost house={house} />
+    <ClosingCost house={house} />
     <div className='break' />
     <DownPayment amount={getDownPayment(house)} percent={getDownPaymentPercent(house)} />
     <UpfrontCost amount={getUpfrontCost(house)} />

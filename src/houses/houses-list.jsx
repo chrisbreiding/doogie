@@ -12,11 +12,11 @@ import { MenuGroup } from '../menu/menu-group'
 import { SortableItem } from '../sortable-list/sortable-item'
 
 const House = observer(({ house }) => {
-  const cost = house.get(settingsStore.get('costField'))
-  let description = cost ? `$${cost}` : ''
+  const askingPrice = house.get(settingsStore.get('askingPriceField'))
+  let description = askingPrice ? `$${askingPrice}` : ''
   const visit = house.get(settingsStore.get('visitField'))
 
-  if (cost && visit) description += `, ${visit}`
+  if (askingPrice && visit) description += `, ${visit}`
 
   return (
     <SortableItem id={house.id}>
