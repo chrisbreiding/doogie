@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { faArchive, faLaptopHouse, faMapMarkedAlt, faRoute } from '@fortawesome/free-solid-svg-icons'
+import { faArchive, faHome, faLaptopHouse, faMapMarkedAlt, faRoute } from '@fortawesome/free-solid-svg-icons'
 import { observer } from 'mobx-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AutosizeTextarea from 'react-textarea-autosize'
@@ -96,6 +96,9 @@ export const House = observer(() => {
   const navigate = useNavigate()
 
   const house = housesStore.getHouseById(houseId)
+  const houseName = house.get(HOUSE_NAME_KEY)
+  // 123 Street Rd, City, ST 12345 -> 123 Street Rd
+  const houseNameShort = houseName.split(/\s*,\s*/)[0]
 
   const archive = () => {
     const archiveId = house.archiveId ? null : archivesStore.current.id
@@ -114,12 +117,14 @@ export const House = observer(() => {
 
   return (
     <div className='house'>
-      <Header />
+      <Header>
+        <h1><Icon icon={faHome}>{houseNameShort}</Icon></h1>
+      </Header>
       <main>
         <form onSubmit={onSubmit}>
           <input
             className={HOUSE_NAME_KEY}
-            value={house.get(HOUSE_NAME_KEY) || ''}
+            value={houseName || ''}
             onChange={_.partial(onChange, house, HOUSE_NAME_KEY)}
           />
           <HouseInfo house={house} />
@@ -142,7 +147,7 @@ export const House = observer(() => {
             <ul>
               <li>
                 <a
-                  href={mapUrl(house.get(HOUSE_NAME_KEY))}
+                  href={mapUrl(houseName)}
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -151,7 +156,7 @@ export const House = observer(() => {
               </li>
               <li>
                 <a
-                  href={directionsUrl(house.get(HOUSE_NAME_KEY))}
+                  href={directionsUrl(houseName)}
                   target='_blank'
                   rel='noreferrer'
                 >
