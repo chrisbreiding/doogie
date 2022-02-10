@@ -34,7 +34,7 @@
   const baths = fullBaths + halfBaths
   const garage = guard(() => getInfo('Garage')) === 'Yes'
   const garageType = garage && guard(() => getInfo('Type Of Parking'))
-  const garageSpaces = garage && guard(() => getInfo('Total Garage Spaces'))
+  const garageSpaces = garage && guard(() => Number(getInfo('Total Garage Spaces')))
 
   const details = {
     address: guard(() => $('[data-tn=listing-page-address]').parentElement.innerText.replace(/\n+/, ', ')),
@@ -44,7 +44,7 @@
     heating: guard(() => `${getInfo('Heating Type')}, ${getInfo('Heating Fuel')}`),
     houseSize: guard(() => $('[data-tn=listing-page-summary-sq-ft] .textIntent-title2').innerText.replace('Sq. Ft.', 'sq ft')),
     lotSize: guard(() => `${getInfo('Lot SQFT')} sq ft / ${getInfo('Lot Size Acres')} acre`),
-    parking: garage ? `${garageSpaces} spaces, ${garageType}` : 'No garage',
+    parking: garage ? `${garageSpaces} space${garageSpaces === 1 ? '' : 's'}, ${garageType}` : 'No garage',
     rooms: `${beds} bed, ${baths} bath`,
     sewer: guard(() => getInfo('Sewer Septic')),
     taxes: guard(() => getInfo('Tax Annual Amount')),
