@@ -115,6 +115,8 @@ export const House = observer(() => {
     }
   }
 
+  const links = fieldsStore.linkFields.filter((field) => !!house.get(field.id))
+
   return (
     <div className='house'>
       <Header>
@@ -130,9 +132,7 @@ export const House = observer(() => {
           <HouseInfo house={house} />
           <div className='links'>
             <ul>
-              {fieldsStore.linkFields
-              .filter((field) => !!house.get(field.id))
-              .map((field) => (
+              {links.map((field) => (
                 <li key={field.id}>
                   <a
                     href={house.get(field.id)}
@@ -143,8 +143,8 @@ export const House = observer(() => {
                   </a>
                 </li>
               ))}
-            </ul>
-            <ul>
+              {/* put in a spacer if uneven so map/direction pair stay in same row */}
+              {links.length % 2 !== 0 && <li></li>}
               <li>
                 <a
                   href={mapUrl(houseName)}

@@ -14,18 +14,20 @@
 
   .links {
     ul {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 0.4em;
+      padding: 0.4em;
     }
 
     li {
-      flex-grow: 2;
-      padding: 0.2em;
+      @extend .truncate-text;
     }
 
     a {
       background: action-color;
       color: light-color;
+      @extend .truncate-text;
 
       &:hover,
       &:focus,
