@@ -96,9 +96,6 @@ export const House = observer(() => {
   const navigate = useNavigate()
 
   const house = housesStore.getHouseById(houseId)
-  const houseName = house.get(HOUSE_NAME_KEY)
-  // 123 Street Rd, City, ST 12345 -> 123 Street Rd
-  const houseNameShort = houseName.split(/\s*,\s*/)[0]
 
   const archive = () => {
     const archiveId = house.archiveId ? null : archivesStore.current.id
@@ -120,13 +117,13 @@ export const House = observer(() => {
   return (
     <div className='house'>
       <Header>
-        <h1><Icon icon={faHome}>{houseNameShort}</Icon></h1>
+        <h1><Icon icon={faHome}>{house.shortName}</Icon></h1>
       </Header>
       <main>
         <form onSubmit={onSubmit}>
           <input
             className={HOUSE_NAME_KEY}
-            value={houseName || ''}
+            value={house.name || ''}
             onChange={_.partial(onChange, house, HOUSE_NAME_KEY)}
           />
           <HouseInfo house={house} />
@@ -147,7 +144,7 @@ export const House = observer(() => {
               {links.length % 2 !== 0 && <li></li>}
               <li>
                 <a
-                  href={mapUrl(houseName)}
+                  href={mapUrl(house.address)}
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -156,7 +153,7 @@ export const House = observer(() => {
               </li>
               <li>
                 <a
-                  href={directionsUrl(houseName)}
+                  href={directionsUrl(house.address)}
                   target='_blank'
                   rel='noreferrer'
                 >

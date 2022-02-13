@@ -8,7 +8,6 @@ import { Link, Outlet } from 'react-router-dom'
 import { observer, useLocalStore } from 'mobx-react'
 
 import { directionsUrl } from '../lib/util'
-import { HOUSE_NAME_KEY } from '../lib/constants'
 import { housesStore } from '../houses/houses-store'
 import { settingsStore } from '../settings/settings-store'
 
@@ -34,9 +33,7 @@ class MarkerModel {
 
 const Marker = observer(({ marker, $hover, isClicked }) => {
   const { house } = marker
-  const [address1, address2] = house.get(HOUSE_NAME_KEY)
-  .replace(/,/, '<<BREAK>>')
-  .split('<<BREAK>>')
+  const [address1, address2] = house.addressLines
   const visit = house.get(settingsStore.get('visitField'))
 
   return (
@@ -54,7 +51,7 @@ const Marker = observer(({ marker, $hover, isClicked }) => {
         </p>
         <p>
           <a
-            href={`${directionsUrl(house.get(HOUSE_NAME_KEY))}`}
+            href={`${directionsUrl(house.name)}`}
             target='_blank'
             rel='noreferrer'
           >
@@ -122,7 +119,7 @@ export const Map = observer(() => {
 
   const onGoogleApiLoaded = ({ maps }) => {
     _.each(state.markers, (marker) => {
-      getLatLng(maps, marker.house.get(HOUSE_NAME_KEY), (location) => {
+      getLatLng(maps, marker.house.name, (location) => {
         marker.setLatLng(location)
       })
     })

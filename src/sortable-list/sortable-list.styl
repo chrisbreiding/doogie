@@ -13,20 +13,21 @@
     visibility: hidden;
   }
 
-  > .icon {
+  .sortable-handle {
     @extends .center-contents;
     background: light-color;
+    color: darken(light-color, 20%);
     cursor: move;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
     flex-shrink: 0;
     touch-action: none;
-    width: 2.8em;
+    width: 2em;
   }
 
   a {
-    flex-grow: 1;
+    flex-grow: 2;
   }
 }
 

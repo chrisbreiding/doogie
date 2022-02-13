@@ -1,21 +1,55 @@
 .list-house {
-  a,
+  a {
+    @extends .truncate-text;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   h3 {
     @extends .truncate-text;
+
+    span {
+      @extends .truncate-text;
+      color: lighten(dark-color, 20%);
+      display: block;
+      font-size: 0.9em;
+      margin-top: 0.4em;
+    }
   }
 
   p {
     @extends .truncate-text;
-    color: lighten(dark-color, 20%);
-    font-size: 0.9em;
-    margin: 0.2em 0 0;
+    color: dark-color;
+    font-size: 0.8em;
+    text-align: right;
+    margin: 0;
+
+    span {
+      @extends .truncate-text;
+      color: lighten(dark-color, 20%);
+      display: block;
+      margin-top: 0.6em;
+    }
   }
 
   a:hover,
   a:focus {
-    p {
+    h3 span,
+    p,
+    p span {
       color: light-color;
     }
+  }
+
+  .directions {
+    @extends .center-contents;
+    border-left: 1px solid background-color;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

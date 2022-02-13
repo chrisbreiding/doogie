@@ -2,7 +2,7 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '../lib/icon'
 
 export const SortableItem = observer(({ id, children }) => {
@@ -26,7 +26,10 @@ export const SortableItem = observer(({ id, children }) => {
   }
 
   const handle = (
-    <Icon icon={faBars} transferAttributes={handleAttributes} />
+    <span className='sortable-handle' {...handleAttributes}>
+      <Icon icon={faEllipsisV} />
+      <Icon icon={faEllipsisV} />
+    </span>
   )
 
   return children({

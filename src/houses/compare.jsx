@@ -6,7 +6,6 @@ import { Link, Outlet } from 'react-router-dom'
 
 import { fieldsStore } from '../fields/fields-store'
 import { housesStore } from './houses-store'
-import { HOUSE_NAME_KEY } from '../lib/constants'
 
 import { Header } from '../app/header'
 import { HouseInfo } from '../house/house-info'
@@ -24,7 +23,7 @@ const Content = observer(() => {
         <tr>
           <th></th>
           {_.map(housesStore.houses, (house) => (
-            <th key={house.id}>{house.get(HOUSE_NAME_KEY)}</th>
+            <th key={house.id}>{house.name}</th>
           ))}
         </tr>
       </thead>
