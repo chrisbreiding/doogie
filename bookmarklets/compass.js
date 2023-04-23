@@ -54,4 +54,5 @@
   const query = Object.keys(details).map((key) => `${key}=${encodeURIComponent(details[key])}`).join('&')
 
   location.href = `https://doogie.crbapps.com/add?${query}`
+  // location.href = `http://localhost:8000/add?${query}`
 }())

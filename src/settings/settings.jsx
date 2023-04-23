@@ -76,7 +76,7 @@ const DropdownSettings = observer(() => (
     'Misc Upfront Costs Field',
     'Misc Monthly Costs Field',
     'Visit Field',
-    // these are used for bookmarklet import from compass
+    // these are used for bookmarklet import from compass/zillow
     'Compass Link Field',
     'Cooling Field',
     'Heating Field',
